@@ -14,11 +14,8 @@
 
 # misc
 .DS_Store
-.env*
-/.nx
-/.nx/cache
-/.vscode/*
-!/.vscode/extensions.json
+.nx
+.vscode
 .idea
 
 npm-debug.log*
@@ -27,3 +24,7 @@ yarn-error.log*
 
 # Optional eslint cache
 .eslintcache
+
+# dotenv environment variable files
+.env*
+!.env.example
