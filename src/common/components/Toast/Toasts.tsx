@@ -19,7 +19,7 @@ import Toast from './Toast';
  * @param {BaseComponentProps} props - Component properties.
  * @returns {JSX.Element} JSX
  */
-const Toasts = ({ className, testid = 'toasts' }: BaseComponentProps): JSX.Element => {
+const Toasts = ({ className, testid = 'toasts' }: BaseComponentProps) => {
   const { removeToast, toasts = [] } = useToasts();
   const toast = toasts[0];
 

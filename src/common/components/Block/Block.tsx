@@ -21,7 +21,7 @@ interface BlockProps extends BaseComponentProps {
  * @param {BlockProps} props - Component properties.
  * @returns JSX
  */
-const Block = ({ className, content, testid = 'block', title }: BlockProps): JSX.Element => {
+const Block = ({ className, content, testid = 'block', title }: BlockProps) => {
   return (
     <div className={classNames('ls-block', className)} data-testid={testid}>
       {title && (

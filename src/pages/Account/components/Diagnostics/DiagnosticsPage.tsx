@@ -15,16 +15,12 @@ import BuildDiagnostics from './BuildDiagnostics';
  * @param {PropsWithTestId} props - Component properties.
  * @returns {JSX.Element} JSX
  */
-const DiagnosticsPage = ({ testid = 'page-diagnostics' }: PropsWithTestId): JSX.Element => {
+const DiagnosticsPage = ({ testid = 'page-diagnostics' }: PropsWithTestId) => {
   const { t } = useTranslation();
 
   return (
     <IonPage className="ls-diagnostics-page" data-testid={testid}>
-      <Header
-        title={t('diagnostics.diagnostics', { ns: 'account' })}
-        backButton
-        defaultHref="/tabs/account"
-      />
+      <Header title={t('diagnostics.diagnostics', { ns: 'account' })} backButton defaultHref="/tabs/account" />
 
       <IonContent>
         <IonGrid fixed>

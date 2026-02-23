@@ -38,11 +38,7 @@ interface ProfileFormProps extends BaseComponentProps {
  * @param {ProfileFormProps} props - Component propeties.
  * @returns {JSX.Element} JSX
  */
-const ProfileForm = ({
-  className,
-  testid = 'form-profile',
-  profile,
-}: ProfileFormProps): JSX.Element => {
+const ProfileForm = ({ className, testid = 'form-profile', profile }: ProfileFormProps) => {
   const focusInput = useRef<HTMLIonInputElement>(null);
   const [error, setError] = useState<string>('');
   const { mutate: updateProfile } = useUpdateProfile();

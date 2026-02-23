@@ -17,7 +17,7 @@ interface BadgesProps extends BaseComponentProps, PropsWithChildren {}
  * @param {BadgesProps} props - Component properties.
  * @returns {JSX.Element} JSX
  */
-const Badges = ({ children, className, testid = 'badges' }: BadgesProps): JSX.Element => {
+const Badges = ({ children, className, testid = 'badges' }: BadgesProps) => {
   return (
     <div className={classNames('ls-badges', className)} data-testid={testid}>
       {children}

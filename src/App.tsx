@@ -22,7 +22,7 @@ setupIonicReact();
  * application hierarchy. Declares application-wide providers.
  * @returns JSX
  */
-const App = (): JSX.Element => (
+const App = () => (
   <IonApp data-testid="app">
     <ErrorBoundary FallbackComponent={ErrorPage}>
       <ConfigContextProvider>

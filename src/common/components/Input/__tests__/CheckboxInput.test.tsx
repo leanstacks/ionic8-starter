@@ -2,7 +2,7 @@ import { describe, expect, it, vi } from 'vitest';
 import userEvent from '@testing-library/user-event';
 import { Form, Formik } from 'formik';
 
-import { render, screen } from 'test/test-utils';
+import { render, screen, waitFor } from 'test/test-utils';
 
 import CheckboxInput from '../CheckboxInput';
 
@@ -35,11 +35,11 @@ describe('CheckboxInput', () => {
         </Form>
       </Formik>,
     );
-    await screen.findByTestId('input');
+    const checkboxElement = await screen.findByTestId('input');
 
     // ASSERT
-    expect(screen.getByTestId('input')).toBeDefined();
-    expect(screen.getByTestId('input')).toHaveAttribute('checked', 'false');
+    expect(checkboxElement).toBeDefined();
+    expect(checkboxElement).not.toBeChecked();
   });
 
   it('should be checked', async () => {
@@ -53,11 +53,11 @@ describe('CheckboxInput', () => {
         </Form>
       </Formik>,
     );
-    await screen.findByTestId('input');
+    const checkboxElement = await screen.findByTestId('input');
 
     // ASSERT
-    expect(screen.getByTestId('input')).toBeDefined();
-    expect(screen.getByTestId('input')).toHaveAttribute('checked', 'true');
+    expect(checkboxElement).toBeDefined();
+    expect(checkboxElement).toBeChecked();
   });
 
   it('should change boolean value', async () => {
@@ -72,15 +72,15 @@ describe('CheckboxInput', () => {
         </Form>
       </Formik>,
     );
-    await screen.findByTestId('input');
-    expect(screen.getByTestId('input')).toHaveAttribute('checked', 'false');
+    const checkboxElement = await screen.findByTestId('input');
+    expect(checkboxElement).not.toBeChecked();
 
     // ACT
-    await user.click(screen.getByText('MyCheckbox'));
+    await user.click(checkboxElement);
 
     // ASSERT
-    expect(screen.getByTestId('input')).toBeDefined();
-    expect(screen.getByTestId('input')).toHaveAttribute('checked', 'true');
+    // use waitFor to ensure the state update has been processed before making the assertion
+    await waitFor(() => expect(checkboxElement).toBeChecked());
   });
 
   it('should change array value', async () => {
@@ -98,24 +98,25 @@ describe('CheckboxInput', () => {
         </Form>
       </Formik>,
     );
-    await screen.findByTestId('one');
-    expect(screen.getByTestId('one')).toHaveAttribute('checked', 'false');
-    expect(screen.getByTestId('two')).toHaveAttribute('checked', 'false');
+    const checkboxOne = await screen.findByTestId('one');
+    const checkboxTwo = await screen.findByTestId('two');
+    expect(checkboxOne).not.toBeChecked();
+    expect(checkboxTwo).not.toBeChecked();
 
     // ACT
     await user.click(screen.getByText('CheckboxOne'));
 
     // ASSERT
-    expect(screen.getByTestId('one')).toBeDefined();
-    expect(screen.getByTestId('one')).toHaveAttribute('checked', 'true');
-    expect(screen.getByTestId('two')).toHaveAttribute('checked', 'false');
+    // use waitFor to ensure the state update has been processed before making the assertion
+    await waitFor(() => expect(checkboxOne).toBeChecked());
+    expect(checkboxTwo).not.toBeChecked();
 
     // ACT
     await user.click(screen.getByText('CheckboxOne'));
 
     // ASSERT
-    expect(screen.getByTestId('one')).toHaveAttribute('checked', 'false');
-    expect(screen.getByTestId('two')).toHaveAttribute('checked', 'false');
+    await waitFor(() => expect(checkboxOne).not.toBeChecked());
+    expect(checkboxTwo).not.toBeChecked();
   });
 
   it.skip('should call onChange function', async () => {

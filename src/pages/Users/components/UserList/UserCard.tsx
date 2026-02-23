@@ -22,7 +22,7 @@ interface UserCardProps extends BaseComponentProps {
  * @param {UserCardProps} props - Component properties.
  * @returns {JSX.Element} JSX
  */
-const UserCard = ({ className, testid = 'card-user', user }: UserCardProps): JSX.Element => {
+const UserCard = ({ className, testid = 'card-user', user }: UserCardProps) => {
   return (
     <IonCard
       className={classNames('ls-card-user', className)}

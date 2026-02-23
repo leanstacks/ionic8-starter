@@ -9,7 +9,7 @@ import { BaseComponentProps } from 'common/components/types';
  * @param {BaseComponentProps} props - Component properties.
  * @returns JSX
  */
-const WelcomeBlock = ({ className, testid = 'block-welcome' }: BaseComponentProps): JSX.Element => {
+const WelcomeBlock = ({ className, testid = 'block-welcome' }: BaseComponentProps) => {
   const { t } = useTranslation();
 
   return (

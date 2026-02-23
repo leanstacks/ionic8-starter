@@ -16,10 +16,7 @@ import LoaderSkeleton from 'common/components/Loader/LoaderSkeleton';
  * @param {BaseComponentProps} props - Component properties.
  * @returns {JSX.Element} JSX
  */
-const AppDiagnostics = ({
-  className,
-  testid = 'diagnostics-app',
-}: BaseComponentProps): JSX.Element => {
+const AppDiagnostics = ({ className, testid = 'diagnostics-app' }: BaseComponentProps) => {
   const { isNativePlatform } = usePlatform();
   const { data: appInfo, isLoading } = useGetAppInfo();
   const { t } = useTranslation();
@@ -46,9 +43,7 @@ const AppDiagnostics = ({
               </IonLabel>
             </IonItem>
             <IonItem className="text-sm">
-              <IonLabel className="font-medium ion-margin-end">
-                {t('diagnostics.label.id', { ns: 'account' })}
-              </IonLabel>
+              <IonLabel className="font-medium ion-margin-end">{t('diagnostics.label.id', { ns: 'account' })}</IonLabel>
               <IonLabel className="ion-text-end" data-testid={`${testid}-id`}>
                 {appInfo.id}
               </IonLabel>

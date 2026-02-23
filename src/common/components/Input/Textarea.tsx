@@ -11,7 +11,8 @@ import { PropsWithTestId } from '../types';
  * @see {@link IonTextarea}
  */
 interface TextareaProps
-  extends PropsWithTestId,
+  extends
+    PropsWithTestId,
     Omit<ComponentPropsWithoutRef<typeof IonTextarea>, 'name'>,
     Required<Pick<ComponentPropsWithoutRef<typeof IonTextarea>, 'name'>> {}
 
@@ -26,10 +27,7 @@ interface TextareaProps
  * @returns {JSX.Element} JSX
  */
 const Textarea = forwardRef<HTMLIonTextareaElement, TextareaProps>(
-  (
-    { className, onIonInput, testid = 'textarea', ...textareaProps }: TextareaProps,
-    ref,
-  ): JSX.Element => {
+  ({ className, onIonInput, testid = 'textarea', ...textareaProps }: TextareaProps, ref) => {
     const [field, meta, helpers] = useField(textareaProps.name);
 
     /**

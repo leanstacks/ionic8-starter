@@ -25,7 +25,7 @@ interface UserEditProps extends BaseComponentProps {
  * @param {UserEditProps} props - Component properties.
  * @returns {JSX.Element} JSX
  */
-const UserEdit = ({ className, user, testid = 'user-edit' }: UserEditProps): JSX.Element => {
+const UserEdit = ({ className, user, testid = 'user-edit' }: UserEditProps) => {
   const { t } = useTranslation();
   const router = useIonRouter();
   const [error, setError] = useState<string>('');

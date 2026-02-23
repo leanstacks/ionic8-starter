@@ -46,7 +46,7 @@ const UserAddModal = ({
   setIsOpen,
   testid = 'modal-user-add',
   ...modalProps
-}: UserAddModalProps): JSX.Element => {
+}: UserAddModalProps) => {
   const [error, setError] = useState<string>('');
   const router = useIonRouter();
   const { isActive: isActiveProgressBar, progressBar, setProgress } = useProgress();

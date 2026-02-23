@@ -29,7 +29,7 @@ interface UserDetailPageRouteParams {
  * The `UserDetailPage` component renders information about a single `User`.
  * @returns JSX
  */
-export const UserDetailPage = ({ testid = 'page-user-detail' }: PropsWithTestId): JSX.Element => {
+export const UserDetailPage = ({ testid = 'page-user-detail' }: PropsWithTestId) => {
   const { t } = useTranslation();
   const router = useIonRouter();
   const { createToast } = useToasts();

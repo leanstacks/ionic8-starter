@@ -8,7 +8,7 @@ import { AxiosContext, customAxios } from './AxiosContext';
  * @param {PropsWithChildren} props - Component properties, `PropsWithChildren`.
  * @returns {JSX.Element} JSX
  */
-const AxiosProvider = ({ children }: PropsWithChildren): JSX.Element => {
+const AxiosProvider = ({ children }: PropsWithChildren) => {
   const [isReady, setIsReady] = useState(false);
 
   useEffect(() => {

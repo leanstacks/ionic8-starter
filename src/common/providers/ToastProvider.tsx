@@ -99,7 +99,7 @@ const actions = (dispatch: Dispatch<ToastContextAction>) => {
  * @param {PropsWithChildren} props - Component properties.
  * @returns {JSX.Element} JSX
  */
-const ToastProvider = ({ children }: PropsWithChildren): JSX.Element => {
+const ToastProvider = ({ children }: PropsWithChildren) => {
   const [{ toasts }, dispatch] = useReducer(reducer, DEFAULT_STATE);
 
   const value = useMemo<ToastContextValue>(() => {

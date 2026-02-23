@@ -22,7 +22,7 @@ import { ScrollContext, ScrollContextValue, ScrollDirection } from './ScrollCont
  * @param {PropsWithChildren} props - Component properties.
  * @returns {JSX.Element} JSX
  */
-const ScrollProvider = ({ children }: PropsWithChildren): JSX.Element => {
+const ScrollProvider = ({ children }: PropsWithChildren) => {
   const [scrollDirection, setScrollDirection] = useState<ScrollDirection | undefined>(undefined);
 
   const handleIonScroll = (event: ScrollCustomEvent) => {

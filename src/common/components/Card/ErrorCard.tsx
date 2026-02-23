@@ -14,7 +14,7 @@ const ErrorCard = ({
   testid = 'card-error',
   title,
   ...cardProps
-}: MessageCardProps): JSX.Element => {
+}: MessageCardProps) => {
   const { t } = useTranslation();
   title ??= t('error-generic');
 

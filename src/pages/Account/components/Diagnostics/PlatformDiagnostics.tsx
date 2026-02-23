@@ -15,10 +15,7 @@ import { useTranslation } from 'react-i18next';
  * @param {BaseComponentProps} props - Component properties.
  * @returns {JSX.Element} JSX
  */
-const PlatformDiagnostics = ({
-  className,
-  testid = 'diagnostics-platform',
-}: BaseComponentProps): JSX.Element => {
+const PlatformDiagnostics = ({ className, testid = 'diagnostics-platform' }: BaseComponentProps) => {
   const { isNativePlatform, platforms } = usePlatform();
   const { t } = useTranslation();
 
@@ -28,9 +25,7 @@ const PlatformDiagnostics = ({
         <IonLabel>{t('diagnostics.platform', { ns: 'account' })}</IonLabel>
       </IonListHeader>
       <IonItem className="text-sm">
-        <IonLabel className="font-medium ion-margin-end">
-          {t('diagnostics.label.native', { ns: 'account' })}
-        </IonLabel>
+        <IonLabel className="font-medium ion-margin-end">{t('diagnostics.label.native', { ns: 'account' })}</IonLabel>
         {isNativePlatform ? (
           <IonBadge className="uppercase" data-testid={`${testid}-is-native`}>
             {t('yes')}

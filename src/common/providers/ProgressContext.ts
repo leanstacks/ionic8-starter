@@ -1,3 +1,4 @@
+import { JSX } from 'react';
 import { ComponentPropsWithoutRef, createContext, ReactNode } from 'react';
 import { IonProgressBar } from '@ionic/react';
 

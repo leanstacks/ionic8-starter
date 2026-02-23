@@ -31,7 +31,7 @@ interface UserListItemProps extends BaseComponentProps, Pick<ComponentPropsWithR
  * @param {UserListItemProps} props - Component properties.
  * @returns JSX
  */
-const UserListItem = ({ className, lines, testid, user }: UserListItemProps): JSX.Element => {
+const UserListItem = ({ className, lines, testid, user }: UserListItemProps) => {
   const testIdentifier = testid ?? `list-item-user-${user.id}`;
   const [showConfirmDelete, setShowConfirmDelete] = useState<boolean>(false);
   const { t } = useTranslation();

@@ -35,7 +35,8 @@ type DateValue = string | null;
  * @see {@link IonModal}
  */
 interface DateInputProps
-  extends PropsWithTestId,
+  extends
+    PropsWithTestId,
     Pick<ComponentPropsWithoutRef<typeof IonInput>, 'label' | 'labelPlacement'>,
     Pick<ComponentPropsWithoutRef<typeof IonModal>, 'onIonModalDidDismiss'>,
     Omit<ComponentPropsWithoutRef<typeof IonDatetime>, 'multiple' | 'name' | 'presentation'>,
@@ -59,7 +60,7 @@ const DateInput = ({
   onIonModalDidDismiss,
   testid = 'input-date',
   ...datetimeProps
-}: DateInputProps): JSX.Element => {
+}: DateInputProps) => {
   const [field, meta, helpers] = useField<DateValue>(datetimeProps.name);
   const [isOpen, setIsOpen] = useState<boolean>(false);
 

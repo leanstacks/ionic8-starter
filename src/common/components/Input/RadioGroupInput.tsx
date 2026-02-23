@@ -12,7 +12,8 @@ import { PropsWithTestId } from '../types';
  * @see {@link IonRadioGroup}
  */
 interface RadioGroupInputProps
-  extends PropsWithTestId,
+  extends
+    PropsWithTestId,
     Omit<ComponentPropsWithoutRef<typeof IonRadioGroup>, 'name'>,
     Required<Pick<ComponentPropsWithoutRef<typeof IonRadioGroup>, 'name'>> {}
 
@@ -32,7 +33,7 @@ const RadioGroupInput = ({
   onIonChange,
   testid = 'input-radiogroup',
   ...radioGroupProps
-}: RadioGroupInputProps): JSX.Element => {
+}: RadioGroupInputProps) => {
   const [field, meta, helpers] = useField({ name });
 
   /**
@@ -46,10 +47,7 @@ const RadioGroupInput = ({
   };
 
   return (
-    <div
-      className="ls-radiogroup-input ls-radiogroup-input--expand-full"
-      data-testid={`${testid}-wrapper`}
-    >
+    <div className="ls-radiogroup-input ls-radiogroup-input--expand-full" data-testid={`${testid}-wrapper`}>
       <IonRadioGroup
         className={classNames('ls-radiogroup-input__radiogroup', className)}
         data-testid={testid}
@@ -58,11 +56,7 @@ const RadioGroupInput = ({
         {...radioGroupProps}
       />
       {!!meta.error && (
-        <IonText
-          className="ls-radiogroup-input__error"
-          color="danger"
-          data-testid={`${testid}-error`}
-        >
+        <IonText className="ls-radiogroup-input__error" color="danger" data-testid={`${testid}-error`}>
           {meta.error}
         </IonText>
       )}

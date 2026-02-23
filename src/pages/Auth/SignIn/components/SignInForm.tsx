@@ -41,7 +41,7 @@ interface SignInFormValues {
  * @param {BaseComponentProps} props - Component properties.
  * @returns {JSX.Element} JSX
  */
-const SignInForm = ({ className, testid = 'form-signin' }: BaseComponentProps): JSX.Element => {
+const SignInForm = ({ className, testid = 'form-signin' }: BaseComponentProps) => {
   const focusInput = useRef<HTMLIonInputElement>(null);
   const [error, setError] = useState<string>('');
   const { setIsActive: setShowProgress } = useProgress();

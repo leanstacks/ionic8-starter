@@ -56,7 +56,8 @@ export type IconName =
  * @see {@link FontAwesomeIcon}
  */
 export interface IconProps
-  extends BaseComponentProps,
+  extends
+    BaseComponentProps,
     Omit<ComponentPropsWithoutRef<typeof FontAwesomeIcon>, 'color' | 'icon'>,
     Pick<ComponentPropsWithoutRef<typeof IonText>, 'color' | 'slot'> {
   icon: IconName;
@@ -93,14 +94,7 @@ const icons: Record<IconName, IconProp> = {
  * @returns {JSX.Element} JSX
  * @see {@link FontAwesomeIcon}
  */
-const Icon = ({
-  className,
-  color,
-  icon,
-  slot = '',
-  testid = 'icon',
-  ...iconProps
-}: IconProps): JSX.Element => {
+const Icon = ({ className, color, icon, slot = '', testid = 'icon', ...iconProps }: IconProps) => {
   const faIcon = icons[icon];
 
   return (

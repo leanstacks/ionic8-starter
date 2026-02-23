@@ -28,7 +28,7 @@ import DiagnosticsPage from 'pages/Account/components/Diagnostics/DiagnosticsPag
  * @returns JSX
  * @see {@link AppMenu}
  */
-const TabNavigation = (): JSX.Element => {
+const TabNavigation = () => {
   const { t } = useTranslation();
 
   return (
@@ -66,34 +66,15 @@ const TabNavigation = (): JSX.Element => {
 
         <IonTabBar slot="bottom" className="ls-tab-navigation__bar ion-hide-md-up">
           <IonTabButton className="ls-tab-navigation__bar-button" tab="home" href="/tabs/home">
-            <Icon
-              className="ls-tab-navigation__bar-button-icon"
-              icon="house"
-              size="xl"
-              fixedWidth
-            />
+            <Icon className="ls-tab-navigation__bar-button-icon" icon="house" size="xl" fixedWidth />
             <IonLabel>{t('navigation.home')}</IonLabel>
           </IonTabButton>
           <IonTabButton className="ls-tab-navigation__bar-button" tab="users" href="/tabs/users">
-            <Icon
-              className="ls-tab-navigation__bar-button-icon"
-              icon="users"
-              size="xl"
-              fixedWidth
-            />
+            <Icon className="ls-tab-navigation__bar-button-icon" icon="users" size="xl" fixedWidth />
             <IonLabel>{t('navigation.users')}</IonLabel>
           </IonTabButton>
-          <IonTabButton
-            className="ls-tab-navigation__bar-button"
-            tab="account"
-            href="/tabs/account"
-          >
-            <Icon
-              className="ls-tab-navigation__bar-button-icon"
-              icon="userGear"
-              size="xl"
-              fixedWidth
-            />
+          <IonTabButton className="ls-tab-navigation__bar-button" tab="account" href="/tabs/account">
+            <Icon className="ls-tab-navigation__bar-button-icon" icon="userGear" size="xl" fixedWidth />
             <IonLabel>{t('navigation.account')}</IonLabel>
           </IonTabButton>
         </IonTabBar>

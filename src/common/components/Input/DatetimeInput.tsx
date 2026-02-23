@@ -46,7 +46,8 @@ type DatetimeValue = string | null;
  * @see {@link IonModal}
  */
 interface DatetimeInputProps
-  extends PropsWithTestId,
+  extends
+    PropsWithTestId,
     Pick<ComponentPropsWithoutRef<typeof IonInput>, 'label' | 'labelPlacement'>,
     Pick<ComponentPropsWithoutRef<typeof IonModal>, 'onIonModalDidDismiss'>,
     Omit<ComponentPropsWithoutRef<typeof IonDatetime>, 'multiple' | 'name' | 'presentation'>,
@@ -70,7 +71,7 @@ const DatetimeInput = ({
   onIonModalDidDismiss,
   testid = 'input-datetime',
   ...datetimeProps
-}: DatetimeInputProps): JSX.Element => {
+}: DatetimeInputProps) => {
   const [field, meta, helpers] = useField<DatetimeValue>(datetimeProps.name);
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
@@ -104,14 +105,12 @@ const DatetimeInput = ({
   // format the value to display in the IonInput
   const inputValue = useMemo(() => {
     if (field.value) {
-      const date = new Intl.DateTimeFormat(
-        undefined,
-        datetimeProps.formatOptions?.date ?? DEFAULT_FORMAT_DATE,
-      ).format(new Date(field.value));
-      const time = new Intl.DateTimeFormat(
-        undefined,
-        datetimeProps.formatOptions?.time ?? DEFAULT_FORMAT_TIME,
-      ).format(new Date(field.value));
+      const date = new Intl.DateTimeFormat(undefined, datetimeProps.formatOptions?.date ?? DEFAULT_FORMAT_DATE).format(
+        new Date(field.value),
+      );
+      const time = new Intl.DateTimeFormat(undefined, datetimeProps.formatOptions?.time ?? DEFAULT_FORMAT_TIME).format(
+        new Date(field.value),
+      );
 
       return `${date} ${time}`;
     } else {

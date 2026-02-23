@@ -13,7 +13,7 @@ import { BaseComponentProps } from 'common/components/types';
  * @param {UserSummaryCardProps} props - Component properties.
  * @returns JSX
  */
-const UserSummaryCard = ({ className, testid = 'card-user-summary' }: BaseComponentProps): JSX.Element => {
+const UserSummaryCard = ({ className, testid = 'card-user-summary' }: BaseComponentProps) => {
   const { data: users } = useGetUsers();
   const { t } = useTranslation();
 

@@ -12,7 +12,7 @@ import LoaderSpinner from 'common/components/Loader/LoaderSpinner';
  * @param {PropsWithTestId} props - Component properties.
  * @returns {JSX.Element} JSX
  */
-const SignOutPage = ({ testid = 'page-signout' }: PropsWithTestId): JSX.Element => {
+const SignOutPage = ({ testid = 'page-signout' }: PropsWithTestId) => {
   const router = useIonRouter();
   const { mutate: signOut } = useSignOut();
 

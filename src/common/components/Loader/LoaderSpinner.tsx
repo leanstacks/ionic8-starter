@@ -22,11 +22,7 @@ interface LoaderSpinnerProps extends BaseComponentProps {
  * @param {LoaderSpinnerProps} props - Component properties.
  * @returns JSX
  */
-const LoaderSpinner = ({
-  className,
-  testid = 'loader-spinner',
-  text,
-}: LoaderSpinnerProps): JSX.Element => {
+const LoaderSpinner = ({ className, testid = 'loader-spinner', text }: LoaderSpinnerProps) => {
   return (
     <div className={classNames('ls-loader-spinner', className)} data-testid={testid}>
       <IonSpinner></IonSpinner>

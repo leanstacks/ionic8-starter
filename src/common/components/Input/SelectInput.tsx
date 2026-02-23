@@ -12,7 +12,8 @@ import { PropsWithTestId } from '../types';
  * @see {@link IonSelect}
  */
 interface SelectInputProps
-  extends PropsWithTestId,
+  extends
+    PropsWithTestId,
     Omit<ComponentPropsWithoutRef<typeof IonSelect>, 'name'>,
     Required<Pick<ComponentPropsWithoutRef<typeof IonSelect>, 'name'>> {}
 
@@ -25,13 +26,7 @@ interface SelectInputProps
  * @param {SelectInputProps} props - Component properties.
  * @returns {JSX.Element} JSX
  */
-const SelectInput = ({
-  className,
-  name,
-  onIonChange,
-  testid = 'input-select',
-  ...selectProps
-}: SelectInputProps): JSX.Element => {
+const SelectInput = ({ className, name, onIonChange, testid = 'input-select', ...selectProps }: SelectInputProps) => {
   const [field, meta, helpers] = useField(name);
 
   const onChange = async (e: SelectCustomEvent) => {

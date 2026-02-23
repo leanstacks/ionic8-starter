@@ -25,17 +25,9 @@ interface ContainerProps extends BaseComponentProps, PropsWithChildren {
  * @param {ContainerProps} props - Component properties.
  * @returns {JSX.Element} Returns JSX.
  */
-const Container = ({
-  children,
-  className,
-  fixed = false,
-  testid = 'container',
-}: ContainerProps): JSX.Element => {
+const Container = ({ children, className, fixed = false, testid = 'container' }: ContainerProps) => {
   return (
-    <div
-      className={classNames('ls-container', { 'ls-container--fixed': fixed }, className)}
-      data-testid={testid}
-    >
+    <div className={classNames('ls-container', { 'ls-container--fixed': fixed }, className)} data-testid={testid}>
       {children}
     </div>
   );

@@ -25,7 +25,7 @@ import Icon from '../Icon/Icon';
  * @param {BaseComponentProps} props - Component properties.
  * @returns JSX
  */
-const AppMenu = ({ className, testid = 'menu-app' }: BaseComponentProps): JSX.Element => {
+const AppMenu = ({ className, testid = 'menu-app' }: BaseComponentProps) => {
   const { isAuthenticated } = useAuth();
   const { data: currentUser } = useGetCurrentUser();
   const { t } = useTranslation();

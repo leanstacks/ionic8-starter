@@ -27,7 +27,7 @@ import List from 'common/components/List/List';
  * @param {PropsWithTestId} props - Component properties.
  * @returns {JSX.Element} JSX
  */
-const AccountPage = ({ testid = 'page-account' }: PropsWithTestId): JSX.Element => {
+const AccountPage = ({ testid = 'page-account' }: PropsWithTestId) => {
   const [diagnosticsCount, setDiagnosticsCount] = useState<number>(0);
   const config = useConfig();
   const router = useIonRouter();
@@ -66,9 +66,7 @@ const AccountPage = ({ testid = 'page-account' }: PropsWithTestId): JSX.Element 
                     </IonLabel>
                   </IonItem>
                   <IonItem className="text-sm" detail routerLink="/auth/signout">
-                    <IonLabel className="font-medium ion-margin-end">
-                      {t('navigation.signout')}
-                    </IonLabel>
+                    <IonLabel className="font-medium ion-margin-end">{t('navigation.signout')}</IonLabel>
                   </IonItem>
                 </List>
               </IonCol>
@@ -84,14 +82,10 @@ const AccountPage = ({ testid = 'page-account' }: PropsWithTestId): JSX.Element 
                   </IonListHeader>
 
                   <IonItem className="text-sm">
-                    <IonLabel className="font-medium">
-                      {t('privacy-policy', { ns: 'account' })}
-                    </IonLabel>
+                    <IonLabel className="font-medium">{t('privacy-policy', { ns: 'account' })}</IonLabel>
                   </IonItem>
                   <IonItem className="text-sm">
-                    <IonLabel className="font-medium">
-                      {t('terms-and-conditions', { ns: 'account' })}
-                    </IonLabel>
+                    <IonLabel className="font-medium">{t('terms-and-conditions', { ns: 'account' })}</IonLabel>
                   </IonItem>
                 </List>
               </IonCol>
@@ -103,9 +97,7 @@ const AccountPage = ({ testid = 'page-account' }: PropsWithTestId): JSX.Element 
                   </IonListHeader>
 
                   <IonItem className="text-sm" onClick={() => onDiagnosticsClick()}>
-                    <IonLabel className="font-medium ion-margin-end">
-                      {t('version', { ns: 'account' })}
-                    </IonLabel>
+                    <IonLabel className="font-medium ion-margin-end">{t('version', { ns: 'account' })}</IonLabel>
                     <IonText>{version}</IonText>
                   </IonItem>
                 </List>

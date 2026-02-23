@@ -13,7 +13,7 @@ import { Config, ConfigContext } from './ConfigContext';
  * @param {PropsWithChildren} props - Component properties, `PropsWithChildren`.
  * @returns {JSX.Element} JSX
  */
-const ConfigContextProvider = ({ children }: PropsWithChildren): JSX.Element => {
+const ConfigContextProvider = ({ children }: PropsWithChildren) => {
   const { t } = useTranslation();
   const [isReady, setIsReady] = useState<boolean>(false);
   const [config, setConfig] = useState<Config>();

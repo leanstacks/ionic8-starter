@@ -12,7 +12,8 @@ import { PropsWithTestId } from '../types';
  * @see {@link IonCheckbox}
  */
 interface CheckboxInputProps
-  extends PropsWithTestId,
+  extends
+    PropsWithTestId,
     Omit<ComponentPropsWithoutRef<typeof IonCheckbox>, 'name'>,
     Required<Pick<ComponentPropsWithoutRef<typeof IonCheckbox>, 'name'>> {}
 
@@ -38,7 +39,7 @@ const CheckboxInput = ({
   testid = 'input-checkbox',
   value,
   ...checkboxProps
-}: CheckboxInputProps): JSX.Element => {
+}: CheckboxInputProps) => {
   const [field, meta, helpers] = useField({
     name,
     type: 'checkbox',

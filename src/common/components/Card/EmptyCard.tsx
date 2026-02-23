@@ -9,12 +9,7 @@ import MessageCard, { MessageCardProps } from './MessageCard';
  * @param {MessageCardProps} props - Component properties.
  * @returns JSX
  */
-const EmptyCard = ({
-  icon = 'circleInfo',
-  testid = 'card-empty',
-  title,
-  ...cardProps
-}: MessageCardProps): JSX.Element => {
+const EmptyCard = ({ icon = 'circleInfo', testid = 'card-empty', title, ...cardProps }: MessageCardProps) => {
   const { t } = useTranslation();
   title ??= t('error-no-data');
 

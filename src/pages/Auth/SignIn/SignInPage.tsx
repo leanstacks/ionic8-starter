@@ -13,7 +13,7 @@ import Container from 'common/components/Content/Container';
  * @param {PropsWithTestId} props - Component properties.
  * @returns {JSX.Element} JSX
  */
-const SignInPage = ({ testid = 'page-signin' }: PropsWithTestId): JSX.Element => {
+const SignInPage = ({ testid = 'page-signin' }: PropsWithTestId) => {
   const { t } = useTranslation();
 
   return (
