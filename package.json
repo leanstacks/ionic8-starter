@@ -1,25 +1,28 @@
 {
-  "name": "ionic8-playground",
-  "description": "A playground application for Ionic 8 with React.",
+  "name": "ionic8-starter",
+  "description": "A template to kickstart Ionic + React applications utilizing an opinionated technology stack for optimal testability, maintainability, and operability.",
   "repository": {
     "type": "git",
-    "url": "https://github.com/mwarman/ionic8-playground"
+    "url": "git+https://github.com/leanstacks/ionic8-starter.git"
   },
   "license": "MIT",
-  "version": "1.0.0",
+  "version": "1.1.0-alpha.1",
   "type": "module",
   "scripts": {
-    "clean": "rimraf coverage dist",
-    "dev": "vite --open",
+    "android": "npx cap sync android && npx cap open android",
     "prebuild": "./.appflow/scripts/prebuild.sh",
     "build": "tsc && vite build",
+    "clean": "rimraf coverage dist",
+    "dev": "vite --open",
+    "format": "prettier --write \"**/*.{ts,js,json,md}\"",
+    "format:check": "prettier --check \"**/*.{ts,js,json,md}\"",
+    "lint": "eslint . --ext .ts --max-warnings 0",
+    "lint:fix": "eslint . --ext .ts --fix",
     "preview": "vite preview",
     "test": "vitest",
     "test:ci": "vitest run --coverage --silent",
     "test:coverage": "vitest --coverage",
-    "test:e2e": "cypress run",
-    "lint": "eslint --max-warnings 0",
-    "android": "npx cap sync android && npx cap open android"
+    "test:e2e": "cypress run"
   },
   "dependencies": {
     "@capacitor/android": "7.2.0",
@@ -79,6 +82,7 @@
     "globals": "16.0.0",
     "jsdom": "26.1.0",
     "msw": "2.7.5",
+    "prettier": "3.8.1",
     "rimraf": "6.0.1",
     "sass": "1.86.3",
     "terser": "5.39.0",
