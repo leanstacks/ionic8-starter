@@ -8,7 +8,7 @@
   "error-no-data": "Aucune donnée",
   "error-generic": "Un problème",
   "error-validation": "Erreur de validation",
-  "ionic-playground": "Projet Ionic",
+  "ionic-project": "Projet Ionic",
   "label": {
     "cancel": "Annuler",
     "delete": "Supprimer",

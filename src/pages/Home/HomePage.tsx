@@ -32,7 +32,7 @@ const HomePage = (): JSX.Element => {
 
   return (
     <IonPage data-testid="page-home">
-      <Header title={t('ionic-playground')} />
+      <Header title={t('ionic-project')} />
 
       <IonContent fullscreen>
         <IonRefresher slot="fixed" onIonRefresh={handleRefresh}>

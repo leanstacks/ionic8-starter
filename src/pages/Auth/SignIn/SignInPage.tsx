@@ -19,7 +19,7 @@ const SignInPage = ({ testid = 'page-signin' }: PropsWithTestId): JSX.Element =>
   return (
     <IonPage className="ls-signin-page" data-testid={testid}>
       <ProgressProvider>
-        <Header title={t('ionic-playground')} />
+        <Header title={t('ionic-project')} />
 
         <IonContent fullscreen className="ion-padding">
           <Container className="ls-signin-page__container" fixed>
