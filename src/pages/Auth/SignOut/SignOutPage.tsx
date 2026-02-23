@@ -26,6 +26,8 @@ const SignOutPage = ({ testid = 'page-signout' }: PropsWithTestId): JSX.Element 
         router.push('/tabs/home', 'forward', 'replace');
       },
     });
+    // disabling eslint rule because hook is only called on mount and unmount, and we don't want to add dependencies that would cause it to run more than once
+    /* eslint-disable react-hooks/exhaustive-deps */
   }, []);
 
   return (

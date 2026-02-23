@@ -18,12 +18,6 @@ import Avatar from 'common/components/Icon/Avatar';
 import UserDeleteAlert from '../UserDelete/UserDeleteAlert';
 
 /**
- * Properties for the `UserDetailPage` component.
- * @see {@link PropsWithTestId}
- */
-interface UserDetailPageProps extends PropsWithTestId {}
-
-/**
  * Router path parameters for the `UserDetailPage`.
  * @param {string} userId - A user identifier.
  */
@@ -35,9 +29,7 @@ interface UserDetailPageRouteParams {
  * The `UserDetailPage` component renders information about a single `User`.
  * @returns JSX
  */
-export const UserDetailPage = ({
-  testid = 'page-user-detail',
-}: UserDetailPageProps): JSX.Element => {
+export const UserDetailPage = ({ testid = 'page-user-detail' }: PropsWithTestId): JSX.Element => {
   const { t } = useTranslation();
   const router = useIonRouter();
   const { createToast } = useToasts();

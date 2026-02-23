@@ -14,6 +14,8 @@ const AxiosProvider = ({ children }: PropsWithChildren): JSX.Element => {
   useEffect(() => {
     // use axios interceptors
 
+    // disabling eslint rule because hook is only called on mount and unmount, and we want to set state after interceptors are set up
+    /* eslint-disable react-hooks/set-state-in-effect */
     setIsReady(true);
 
     return () => {
@@ -21,9 +23,7 @@ const AxiosProvider = ({ children }: PropsWithChildren): JSX.Element => {
     };
   }, []);
 
-  return (
-    <AxiosContext.Provider value={customAxios}>{isReady && <>{children}</>}</AxiosContext.Provider>
-  );
+  return <AxiosContext.Provider value={customAxios}>{isReady && <>{children}</>}</AxiosContext.Provider>;
 };
 
 export default AxiosProvider;

@@ -6,12 +6,6 @@ import { useToasts } from 'common/hooks/useToasts';
 import Toast from './Toast';
 
 /**
- * Properties for the `Toasts` component.
- * @see {@link BaseComponentProps}
- */
-interface ToastsProps extends BaseComponentProps {}
-
-/**
  * The `Toasts` component renders `Toast` components when toast data is
  * available via the `ToastProvider`.
  *
@@ -22,10 +16,10 @@ interface ToastsProps extends BaseComponentProps {}
  * The `Toasts` component also provides a position anchor for the rendering
  * of `Toast` components, ensuring that they are positioned appropriately
  * for the viewport size.
- * @param {ToastsProps} props - Component properties.
+ * @param {BaseComponentProps} props - Component properties.
  * @returns {JSX.Element} JSX
  */
-const Toasts = ({ className, testid = 'toasts' }: ToastsProps): JSX.Element => {
+const Toasts = ({ className, testid = 'toasts' }: BaseComponentProps): JSX.Element => {
   const { removeToast, toasts = [] } = useToasts();
   const toast = toasts[0];
 

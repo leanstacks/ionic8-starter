@@ -20,18 +20,12 @@ import Avatar from '../Icon/Avatar';
 import Icon from '../Icon/Icon';
 
 /**
- * Properties for the `AppMenu` component.
- * @see {@link BaseComponentProps}
- */
-interface AppMenuProps extends BaseComponentProps {}
-
-/**
  * The `AppMenu` component renders the main application menu. Facilitates
  * navigation throughout the major sections of the application.
- * @param {AppMenuProps} props - Component properties.
+ * @param {BaseComponentProps} props - Component properties.
  * @returns JSX
  */
-const AppMenu = ({ className, testid = 'menu-app' }: AppMenuProps): JSX.Element => {
+const AppMenu = ({ className, testid = 'menu-app' }: BaseComponentProps): JSX.Element => {
   const { isAuthenticated } = useAuth();
   const { data: currentUser } = useGetCurrentUser();
   const { t } = useTranslation();
@@ -76,21 +70,13 @@ const AppMenu = ({ className, testid = 'menu-app' }: AppMenuProps): JSX.Element 
               </IonItem>
             </IonMenuToggle>
             <IonMenuToggle>
-              <IonItem
-                routerLink="/tabs/account"
-                lines="full"
-                data-testid={`${testid}-item-account`}
-              >
+              <IonItem routerLink="/tabs/account" lines="full" data-testid={`${testid}-item-account`}>
                 <Icon className="ls-app-menu__toggle-icon" icon="userGear" fixedWidth />
                 <IonLabel>{t('navigation.account')}</IonLabel>
               </IonItem>
             </IonMenuToggle>
             <IonMenuToggle>
-              <IonItem
-                routerLink="/auth/signout"
-                lines="full"
-                data-testid={`${testid}-item-signout`}
-              >
+              <IonItem routerLink="/auth/signout" lines="full" data-testid={`${testid}-item-signout`}>
                 <Icon className="ls-app-menu__toggle-icon" icon="signOut" fixedWidth />
                 <IonLabel>{t('navigation.signout')}</IonLabel>
               </IonItem>
