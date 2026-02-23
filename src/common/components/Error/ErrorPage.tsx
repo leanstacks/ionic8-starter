@@ -32,9 +32,12 @@ const ErrorPage = ({ error, resetErrorBoundary, testid = 'page-error' }: ErrorPa
   } else if (error instanceof AxiosError) {
     title = error.status ?? error.code;
     message = `${error.message}. ${error.config?.url}`;
-  } else {
+  } else if (error instanceof Error) {
     title = error.name ?? t('error');
-    message = error.message ?? error;
+    message = error.message ?? String(error);
+  } else {
+    title = t('error');
+    message = String(error);
   }
 
   return (
@@ -44,7 +47,7 @@ const ErrorPage = ({ error, resetErrorBoundary, testid = 'page-error' }: ErrorPa
       <IonContent className="ion-padding">
         <Container fixed className="ls-error-page__container">
           <div className="ls-error-page__content">
-            <img src={image} alt={title} />
+            <img src={image} alt="An error has occurred" />
 
             <div className="text-3xl font-bold uppercase ls-error-page__title" data-testid={`${testid}-title`}>
               {title}
