@@ -46,10 +46,7 @@ const CompanyDetail = ({
   if (isLoading) {
     // loading state
     return (
-      <div
-        className={classNames('ls-company-detail ls-company-detail--loading')}
-        data-testid={`${testid}-loader`}
-      >
+      <div className={classNames('ls-company-detail ls-company-detail--loading')} data-testid={`${testid}-loader`}>
         <HeaderRow border>
           <LoaderSkeleton animated heightStyle="1.5rem" widthStyle="1.5rem" />
           <LoaderSkeleton animated heightStyle="1.5rem" widthStyle="10rem" />
@@ -68,7 +65,7 @@ const CompanyDetail = ({
     return (
       <div className={classNames('ls-company-detail', className)} data-testid={testid}>
         <HeaderRow border>
-          <Icon icon="building" />
+          <Icon icon="building" widthAuto />
           <div>{t('company', { ns: 'user' })}</div>
         </HeaderRow>
         <div className="ls-company-detail__content">

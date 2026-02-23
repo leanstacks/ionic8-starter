@@ -34,7 +34,7 @@ const UserCard = ({ className, testid = 'card-user', user }: UserCardProps): JSX
         <div>
           <div className="ls-card-user__header">{user.name}</div>
           <div className="ls-card-user__content-row">
-            <Icon icon="envelope" />
+            <Icon icon="envelope" widthAuto />
             <div>{user.email}</div>
           </div>
         </div>

@@ -1,12 +1,5 @@
 import { ComponentPropsWithRef, useRef, useState } from 'react';
-import {
-  IonItem,
-  IonItemOption,
-  IonItemOptions,
-  IonItemSliding,
-  IonLabel,
-  useIonRouter,
-} from '@ionic/react';
+import { IonItem, IonItemOption, IonItemOptions, IonItemSliding, IonLabel, useIonRouter } from '@ionic/react';
 import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
 
@@ -26,9 +19,7 @@ import UserDeleteAlert from '../UserDelete/UserDeleteAlert';
  * @see {@link BaseComponentProps}
  * @see {@link IonItem}
  */
-interface UserListItemProps
-  extends BaseComponentProps,
-    Pick<ComponentPropsWithRef<typeof IonItem>, 'lines'> {
+interface UserListItemProps extends BaseComponentProps, Pick<ComponentPropsWithRef<typeof IonItem>, 'lines'> {
   user: User;
 }
 
@@ -60,19 +51,14 @@ const UserListItem = ({ className, lines, testid, user }: UserListItemProps): JS
       className={classNames('ls-user-list-item', className)}
       data-testid={testIdentifier}
     >
-      <IonItem
-        className="ls-user-list-item__item"
-        routerLink={`/tabs/users/${user.id}`}
-        lines={lines}
-        detail
-      >
+      <IonItem className="ls-user-list-item__item" routerLink={`/tabs/users/${user.id}`} lines={lines} detail>
         <Avatar className="ls-user-list-item__avatar" value={user.name} size="large" />
         <IonLabel>
           <div className="ls-user-list-item__content-row ls-user-list-item__content-row--primary">
             <div data-testid={`${testIdentifier}-name`}>{user.name}</div>
           </div>
           <div className="ls-user-list-item__content-row ls-user-list-item__content-row--secondary">
-            <Icon icon="envelope" />
+            <Icon icon="envelope" widthAuto />
             <div data-testid={`${testIdentifier}-email`}>{user.email}</div>
           </div>
         </IonLabel>

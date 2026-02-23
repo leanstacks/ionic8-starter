@@ -75,7 +75,7 @@ const ContactInfo = ({
       <div className={classNames('ls-contact-info', className)} data-testid={testid}>
         {showHeader && (
           <HeaderRow border>
-            <Icon icon="user" />
+            <Icon icon="user" widthAuto />
             <div>{t('contact', { ns: 'user' })}</div>
           </HeaderRow>
         )}
