@@ -7,7 +7,7 @@ import { UserTokens } from 'common/models/auth';
 import { QueryKey, StorageKey } from 'common/utils/constants';
 import storage from 'common/utils/storage';
 import { useAxios } from 'common/hooks/useAxios';
-import { useConfig } from 'common/hooks/useConfig';
+import { config } from 'common/utils/config';
 
 /**
  * An API hook which authenticates a `User`.
@@ -16,7 +16,6 @@ import { useConfig } from 'common/hooks/useConfig';
 export const useSignIn = () => {
   const queryClient = useQueryClient();
   const axios = useAxios();
-  const config = useConfig();
 
   /**
    * Authenticates a user.

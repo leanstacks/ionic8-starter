@@ -4,7 +4,6 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { ErrorBoundary } from 'react-error-boundary';
 
 import ErrorPage from 'common/components/Error/ErrorPage';
-import ConfigContextProvider from './common/providers/ConfigProvider';
 import { queryClient } from 'common/utils/query-client';
 import AuthProvider from 'common/providers/AuthProvider';
 import AxiosProvider from 'common/providers/AxiosProvider';
@@ -25,21 +24,19 @@ setupIonicReact();
 const App = () => (
   <IonApp data-testid="app">
     <ErrorBoundary FallbackComponent={ErrorPage}>
-      <ConfigContextProvider>
-        <QueryClientProvider client={queryClient}>
-          <AuthProvider>
-            <AxiosProvider>
-              <ToastProvider>
-                <ScrollProvider>
-                  <AppRouter />
-                  <Toasts />
-                  <ReactQueryDevtools initialIsOpen={false} buttonPosition="bottom-left" />
-                </ScrollProvider>
-              </ToastProvider>
-            </AxiosProvider>
-          </AuthProvider>
-        </QueryClientProvider>
-      </ConfigContextProvider>
+      <QueryClientProvider client={queryClient}>
+        <AuthProvider>
+          <AxiosProvider>
+            <ToastProvider>
+              <ScrollProvider>
+                <AppRouter />
+                <Toasts />
+                <ReactQueryDevtools initialIsOpen={false} buttonPosition="bottom-left" />
+              </ScrollProvider>
+            </ToastProvider>
+          </AxiosProvider>
+        </AuthProvider>
+      </QueryClientProvider>
     </ErrorBoundary>
   </IonApp>
 );

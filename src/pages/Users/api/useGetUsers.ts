@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 
 import { useAxios } from 'common/hooks/useAxios';
-import { useConfig } from 'common/hooks/useConfig';
+import { config } from 'common/utils/config';
 import { User } from 'common/models/user';
 import { QueryKey } from 'common/utils/constants';
 
@@ -11,7 +11,6 @@ import { QueryKey } from 'common/utils/constants';
  */
 export const useGetUsers = () => {
   const axios = useAxios();
-  const config = useConfig();
 
   const getUsers = async (): Promise<User[]> => {
     const response = await axios.request({

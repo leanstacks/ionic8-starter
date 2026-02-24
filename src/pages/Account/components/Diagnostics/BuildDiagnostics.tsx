@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 
 import { BaseComponentProps } from 'common/components/types';
 import List from 'common/components/List/List';
-import { useConfig } from 'common/hooks/useConfig';
+import { config } from 'common/utils/config';
 
 /**
  * The `BuildDiagnostics` component displays application diagnostic information
@@ -16,7 +16,6 @@ import { useConfig } from 'common/hooks/useConfig';
  * @returns {JSX.Element} JSX
  */
 const BuildDiagnostics = ({ className, testid = 'diagnostics-build' }: BaseComponentProps) => {
-  const config = useConfig();
   const { t } = useTranslation();
 
   return (
