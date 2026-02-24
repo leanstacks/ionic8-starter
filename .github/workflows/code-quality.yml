@@ -74,7 +74,7 @@ jobs:
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "## Test Coverage Analysis" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
-          npm run test:ci -- --coverage.reporter=json-summary
+          npm run test:ci
 
           # Extract coverage summary
           if [ -f coverage/coverage-summary.json ]; then

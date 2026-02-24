@@ -9,6 +9,7 @@ on:
 
 concurrency:
   group: ${{ github.workflow }}
+  cancel-in-progress: false
 
 env:
   APP_NAME: ionic8-playground.leanstacks.net
@@ -17,14 +18,14 @@ env:
   AWS_ENV_CODE: qa
   AWS_REGION: ${{ vars.AWS_REGION }}
   AWS_ROLE_ARN: ${{ vars.AWS_ROLE_ARN_QA }}
-  ENV_FILE: ${{ secrets.ENV_QA }}
+  ENV_FILE: ${{ vars.ENV_QA }}
 
 jobs:
   deploy:
     name: Deploy
 
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 30
 
     permissions:
       id-token: write
@@ -32,10 +33,10 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Setup Node.js Environment
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
           node-version-file: '.nvmrc'
           cache: npm
@@ -60,10 +61,11 @@ jobs:
         run: npm run build
 
       - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v4
+        uses: aws-actions/configure-aws-credentials@v6
         with:
-          role-to-assume: ${{ env.AWS_ROLE_ARN }}
           aws-region: ${{ env.AWS_REGION }}
+          role-to-assume: ${{ env.AWS_ROLE_ARN }}
+          role-session-name: deploy-ionic8-starter-qa
 
       - name: Deploy AWS CloudFormation Stack
         run: |-
