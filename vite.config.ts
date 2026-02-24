@@ -1,19 +1,11 @@
 /// <reference types="vitest" />
-
 import legacy from '@vitejs/plugin-legacy';
 import react from '@vitejs/plugin-react';
 import { defineConfig } from 'vite';
-import { coverageConfigDefaults } from 'vitest/config';
+import { coverageConfigDefaults, configDefaults } from 'vitest/config';
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  css: {
-    preprocessorOptions: {
-      scss: {
-        api: 'modern-compiler',
-      },
-    },
-  },
   plugins: [react(), legacy()],
   resolve: {
     alias: {
@@ -25,6 +17,7 @@ export default defineConfig({
     },
   },
   test: {
+    exclude: [...configDefaults.exclude],
     coverage: {
       provider: 'v8',
       exclude: [
@@ -36,6 +29,7 @@ export default defineConfig({
         'capacitor.config.ts',
         ...coverageConfigDefaults.exclude,
       ],
+      reporter: ['text', 'json', 'json-summary', 'html'],
     },
     globals: true,
     environment: 'jsdom',
