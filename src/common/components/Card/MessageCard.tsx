@@ -1,10 +1,4 @@
-import {
-  IonCard,
-  IonCardContent,
-  IonCardHeader,
-  IonCardSubtitle,
-  IonCardTitle,
-} from '@ionic/react';
+import { IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle } from '@ionic/react';
 import { ComponentPropsWithoutRef, ReactNode } from 'react';
 import classNames from 'classnames';
 
@@ -22,7 +16,8 @@ import Icon, { IconProps } from '../Icon/Icon';
  * @see {@link HTMLIonIconElement}
  */
 export interface MessageCardProps
-  extends BaseComponentProps,
+  extends
+    BaseComponentProps,
     Pick<ComponentPropsWithoutRef<typeof IonCard>, 'color'>,
     Partial<Pick<IconProps, 'icon'>> {
   content?: ReactNode;
@@ -46,32 +41,19 @@ const MessageCard = ({
   subtitle,
   testid = 'card-message',
   title,
-}: MessageCardProps): JSX.Element => {
+}: MessageCardProps) => {
   return (
-    <IonCard
-      className={classNames('ls-message-card', className)}
-      data-testid={testid}
-      color={color}
-    >
+    <IonCard className={classNames('ls-message-card', className)} data-testid={testid} color={color}>
       {title && (
         <IonCardHeader className="header">
           <IonCardTitle className="ls-message-card__header">
-            {icon && (
-              <Icon
-                className="ls-message-card__header-icon"
-                icon={icon}
-                data-testid={`${testid}-icon`}
-              />
-            )}
+            {icon && <Icon className="ls-message-card__header-icon" icon={icon} data-testid={`${testid}-icon`} />}
             <div className="ls-message-card__header-title" data-testid={`${testid}-title`}>
               {title}
             </div>
           </IonCardTitle>
           {subtitle && (
-            <IonCardSubtitle
-              className="ls-message-card__subtitle"
-              data-testid={`${testid}-subtitle`}
-            >
+            <IonCardSubtitle className="ls-message-card__subtitle" data-testid={`${testid}-subtitle`}>
               {subtitle}
             </IonCardSubtitle>
           )}

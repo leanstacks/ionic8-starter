@@ -29,7 +29,7 @@ interface UserGridProps extends BaseComponentProps {
  * @returns JSX
  * @see {@link IonGrid}
  */
-const UserGrid = ({ className, filterBy, testid = 'grid-user' }: UserGridProps): JSX.Element => {
+const UserGrid = ({ className, filterBy, testid = 'grid-user' }: UserGridProps) => {
   const { t } = useTranslation();
   const { data: users, isError, isLoading } = useGetUsers();
 

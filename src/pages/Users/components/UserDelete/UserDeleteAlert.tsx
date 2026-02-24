@@ -22,9 +22,7 @@ import { useDeleteUser } from 'pages/Users/api/useDeleteUser';
  * @see {@link BaseComponentProps}
  * @see {@link IonAlert}
  */
-interface UserDeleteAlertProps
-  extends BaseComponentProps,
-    Pick<ComponentPropsWithoutRef<typeof IonAlert>, 'isOpen'> {
+interface UserDeleteAlertProps extends BaseComponentProps, Pick<ComponentPropsWithoutRef<typeof IonAlert>, 'isOpen'> {
   isPending?: (isPending: boolean) => void;
   onCancel?: () => void;
   onError?: () => void;
@@ -48,7 +46,7 @@ const UserDeleteAlert = ({
   onSuccess,
   testid = 'alert-user-delete',
   user,
-}: UserDeleteAlertProps): JSX.Element => {
+}: UserDeleteAlertProps) => {
   const { isPending: isDeleting, mutate: deleteUser } = useDeleteUser();
   const { t } = useTranslation();
 

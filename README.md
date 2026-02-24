@@ -1,8 +1,8 @@
-# Ionic 8 Playground
+# Ionic 8 Starter
 
-A playground project for Ionic 8 with React.
+A template to kickstart Ionic + React applications utilizing an opinionated technology stack for optimal testability, maintainability, and operability.
 
-[![CI](https://github.com/mwarman/ionic8-playground/actions/workflows/ci.yml/badge.svg)](https://github.com/mwarman/ionic8-playground/actions/workflows/ci.yml)
+[![CI](https://github.com/leanstacks/ionic8-starter/actions/workflows/ci.yml/badge.svg)](https://github.com/leanstacks/ionic8-starter/actions/workflows/ci.yml)
 
 ## Helpful Hints
 
@@ -25,7 +25,7 @@ Many applications, particularly mobile applications, have a hidden page which di
 This project was bootstrapped with the [Ionic CLI](https://ionicframework.com/docs/cli/commands/start).
 
 ```
-ionic start ionic8-playground blank --type=react
+ionic start ionic8-starter blank --type=react
 ```
 
 The technology stack includes:
@@ -34,8 +34,8 @@ The technology stack includes:
 - Vite - React development environment
 - React - SPA framework
 - React Router Dom - routing
-- TanStack React Query - data manipulation and caching
-- Axios - http client
+- TanStack Query - data fetching, caching, and asynchronous state management
+- Axios - HTTP client
 - Formik - form management
 - Yup - validation
 - Lodash - utility functions
@@ -63,13 +63,13 @@ See also: [Feature flags](https://www.atlassian.com/continuous-delivery/principl
 
 ### Issue Management
 
-This project uses [GitHub Issues](https://github.com/mwarman/ionic8-playground/issues).
+This project uses [GitHub Issues](https://github.com/leanstacks/ionic8-starter/issues).
 
 ### Code Formatting
 
-The project includes a configuration file for the [Prettier](https://prettier.io/docs/en/configuration.html) code formatter. This allows all project contributors to share the same code formatting rules.
+The project includes configuration files for the [Prettier](https://prettier.io/docs/en/configuration.html) and [EditorConfig](https://editorconfig.org/) code formatters. This allows all project contributors to share the same code formatting rules.
 
-Adjust the Prettier configuration as desired.
+Adjust the configuration as desired.
 
 ## Installation
 
@@ -114,7 +114,8 @@ The installation is now complete! You may open the project in your favorite sour
 We recommend the following VS Code extensions:
 
 - Prettier - Code formatter (required)
-- ESLint - Source code analysis (strongly recommended)
+- ESLint - Source code analysis (recommended)
+- GitHub Copilot (recommended)
 - Ionic (optional)
 - Indent Rainbow (optional)
 - GitLens (optional)
@@ -273,7 +274,7 @@ This project uses GitHub Actions to perform DevOps automation activities such as
 - [ESLint][eslint]
 - [GitHub Actions][ghactions]
 
-[repo]: https://github.com/mwarman/ionic8-playground 'GitHub Repository'
+[repo]: https://github.com/leanstacks/ionic8-starter 'GitHub Repository'
 [nvm]: https://github.com/nvm-sh/nvm 'Node Version Manager'
 [ionic]: https://ionicframework.com/docs/react 'Ionic with React'
 [vite]: https://vitejs.dev/ 'Vite'

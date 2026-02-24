@@ -22,13 +22,7 @@ interface RangeInputProps extends PropsWithTestId, ComponentPropsWithoutRef<type
  * @param {RangeInputProps} props - Component properties.
  * @returns {JSX.Element} JSX
  */
-const RangeInput = ({
-  className,
-  name,
-  onIonChange,
-  testid = 'input-range',
-  ...rangeProps
-}: RangeInputProps): JSX.Element => {
+const RangeInput = ({ className, name, onIonChange, testid = 'input-range', ...rangeProps }: RangeInputProps) => {
   /* eslint-disable-next-line @typescript-eslint/no-unused-vars */
   const [field, meta, helpers] = useField<number>(name);
 

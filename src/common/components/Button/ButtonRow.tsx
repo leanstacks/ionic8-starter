@@ -22,19 +22,10 @@ interface ButtonRowProps extends BaseComponentProps, ComponentPropsWithoutRef<ty
  * @param {ButtonRowProps} props - Component properties.
  * @returns {JSX.Element} JSX
  */
-const ButtonRow = ({
-  className,
-  expand,
-  testid = 'row-button',
-  ...rowProps
-}: ButtonRowProps): JSX.Element => {
+const ButtonRow = ({ className, expand, testid = 'row-button', ...rowProps }: ButtonRowProps) => {
   return (
     <IonRow
-      className={classNames(
-        'ls-button-row',
-        { 'ls-button-row--block': expand === 'block' },
-        className,
-      )}
+      className={classNames('ls-button-row', { 'ls-button-row--block': expand === 'block' }, className)}
       data-testid={testid}
       {...rowProps}
     />

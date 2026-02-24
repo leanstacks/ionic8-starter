@@ -32,23 +32,14 @@ import { useAuth } from 'common/hooks/useAuth';
  * @see {@link IonBackButton}
  * @see {@link IonToolbar}
  */
-interface HeaderProps
-  extends PropsWithTestId,
-    Pick<ComponentPropsWithoutRef<typeof IonBackButton>, 'defaultHref'> {
+interface HeaderProps extends PropsWithTestId, Pick<ComponentPropsWithoutRef<typeof IonBackButton>, 'defaultHref'> {
   backButton?: boolean;
   buttons?: ReactNode;
   title?: string;
   toolbars?: ComponentPropsWithoutRef<typeof IonToolbar>[];
 }
 
-const Header = ({
-  backButton = false,
-  buttons,
-  defaultHref,
-  testid = 'header-app',
-  title,
-  toolbars,
-}: HeaderProps): JSX.Element => {
+const Header = ({ backButton = false, buttons, defaultHref, testid = 'header-app', title, toolbars }: HeaderProps) => {
   const { isAuthenticated } = useAuth();
   const { isActive: isActiveProgressBar, progressBar } = useProgress();
   const { t } = useTranslation();
@@ -60,21 +51,13 @@ const Header = ({
           {backButton ? (
             <IonBackButton defaultHref={defaultHref} data-testid={`${testid}-button-back`} />
           ) : (
-            <img
-              className="ls-header__logo"
-              src={logo}
-              alt="Logo"
-              data-testid={`${testid}-image-logo`}
-            />
+            <img className="ls-header__logo" src={logo} alt="Logo" data-testid={`${testid}-image-logo`} />
           )}
         </IonButtons>
         <IonTitle className="ion-hide-md-up" data-testid={`${testid}-title`}>
           {title}
         </IonTitle>
-        <IonButtons
-          className="ls-header__nav-main ion-hide-md-down"
-          data-testid={`${testid}-menu-row`}
-        >
+        <IonButtons className="ls-header__nav-main ion-hide-md-down" data-testid={`${testid}-menu-row`}>
           {isAuthenticated && (
             <>
               <IonButton routerLink="/tabs/home">{t('navigation.home')}</IonButton>

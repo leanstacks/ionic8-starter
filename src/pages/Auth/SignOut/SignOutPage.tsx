@@ -12,7 +12,7 @@ import LoaderSpinner from 'common/components/Loader/LoaderSpinner';
  * @param {PropsWithTestId} props - Component properties.
  * @returns {JSX.Element} JSX
  */
-const SignOutPage = ({ testid = 'page-signout' }: PropsWithTestId): JSX.Element => {
+const SignOutPage = ({ testid = 'page-signout' }: PropsWithTestId) => {
   const router = useIonRouter();
   const { mutate: signOut } = useSignOut();
 
@@ -26,6 +26,8 @@ const SignOutPage = ({ testid = 'page-signout' }: PropsWithTestId): JSX.Element 
         router.push('/tabs/home', 'forward', 'replace');
       },
     });
+    // disabling eslint rule because hook is only called on mount and unmount, and we don't want to add dependencies that would cause it to run more than once
+    /* eslint-disable react-hooks/exhaustive-deps */
   }, []);
 
   return (

@@ -22,13 +22,7 @@ interface ToggleInputProps extends PropsWithTestId, ComponentPropsWithoutRef<typ
  * @param {ToggleInputProps} props - Component properties.
  * @returns {JSX.Element} JSX
  */
-const ToggleInput = ({
-  className,
-  name,
-  onIonChange,
-  testid = 'input-toggle',
-  ...toggleProps
-}: ToggleInputProps): JSX.Element => {
+const ToggleInput = ({ className, name, onIonChange, testid = 'input-toggle', ...toggleProps }: ToggleInputProps) => {
   /* eslint-disable-next-line @typescript-eslint/no-unused-vars */
   const [field, meta, helpers] = useField<boolean>(name);
 

@@ -21,11 +21,7 @@ interface ErrorPageProps extends FallbackProps, PropsWithTestId {}
  * @param {ErrorPageProps} props - Component properties.
  * @returns {JSX.Element} JSX
  */
-const ErrorPage = ({
-  error,
-  resetErrorBoundary,
-  testid = 'page-error',
-}: ErrorPageProps): JSX.Element => {
+const ErrorPage = ({ error, resetErrorBoundary, testid = 'page-error' }: ErrorPageProps) => {
   const { t } = useTranslation();
 
   let title;
@@ -36,40 +32,33 @@ const ErrorPage = ({
   } else if (error instanceof AxiosError) {
     title = error.status ?? error.code;
     message = `${error.message}. ${error.config?.url}`;
-  } else {
+  } else if (error instanceof Error) {
     title = error.name ?? t('error');
-    message = error.message ?? error;
+    message = error.message ?? String(error);
+  } else {
+    title = t('error');
+    message = String(error);
   }
 
   return (
     <IonPage className="ls-error-page" data-testid={testid}>
-      <Header title={t('ionic-playground')} />
+      <Header title={t('ionic-project')} />
 
       <IonContent className="ion-padding">
         <Container fixed className="ls-error-page__container">
           <div className="ls-error-page__content">
-            <img src={image} alt={title} />
+            <img src={image} alt="An error has occurred" />
 
-            <div
-              className="text-3xl font-bold uppercase ls-error-page__title"
-              data-testid={`${testid}-title`}
-            >
+            <div className="text-3xl font-bold uppercase ls-error-page__title" data-testid={`${testid}-title`}>
               {title}
             </div>
 
-            <div
-              className="ion-text-center text-lg ls-error-page__message"
-              data-testid={`${testid}-message`}
-            >
+            <div className="ion-text-center text-lg ls-error-page__message" data-testid={`${testid}-message`}>
               {message}
             </div>
 
             <ButtonRow className="ion-hide-md-down ls-error-page__button-row">
-              <IonButton
-                color="medium"
-                onClick={() => resetErrorBoundary()}
-                data-testid={`${testid}-button`}
-              >
+              <IonButton color="medium" onClick={() => resetErrorBoundary()} data-testid={`${testid}-button`}>
                 {t('label.try-again')}
               </IonButton>
             </ButtonRow>

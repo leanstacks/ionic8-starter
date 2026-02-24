@@ -76,20 +76,17 @@ describe('Textarea', () => {
       testField: string().max(4, 'Must be 4 characters or less.'),
     });
     render(
-      <Formik
-        initialValues={{ testField: '' }}
-        onSubmit={() => {}}
-        validationSchema={validationSchema}
-      >
+      <Formik initialValues={{ testField: '' }} onSubmit={() => {}} validationSchema={validationSchema}>
         <Form>
           <Textarea name="testField" label="Field" />
         </Form>
       </Formik>,
     );
-    await screen.findByLabelText('Field');
+    const textareaField = await screen.findByLabelText('Field');
 
     // ACT
-    await userEvent.type(screen.getByLabelText('Field'), value);
+    await userEvent.type(textareaField, value);
+    await userEvent.tab();
     await screen.findByText('Must be 4 characters or less.');
 
     // ASSERT

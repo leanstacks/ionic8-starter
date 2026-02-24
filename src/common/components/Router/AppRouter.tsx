@@ -16,7 +16,7 @@ import SignOutPage from 'pages/Auth/SignOut/SignOutPage';
  * @returns JSX
  * @see {@link TabNavigation}
  */
-const AppRouter = (): JSX.Element => {
+const AppRouter = () => {
   return (
     <IonReactRouter>
       <IonRouterOutlet>

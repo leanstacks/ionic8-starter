@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
-    <string name="app_name">Ionic Playground 8</string>
-    <string name="title_activity_main">Ionic Playground 8</string>
+    <string name="app_name">Ionic Starter 8</string>
+    <string name="title_activity_main">Ionic Starter 8</string>
     <string name="package_name">net.leanstacks.ionic8</string>
     <string name="custom_url_scheme">net.leanstacks.ionic8</string>
 </resources>

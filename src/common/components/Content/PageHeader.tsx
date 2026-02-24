@@ -4,12 +4,6 @@ import './PageHeader.scss';
 import HeaderRow, { HeaderRowProps } from '../Text/HeaderRow';
 
 /**
- * Properties for the `PageHeader` component.
- * @see {@link HeaderRowProps}
- */
-interface PageHeaderProps extends HeaderRowProps {}
-
-/**
  * The `PageHeader` component displays a block intended for the top of a page.
  * The block displays the page title and an optional collection of buttons.
  *
@@ -24,21 +18,11 @@ interface PageHeaderProps extends HeaderRowProps {}
  * </PageHeader>
  * ```
  *
- * @param {PageHeaderProps} props - Component properties.
+ * @param {HeaderRowProps} props - Component properties.
  * @returns {JSX.Element} Returns JSX.
  */
-const PageHeader = ({
-  className,
-  testid = 'page-header',
-  ...props
-}: PageHeaderProps): JSX.Element => {
-  return (
-    <HeaderRow
-      className={classNames('ls-page-header', className)}
-      data-testid={testid}
-      {...props}
-    />
-  );
+const PageHeader = ({ className, testid = 'page-header', ...props }: HeaderRowProps) => {
+  return <HeaderRow className={classNames('ls-page-header', className)} data-testid={testid} {...props} />;
 };
 
 export default PageHeader;

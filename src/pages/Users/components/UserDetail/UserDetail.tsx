@@ -32,11 +32,7 @@ interface UserDetailProps extends BaseComponentProps {
  * @param {UserDetailProps} props - Component properties.
  * @returns {JSX.Element} JSX
  */
-const UserDetail = ({
-  className,
-  testid = 'user-detail',
-  userId,
-}: UserDetailProps): JSX.Element => {
+const UserDetail = ({ className, testid = 'user-detail', userId }: UserDetailProps) => {
   const { t } = useTranslation();
   const { data: user, isError, isLoading } = useGetUser({ userId });
 

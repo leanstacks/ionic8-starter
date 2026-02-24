@@ -9,7 +9,7 @@ import AxiosProvider from 'common/providers/AxiosProvider';
 import AuthProvider from 'common/providers/AuthProvider';
 import ScrollProvider from 'common/providers/ScrollProvider';
 
-const WithAllProviders = ({ children }: PropsWithChildren): JSX.Element => {
+const WithAllProviders = ({ children }: PropsWithChildren) => {
   return (
     <ConfigContextProvider>
       <QueryClientProvider client={queryClient}>

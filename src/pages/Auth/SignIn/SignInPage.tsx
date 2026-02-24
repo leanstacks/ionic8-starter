@@ -9,22 +9,17 @@ import SignInForm from './components/SignInForm';
 import Container from 'common/components/Content/Container';
 
 /**
- * Properties for the `SignInPage` component.
- */
-interface SignInPageProps extends PropsWithTestId {}
-
-/**
  * The `SignInPage` renders the layout for user authentication.
- * @param {SignInPageProps} props - Component properties.
+ * @param {PropsWithTestId} props - Component properties.
  * @returns {JSX.Element} JSX
  */
-const SignInPage = ({ testid = 'page-signin' }: SignInPageProps): JSX.Element => {
+const SignInPage = ({ testid = 'page-signin' }: PropsWithTestId) => {
   const { t } = useTranslation();
 
   return (
     <IonPage className="ls-signin-page" data-testid={testid}>
       <ProgressProvider>
-        <Header title={t('ionic-playground')} />
+        <Header title={t('ionic-project')} />
 
         <IonContent fullscreen className="ion-padding">
           <Container className="ls-signin-page__container" fixed>

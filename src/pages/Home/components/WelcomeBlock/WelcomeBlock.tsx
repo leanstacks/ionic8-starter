@@ -4,18 +4,12 @@ import Block from 'common/components/Block/Block';
 import { BaseComponentProps } from 'common/components/types';
 
 /**
- * Properties for the `WelcomeBlock` component.
- * @see {@link BaseComponentProps}
- */
-interface WelcomeBlockProps extends BaseComponentProps {}
-
-/**
  * The `WelcomeBlock` component renders a `Block` of information about the
  * application.
- * @param {WelcomeBlockProps} props - Component properties.
+ * @param {BaseComponentProps} props - Component properties.
  * @returns JSX
  */
-const WelcomeBlock = ({ className, testid = 'block-welcome' }: WelcomeBlockProps): JSX.Element => {
+const WelcomeBlock = ({ className, testid = 'block-welcome' }: BaseComponentProps) => {
   const { t } = useTranslation();
 
   return (

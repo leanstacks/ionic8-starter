@@ -23,7 +23,7 @@ interface UserEditPageRouteParams {
  * `User`.
  * @returns {JSX.Element} JSX
  */
-export const UserEditPage = (): JSX.Element => {
+export const UserEditPage = () => {
   const testid = 'page-user-edit';
   const { userId } = useParams<UserEditPageRouteParams>();
   const { data: user } = useGetUser({ userId });
@@ -45,12 +45,7 @@ export const UserEditPage = (): JSX.Element => {
                 <UserEdit user={user} />
               </>
             ) : (
-              <LoaderSkeleton
-                animated
-                widthStyle="100%"
-                heightStyle="3rem"
-                testid={`${testid}-loader`}
-              />
+              <LoaderSkeleton animated widthStyle="100%" heightStyle="3rem" testid={`${testid}-loader`} />
             )}
           </Container>
         </IonContent>

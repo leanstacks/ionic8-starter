@@ -19,18 +19,14 @@ import CardRow from 'common/components/Card/CardRow';
  * @param {PropsWithTestId} props - Component properties.
  * @returns {JSX.Element} JSX
  */
-const ProfilePage = ({ testid = 'page-profile' }: PropsWithTestId): JSX.Element => {
+const ProfilePage = ({ testid = 'page-profile' }: PropsWithTestId) => {
   const { data: profile, isError, isLoading } = useGetProfile();
   const { t } = useTranslation();
 
   return (
     <IonPage className="ls-profile-page" data-testid={testid}>
       <ProgressProvider>
-        <Header
-          backButton
-          defaultHref="/tabs/account"
-          title={t('profile.profile', { ns: 'account' })}
-        />
+        <Header backButton defaultHref="/tabs/account" title={t('profile.profile', { ns: 'account' })} />
 
         <IonContent className="ion-padding">
           <Container fixed>

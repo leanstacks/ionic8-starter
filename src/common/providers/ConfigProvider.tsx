@@ -13,7 +13,7 @@ import { Config, ConfigContext } from './ConfigContext';
  * @param {PropsWithChildren} props - Component properties, `PropsWithChildren`.
  * @returns {JSX.Element} JSX
  */
-const ConfigContextProvider = ({ children }: PropsWithChildren): JSX.Element => {
+const ConfigContextProvider = ({ children }: PropsWithChildren) => {
   const { t } = useTranslation();
   const [isReady, setIsReady] = useState<boolean>(false);
   const [config, setConfig] = useState<Config>();
@@ -49,19 +49,18 @@ const ConfigContextProvider = ({ children }: PropsWithChildren): JSX.Element => 
     } catch (err) {
       if (err instanceof ValidationError) {
         throw new Error(
-          `${t('error-configuration-validation')}. ${err.errors.reduce(
-            (msg, error) => `${msg} ${error}`,
-          )}`,
+          `${t('error-configuration-validation')}. ${err.errors.reduce((msg, error) => `${msg} ${error}`)}`,
         );
       }
       if (err instanceof Error) throw new Error(`${t('error-configuration')}. ${err.message}`);
       throw err;
     }
+
+    // disabling eslint rule because hook is only called on mount and unmount, and we don't want to add dependencies that would cause it to run more than once
+    /* eslint-disable react-hooks/exhaustive-deps */
   }, []);
 
-  return (
-    <ConfigContext.Provider value={config}>{isReady && <>{children}</>}</ConfigContext.Provider>
-  );
+  return <ConfigContext.Provider value={config}>{isReady && <>{children}</>}</ConfigContext.Provider>;
 };
 
 export default ConfigContextProvider;

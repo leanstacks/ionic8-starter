@@ -1,6 +1,6 @@
 {
-  "short_name": "Ionic Playground",
-  "name": "Ionic Playground",
+  "short_name": "Ionic Starter",
+  "name": "Ionic Starter",
   "icons": [
     {
       "src": "assets/icon/favicon.png",

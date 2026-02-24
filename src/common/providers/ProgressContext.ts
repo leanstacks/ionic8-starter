@@ -1,3 +1,4 @@
+import { JSX } from 'react';
 import { ComponentPropsWithoutRef, createContext, ReactNode } from 'react';
 import { IonProgressBar } from '@ionic/react';
 
@@ -5,11 +6,10 @@ import { IonProgressBar } from '@ionic/react';
  * Select properties from `IonProgressBar` which control how the progress bar
  * is rendered.
  */
-export interface ProgressBarProps
-  extends Pick<
-    ComponentPropsWithoutRef<typeof IonProgressBar>,
-    'buffer' | 'color' | 'reversed' | 'type' | 'value'
-  > {}
+export type ProgressBarProps = Pick<
+  ComponentPropsWithoutRef<typeof IonProgressBar>,
+  'buffer' | 'color' | 'reversed' | 'type' | 'value'
+>;
 
 /**
  * The `ProgressProvider` render props function type.

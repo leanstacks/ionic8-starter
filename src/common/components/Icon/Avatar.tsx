@@ -53,14 +53,7 @@ const COLORS = [
  * @param {AvatarProps} props - Component properties.
  * @returns JSX
  */
-const Avatar = ({
-  className,
-  shape = 'rounded',
-  size = 'default',
-  src,
-  testid = 'avatar',
-  value,
-}: AvatarProps): JSX.Element => {
+const Avatar = ({ className, shape = 'rounded', size = 'default', src, testid = 'avatar', value }: AvatarProps) => {
   const trimmedValue = value.trim();
   const initial = trimmedValue ? trimmedValue.charAt(0) : '?';
 
@@ -82,10 +75,7 @@ const Avatar = ({
       {src ? (
         <img className="ls-avatar__image" src={src} alt={value} data-testid={`${testid}-image`} />
       ) : (
-        <div
-          className={classNames('ls-avatar__initial', colorClass)}
-          data-testid={`${testid}-initial`}
-        >
+        <div className={classNames('ls-avatar__initial', colorClass)} data-testid={`${testid}-initial`}>
           {initial}
         </div>
       )}

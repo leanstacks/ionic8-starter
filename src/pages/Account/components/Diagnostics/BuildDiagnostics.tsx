@@ -15,10 +15,7 @@ import { useConfig } from 'common/hooks/useConfig';
  * @param {BaseComponentProps} props - Component properties.
  * @returns {JSX.Element} JSX
  */
-const BuildDiagnostics = ({
-  className,
-  testid = 'diagnostics-build',
-}: BaseComponentProps): JSX.Element => {
+const BuildDiagnostics = ({ className, testid = 'diagnostics-build' }: BaseComponentProps) => {
   const config = useConfig();
   const { t } = useTranslation();
 
@@ -35,36 +32,24 @@ const BuildDiagnostics = ({
         <IonText data-testid={`${testid}-env`}>{config.VITE_BUILD_ENV_CODE}</IonText>
       </IonItem>
       <IonItem className="text-sm">
-        <IonLabel className="font-medium ion-margin-end">
-          {t('diagnostics.label.time', { ns: 'account' })}
-        </IonLabel>
-        <IonText data-testid={`${testid}-time`}>
-          {dayjs(config.VITE_BUILD_TS).format('YYYY-MM-DD HH:mm:ss Z')}
-        </IonText>
+        <IonLabel className="font-medium ion-margin-end">{t('diagnostics.label.time', { ns: 'account' })}</IonLabel>
+        <IonText data-testid={`${testid}-time`}>{dayjs(config.VITE_BUILD_TS).format('YYYY-MM-DD HH:mm:ss Z')}</IonText>
       </IonItem>
       <IonItem className="text-sm">
-        <IonLabel className="font-medium ion-margin-end">
-          {t('diagnostics.label.sha', { ns: 'account' })}
-        </IonLabel>
+        <IonLabel className="font-medium ion-margin-end">{t('diagnostics.label.sha', { ns: 'account' })}</IonLabel>
         <IonText className="break-all" data-testid={`${testid}-sha`}>
           {config.VITE_BUILD_COMMIT_SHA}
         </IonText>
       </IonItem>
       <IonItem className="text-sm">
-        <IonLabel className="font-medium ion-margin-end">
-          {t('diagnostics.label.runner', { ns: 'account' })}
-        </IonLabel>
+        <IonLabel className="font-medium ion-margin-end">{t('diagnostics.label.runner', { ns: 'account' })}</IonLabel>
         <IonText data-testid={`${testid}-runner`}>{config.VITE_BUILD_WORKFLOW_RUNNER}</IonText>
       </IonItem>
       <IonItem className="text-sm">
-        <IonLabel className="font-medium ion-margin-end">
-          {t('diagnostics.label.workflow', { ns: 'account' })}
-        </IonLabel>
+        <IonLabel className="font-medium ion-margin-end">{t('diagnostics.label.workflow', { ns: 'account' })}</IonLabel>
         <IonText data-testid={`${testid}-workflow`}>
           {config.VITE_BUILD_WORKFLOW_NAME} {config.VITE_BUILD_WORKFLOW_RUN_NUMBER}
-          {config.VITE_BUILD_WORKFLOW_RUN_ATTEMPT > -1 && (
-            <>.{config.VITE_BUILD_WORKFLOW_RUN_ATTEMPT}</>
-          )}
+          {config.VITE_BUILD_WORKFLOW_RUN_ATTEMPT > -1 && <>.{config.VITE_BUILD_WORKFLOW_RUN_ATTEMPT}</>}
         </IonText>
       </IonItem>
     </List>

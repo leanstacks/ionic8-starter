@@ -1,3 +1,4 @@
+import { JSX } from 'react';
 import { IonItem, IonLabel, IonListHeader, IonRadio, IonSelectOption } from '@ionic/react';
 import classNames from 'classnames';
 import { Form, Formik } from 'formik';
@@ -28,20 +29,14 @@ import RadioGroupInput from 'common/components/Input/RadioGroupInput';
  * Settings form values.
  * @see {@link Settings}
  */
-type SettingsFormValues = Pick<
-  Settings,
-  'allowNotifications' | 'brightness' | 'fontSize' | 'language'
->;
+type SettingsFormValues = Pick<Settings, 'allowNotifications' | 'brightness' | 'fontSize' | 'language'>;
 
 /**
  * The `SettingsForm` component renders a Formik form to edit user settings.
  * @param {BaseComponentProps} props - Component properties.
  * @returns {JSX.Element} JSX
  */
-const SettingsForm = ({
-  className,
-  testid = 'form-settings',
-}: BaseComponentProps): JSX.Element | false => {
+const SettingsForm = ({ className, testid = 'form-settings' }: BaseComponentProps): JSX.Element | false => {
   const { data: settings, isLoading } = useGetSettings();
   const { mutate: updateSettings } = useUpdateSettings();
   const { setProgress } = useProgress();
@@ -57,9 +52,7 @@ const SettingsForm = ({
     fontSize: string()
       .required(t('validation.required'))
       .oneOf(['smaller', 'default', 'larger'], ({ values }) => t('validation.oneOf', { values })),
-    language: string().oneOf(map(LANGUAGES, 'code'), ({ values }) =>
-      t('validation.oneOf', { values }),
-    ),
+    language: string().oneOf(map(LANGUAGES, 'code'), ({ values }) => t('validation.oneOf', { values })),
   });
 
   if (isLoading) {
@@ -189,11 +182,7 @@ const SettingsForm = ({
               </IonItem>
 
               <IonItem>
-                <RadioGroupInput
-                  name="fontSize"
-                  onIonChange={() => submitForm()}
-                  testid={`${testid}-field-fontSize`}
-                >
+                <RadioGroupInput name="fontSize" onIonChange={() => submitForm()} testid={`${testid}-field-fontSize`}>
                   <IonRadio
                     className="ls-settings-form__input-fontsize-radio text-xs"
                     disabled={isSubmitting}
@@ -201,11 +190,7 @@ const SettingsForm = ({
                   >
                     {t('settings.font-size.smaller', { ns: 'account' })}
                   </IonRadio>
-                  <IonRadio
-                    className="ls-settings-form__input-fontsize-radio"
-                    disabled={isSubmitting}
-                    value="default"
-                  >
+                  <IonRadio className="ls-settings-form__input-fontsize-radio" disabled={isSubmitting} value="default">
                     {t('settings.font-size.default', { ns: 'account' })}
                   </IonRadio>
                   <IonRadio

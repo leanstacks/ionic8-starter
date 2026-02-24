@@ -1,3 +1,4 @@
+import { JSX } from 'react';
 import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
 
@@ -69,7 +70,7 @@ const AddressDetail = ({
     return (
       <div className={classNames('ls-address-detail', className)} data-testid={testid}>
         <HeaderRow border>
-          <Icon icon="mapLocationDot" />
+          <Icon icon="mapLocationDot" widthAuto />
           <div>{t('address', { ns: 'user' })}</div>
         </HeaderRow>
         <div className="ls-address-detail__content">

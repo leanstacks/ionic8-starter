@@ -15,12 +15,12 @@ export enum QueryKey {
  * Local storage keys.
  */
 export enum StorageKey {
-  Language = 'ionic-playground.language',
-  RememberMe = 'ionic-playground.remember-me',
-  Settings = 'ionic-playground.settings',
-  UserProfile = 'ionic-playground.user-profile',
-  User = 'ionic-playground.user',
-  UserTokens = 'ionic-playground.user-tokens',
+  Language = 'ionic-starter.language',
+  RememberMe = 'ionic-starter.remember-me',
+  Settings = 'ionic-starter.settings',
+  UserProfile = 'ionic-starter.user-profile',
+  User = 'ionic-starter.user',
+  UserTokens = 'ionic-starter.user-tokens',
 }
 
 /**

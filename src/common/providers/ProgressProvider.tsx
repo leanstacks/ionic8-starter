@@ -14,7 +14,7 @@ import {
  * @param {ProgressProviderProps} props - Component properties.
  * @returns {JSX.Element} JSX
  */
-const ProgressProvider = ({ children }: ProgressProviderProps): JSX.Element => {
+const ProgressProvider = ({ children }: ProgressProviderProps) => {
   const [isActive, setIsActive] = useState<boolean>(false);
   const [progressBar, setProgressBar] = useState<ProgressBarProps>(DEFAULT_PROGRESS_BAR);
 

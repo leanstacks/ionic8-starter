@@ -21,7 +21,7 @@ import WelcomeBlock from './components/WelcomeBlock/WelcomeBlock';
  * blocks and cards containing information in a responsive grid.
  * @returns JSX
  */
-const HomePage = (): JSX.Element => {
+const HomePage = () => {
   const queryClient = useQueryClient();
   const { t } = useTranslation();
 
@@ -32,7 +32,7 @@ const HomePage = (): JSX.Element => {
 
   return (
     <IonPage data-testid="page-home">
-      <Header title={t('ionic-playground')} />
+      <Header title={t('ionic-project')} />
 
       <IonContent fullscreen>
         <IonRefresher slot="fixed" onIonRefresh={handleRefresh}>

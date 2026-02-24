@@ -26,7 +26,7 @@ const UserAddFab = ({
   testid = 'fab-user-add',
   vertical = 'bottom',
   ...fabProps
-}: UserAddFabProps): JSX.Element => {
+}: UserAddFabProps) => {
   return (
     <IonFab
       className={classNames('ls-user-add-fab', className)}

@@ -11,7 +11,8 @@ import { forwardRef } from 'react';
  * @see {@link IonInput}
  */
 interface InputProps
-  extends BaseComponentProps,
+  extends
+    BaseComponentProps,
     Omit<React.ComponentPropsWithoutRef<typeof IonInput>, 'name'>,
     Required<Pick<React.ComponentPropsWithoutRef<typeof IonInput>, 'name'>> {}
 
@@ -27,7 +28,7 @@ interface InputProps
  * @returns {JSX.Element} JSX
  */
 const Input = forwardRef<HTMLIonInputElement, InputProps>(
-  ({ className, testid = 'input', ...props }: InputProps, ref): JSX.Element => {
+  ({ className, testid = 'input', ...props }: InputProps, ref) => {
     const [field, meta, helpers] = useField(props.name);
     const errorText: string | undefined = meta.touched ? meta.error : undefined;
 
@@ -40,9 +41,7 @@ const Input = forwardRef<HTMLIonInputElement, InputProps>(
           { 'ion-invalid': meta.error },
           { 'ion-valid': meta.touched && !meta.error },
         )}
-        onIonInput={async (e: CustomEvent<InputInputEventDetail>) =>
-          await helpers.setValue(e.detail.value)
-        }
+        onIonInput={async (e: CustomEvent<InputInputEventDetail>) => await helpers.setValue(e.detail.value)}
         data-testid={testid}
         {...field}
         {...props}

@@ -32,12 +32,7 @@ interface UserFormProps extends BaseComponentProps {
  * @param {UserFormProps} props - Component properties.
  * @returns {JSX.Element} JSX
  */
-const UserForm = ({
-  className,
-  onSubmit,
-  user,
-  testid = 'form-user',
-}: UserFormProps): JSX.Element => {
+const UserForm = ({ className, onSubmit, user, testid = 'form-user' }: UserFormProps) => {
   const focusInput = useRef<HTMLIonInputElement>(null);
   const { t } = useTranslation();
 

@@ -26,11 +26,6 @@ import HeaderRow from 'common/components/Text/HeaderRow';
 import CheckboxInput from 'common/components/Input/CheckboxInput';
 
 /**
- * Properties for the `SignInForm` component.
- */
-interface SignInFormProps extends BaseComponentProps {}
-
-/**
  * Sign in form values.
  * @param {string} username - A username.
  * @param {string} password - A password.
@@ -43,10 +38,10 @@ interface SignInFormValues {
 
 /**
  * The `SignInForm` component renders a Formik form for user authentication.
- * @param {SignInFormProps} props - Component properties.
+ * @param {BaseComponentProps} props - Component properties.
  * @returns {JSX.Element} JSX
  */
-const SignInForm = ({ className, testid = 'form-signin' }: SignInFormProps): JSX.Element => {
+const SignInForm = ({ className, testid = 'form-signin' }: BaseComponentProps) => {
   const focusInput = useRef<HTMLIonInputElement>(null);
   const [error, setError] = useState<string>('');
   const { setIsActive: setShowProgress } = useProgress();
@@ -161,25 +156,15 @@ const SignInForm = ({ className, testid = 'form-signin' }: SignInFormProps): JSX
               {t('signin', { ns: 'auth' })}
             </IonButton>
 
-            <IonPopover
-              trigger="signinInfo"
-              triggerAction="hover"
-              className="ls-signin-form-popover"
-            >
+            <IonPopover trigger="signinInfo" triggerAction="hover" className="ls-signin-form-popover">
               <IonContent className="ion-padding">
                 <p>
                   {t('info-username.part1', { ns: 'auth' })}
-                  <a
-                    href="https://jsonplaceholder.typicode.com/users"
-                    target="_blank"
-                    rel="noreferrer"
-                  >
+                  <a href="https://jsonplaceholder.typicode.com/users" target="_blank" rel="noreferrer">
                     {t('info-username.part2', { ns: 'auth' })}
                   </a>
-                  . {t('info-username.part3', { ns: 'auth' })}{' '}
-                  <span className="inline-code">Bret</span>{' '}
-                  {t('info-username.part4', { ns: 'auth' })}{' '}
-                  <span className="inline-code">Samantha</span>.
+                  . {t('info-username.part3', { ns: 'auth' })} <span className="inline-code">Bret</span>{' '}
+                  {t('info-username.part4', { ns: 'auth' })} <span className="inline-code">Samantha</span>.
                 </p>
                 <p>{t('info-username.part5', { ns: 'auth' })}</p>
               </IonContent>

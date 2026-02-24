@@ -31,12 +31,7 @@ interface UserListProps extends BaseComponentProps {
  * @param {UserListProps} props - Component properties.
  * @returns JSX
  */
-const UserList = ({
-  className,
-  filterBy,
-  header,
-  testid = 'list-user',
-}: UserListProps): JSX.Element => {
+const UserList = ({ className, filterBy, header, testid = 'list-user' }: UserListProps) => {
   const { t } = useTranslation();
   const { data: users, isError, isLoading } = useGetUsers();
 
@@ -89,11 +84,7 @@ const UserList = ({
 
       {filteredUsers &&
         filteredUsers.map((user, index) => (
-          <UserListItem
-            key={user.id}
-            user={user}
-            lines={index === filteredUsers.length - 1 ? 'none' : 'full'}
-          />
+          <UserListItem key={user.id} user={user} lines={index === filteredUsers.length - 1 ? 'none' : 'full'} />
         ))}
     </IonList>
   );

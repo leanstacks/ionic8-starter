@@ -1,11 +1,4 @@
-import {
-  IonBadge,
-  IonCard,
-  IonCardContent,
-  IonCardHeader,
-  IonCardSubtitle,
-  IonCardTitle,
-} from '@ionic/react';
+import { IonBadge, IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle } from '@ionic/react';
 import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
 
@@ -14,22 +7,13 @@ import { useGetUsers } from 'pages/Users/api/useGetUsers';
 import { BaseComponentProps } from 'common/components/types';
 
 /**
- * Properties for the `UserSummaryCard` component.
- * @see {@link BaseComponentProps}
- */
-interface UserSummaryCardProps extends BaseComponentProps {}
-
-/**
  * The `UserSummaryCard` component renders an `IonCard` containing summary
  * information about the `User` data. Facilitates navigation to the user
  * list  page.
  * @param {UserSummaryCardProps} props - Component properties.
  * @returns JSX
  */
-const UserSummaryCard = ({
-  className,
-  testid = 'card-user-summary',
-}: UserSummaryCardProps): JSX.Element => {
+const UserSummaryCard = ({ className, testid = 'card-user-summary' }: BaseComponentProps) => {
   const { data: users } = useGetUsers();
   const { t } = useTranslation();
 

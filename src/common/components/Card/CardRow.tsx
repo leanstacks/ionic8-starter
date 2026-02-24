@@ -28,17 +28,11 @@ const CardRow = ({
   sizeLg = '6',
   offsetLg = '3',
   ...colProps
-}: CardRowProps): JSX.Element => {
+}: CardRowProps) => {
   return (
     <IonGrid className={classNames('ls-card-row', className)} data-testid={testid}>
       <IonRow>
-        <IonCol
-          sizeMd={sizeMd}
-          offsetMd={offsetMd}
-          sizeLg={sizeLg}
-          offsetLg={offsetLg}
-          {...colProps}
-        />
+        <IonCol sizeMd={sizeMd} offsetMd={offsetMd} sizeLg={sizeLg} offsetLg={offsetLg} {...colProps} />
       </IonRow>
     </IonGrid>
   );

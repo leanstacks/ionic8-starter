@@ -22,7 +22,6 @@ _Pull request authors must complete the following tasks before marking the PR as
 - [ ] Complete a self-review of changes
 - [ ] Unit tests have been created or updated
 - [ ] The code is free of [new] lint errors and warnings
-- [ ] Update storybook stories as needed
 - [ ] Update project documentation as needed, README, JSDoc, etc.
 
 ### :test_tube: Steps to Test

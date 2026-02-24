@@ -14,9 +14,7 @@ import { BaseComponentProps } from '../types';
  * @see {@link BaseComponentProps}
  * @see {@link IonRow}
  */
-export interface HeaderRowProps
-  extends BaseComponentProps,
-    ComponentPropsWithoutRef<typeof IonRow> {
+export interface HeaderRowProps extends BaseComponentProps, ComponentPropsWithoutRef<typeof IonRow> {
   border?: boolean;
   inset?: boolean;
 }
@@ -34,7 +32,7 @@ const HeaderRow = ({
   inset = false,
   testid = 'row-header',
   ...rowProps
-}: HeaderRowProps): JSX.Element => {
+}: HeaderRowProps) => {
   return (
     <IonRow
       className={classNames(

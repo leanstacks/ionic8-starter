@@ -5,11 +5,10 @@ import { IonToast } from '@ionic/react';
  * Describes the attributes of a single `Toast`.
  * @see {@link IonToast}
  */
-export interface ToastData
-  extends Pick<
-    ComponentPropsWithoutRef<typeof IonToast>,
-    'buttons' | 'color' | 'duration' | 'layout' | 'message' | 'position' | 'positionAnchor'
-  > {
+export interface ToastData extends Pick<
+  ComponentPropsWithoutRef<typeof IonToast>,
+  'buttons' | 'color' | 'duration' | 'layout' | 'message' | 'position' | 'positionAnchor'
+> {
   id: string;
 }
 

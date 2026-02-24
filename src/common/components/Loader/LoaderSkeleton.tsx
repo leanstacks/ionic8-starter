@@ -26,7 +26,7 @@ const LoaderSkeleton = ({
   heightStyle,
   testid = 'loader-skeleton',
   widthStyle,
-}: LoaderSkeletonProps): JSX.Element => {
+}: LoaderSkeletonProps) => {
   const styles = {
     height: heightStyle,
     width: widthStyle,

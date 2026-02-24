@@ -20,10 +20,8 @@ interface ListProps extends PropsWithTestId, ComponentPropsWithoutRef<typeof Ion
  * @returns {JSX.Element} JSX
  * @see {@link IonList}
  */
-const List = ({ className, testid = 'list', ...listProps }: ListProps): JSX.Element => {
-  return (
-    <IonList className={classNames('ls-list', className)} data-testid={testid} {...listProps} />
-  );
+const List = ({ className, testid = 'list', ...listProps }: ListProps) => {
+  return <IonList className={classNames('ls-list', className)} data-testid={testid} {...listProps} />;
 };
 
 export default List;
