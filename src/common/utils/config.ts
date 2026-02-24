@@ -18,6 +18,7 @@ export const configSchema = z.object({
   VITE_BUILD_COMMIT_SHA: z.string().describe('The Git commit SHA of the build'),
   VITE_BUILD_ENV_CODE: z.string().describe('The environment code for the build (e.g., local, dev, qa, prd)'),
   VITE_BUILD_WORKFLOW_NAME: z.string().describe('The name of the CI/CD workflow that produced the build'),
+  VITE_BUILD_WORKFLOW_RUNNER: z.string().describe('The runner of the CI/CD workflow that produced the build'),
   VITE_BUILD_WORKFLOW_RUN_NUMBER: z.coerce
     .number()
     .int()
@@ -48,7 +49,6 @@ export type Config = z.infer<typeof configSchema>;
  * Parse and validate environment variables
  */
 const parseConfig = (): Config => {
-  console.debug('Parsing environment variables with Zod schema validation...');
   try {
     // Parse environment variables using Zod schema
     const parsed = configSchema.parse(import.meta.env);

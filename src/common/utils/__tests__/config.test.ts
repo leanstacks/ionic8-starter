@@ -13,6 +13,7 @@ describe('config', () => {
         VITE_BUILD_COMMIT_SHA: 'abc123def456',
         VITE_BUILD_ENV_CODE: 'dev',
         VITE_BUILD_WORKFLOW_NAME: 'CI/CD Pipeline',
+        VITE_BUILD_WORKFLOW_RUNNER: 'GitHub Actions',
         VITE_BUILD_WORKFLOW_RUN_NUMBER: 42,
         VITE_BUILD_WORKFLOW_RUN_ATTEMPT: 1,
         VITE_BASE_URL_API: 'https://api.example.com',
@@ -55,6 +56,7 @@ describe('config', () => {
         VITE_BUILD_COMMIT_SHA: 'abc123def456',
         VITE_BUILD_ENV_CODE: 'dev',
         VITE_BUILD_WORKFLOW_NAME: 'CI/CD Pipeline',
+        VITE_BUILD_WORKFLOW_RUNNER: 'GitHub Actions',
         VITE_BUILD_WORKFLOW_RUN_NUMBER: 42,
         VITE_BUILD_WORKFLOW_RUN_ATTEMPT: 1,
         VITE_BASE_URL_API: 'https://api.example.com',
@@ -77,6 +79,7 @@ describe('config', () => {
         VITE_BUILD_COMMIT_SHA: 'abc123def456',
         VITE_BUILD_ENV_CODE: 'dev',
         VITE_BUILD_WORKFLOW_NAME: 'CI/CD Pipeline',
+        VITE_BUILD_WORKFLOW_RUNNER: 'GitHub Actions',
         VITE_BUILD_WORKFLOW_RUN_NUMBER: 42,
         VITE_BUILD_WORKFLOW_RUN_ATTEMPT: 1,
         VITE_BASE_URL_API: 'https://api.example.com',
@@ -99,6 +102,7 @@ describe('config', () => {
         VITE_BUILD_COMMIT_SHA: 'abc123def456',
         VITE_BUILD_ENV_CODE: 'dev',
         VITE_BUILD_WORKFLOW_NAME: 'CI/CD Pipeline',
+        VITE_BUILD_WORKFLOW_RUNNER: 'GitHub Actions',
         VITE_BUILD_WORKFLOW_RUN_NUMBER: 42,
         VITE_BUILD_WORKFLOW_RUN_ATTEMPT: 1,
         VITE_BASE_URL_API: 'https://api.example.com',
@@ -121,6 +125,7 @@ describe('config', () => {
         VITE_BUILD_COMMIT_SHA: 'abc123def456',
         VITE_BUILD_ENV_CODE: 'dev',
         VITE_BUILD_WORKFLOW_NAME: 'CI/CD Pipeline',
+        VITE_BUILD_WORKFLOW_RUNNER: 'GitHub Actions',
         VITE_BUILD_WORKFLOW_RUN_NUMBER: 42,
         VITE_BUILD_WORKFLOW_RUN_ATTEMPT: 1,
         VITE_BASE_URL_API: 'not-a-valid-url',
@@ -143,6 +148,7 @@ describe('config', () => {
         VITE_BUILD_COMMIT_SHA: 'abc123def456',
         VITE_BUILD_ENV_CODE: 'dev',
         VITE_BUILD_WORKFLOW_NAME: 'CI/CD Pipeline',
+        VITE_BUILD_WORKFLOW_RUNNER: 'GitHub Actions',
         VITE_BUILD_WORKFLOW_RUN_NUMBER: '99',
         VITE_BUILD_WORKFLOW_RUN_ATTEMPT: '3',
         VITE_BASE_URL_API: 'https://api.example.com',
@@ -173,6 +179,7 @@ describe('config', () => {
         VITE_BUILD_COMMIT_SHA: 'abc123def456',
         VITE_BUILD_ENV_CODE: 'dev',
         VITE_BUILD_WORKFLOW_NAME: 'CI/CD Pipeline',
+        VITE_BUILD_WORKFLOW_RUNNER: 'GitHub Actions',
         VITE_BUILD_WORKFLOW_RUN_NUMBER: 42,
         VITE_BUILD_WORKFLOW_RUN_ATTEMPT: 1,
         VITE_BASE_URL_API: 'https://api.example.com',
@@ -198,6 +205,7 @@ describe('config', () => {
         VITE_BUILD_COMMIT_SHA: 'abc123def456',
         VITE_BUILD_ENV_CODE: 'dev',
         VITE_BUILD_WORKFLOW_NAME: 'CI/CD Pipeline',
+        VITE_BUILD_WORKFLOW_RUNNER: 'GitHub Actions',
         VITE_BUILD_WORKFLOW_RUN_NUMBER: -1,
         VITE_BUILD_WORKFLOW_RUN_ATTEMPT: 1,
         VITE_BASE_URL_API: 'https://api.example.com',
@@ -220,6 +228,7 @@ describe('config', () => {
         VITE_BUILD_COMMIT_SHA: 'abc123def456',
         VITE_BUILD_ENV_CODE: 'dev',
         VITE_BUILD_WORKFLOW_NAME: 'CI/CD Pipeline',
+        VITE_BUILD_WORKFLOW_RUNNER: 'GitHub Actions',
         VITE_BUILD_WORKFLOW_RUN_NUMBER: 42,
         VITE_BUILD_WORKFLOW_RUN_ATTEMPT: -5,
         VITE_BASE_URL_API: 'https://api.example.com',
@@ -242,6 +251,7 @@ describe('config', () => {
         VITE_BUILD_COMMIT_SHA: 'abc123def456',
         VITE_BUILD_ENV_CODE: 'dev',
         VITE_BUILD_WORKFLOW_NAME: 'CI/CD Pipeline',
+        VITE_BUILD_WORKFLOW_RUNNER: 'GitHub Actions',
         VITE_BUILD_WORKFLOW_RUN_NUMBER: 42,
         VITE_BUILD_WORKFLOW_RUN_ATTEMPT: 1,
         VITE_BASE_URL_API: 'https://api.example.com',
@@ -264,6 +274,7 @@ describe('config', () => {
         VITE_BUILD_COMMIT_SHA: 'abc123def456',
         VITE_BUILD_ENV_CODE: 'dev',
         VITE_BUILD_WORKFLOW_NAME: 'CI/CD Pipeline',
+        VITE_BUILD_WORKFLOW_RUNNER: 'GitHub Actions',
         VITE_BUILD_WORKFLOW_RUN_NUMBER: 42,
         VITE_BUILD_WORKFLOW_RUN_ATTEMPT: 1,
         VITE_BASE_URL_API: 'https://api.example.com',
@@ -282,6 +293,7 @@ describe('config', () => {
         expect(result.data).toHaveProperty('VITE_BUILD_COMMIT_SHA');
         expect(result.data).toHaveProperty('VITE_BUILD_ENV_CODE');
         expect(result.data).toHaveProperty('VITE_BUILD_WORKFLOW_NAME');
+        expect(result.data).toHaveProperty('VITE_BUILD_WORKFLOW_RUNNER');
         expect(result.data).toHaveProperty('VITE_BUILD_WORKFLOW_RUN_NUMBER');
         expect(result.data).toHaveProperty('VITE_BUILD_WORKFLOW_RUN_ATTEMPT');
         expect(result.data).toHaveProperty('VITE_BASE_URL_API');
@@ -298,6 +310,7 @@ describe('config', () => {
         VITE_BUILD_COMMIT_SHA: '',
         VITE_BUILD_ENV_CODE: '',
         VITE_BUILD_WORKFLOW_NAME: '',
+        VITE_BUILD_WORKFLOW_RUNNER: '',
         VITE_BUILD_WORKFLOW_RUN_NUMBER: 'not-a-number',
         VITE_BUILD_WORKFLOW_RUN_ATTEMPT: 'not-a-number',
         VITE_BASE_URL_API: 'invalid-url',
@@ -323,6 +336,7 @@ describe('config', () => {
         VITE_BUILD_COMMIT_SHA: 'abc123def456',
         VITE_BUILD_ENV_CODE: 'dev',
         VITE_BUILD_WORKFLOW_NAME: 'CI/CD Pipeline',
+        VITE_BUILD_WORKFLOW_RUNNER: 'GitHub Actions',
         VITE_BUILD_WORKFLOW_RUN_NUMBER: 42,
         VITE_BUILD_WORKFLOW_RUN_ATTEMPT: 1,
         VITE_BASE_URL_API: 'https://api.example.com',
@@ -348,6 +362,7 @@ describe('config', () => {
         VITE_BUILD_COMMIT_SHA: 'abc123def456',
         VITE_BUILD_ENV_CODE: 'dev',
         VITE_BUILD_WORKFLOW_NAME: 'CI/CD Pipeline',
+        VITE_BUILD_WORKFLOW_RUNNER: 'GitHub Actions',
         VITE_BUILD_WORKFLOW_RUN_NUMBER: 0,
         VITE_BUILD_WORKFLOW_RUN_ATTEMPT: 0,
         VITE_BASE_URL_API: 'https://api.example.com',
@@ -377,6 +392,7 @@ describe('config', () => {
         VITE_BUILD_COMMIT_SHA: 'abc123def456',
         VITE_BUILD_ENV_CODE: 'dev',
         VITE_BUILD_WORKFLOW_NAME: 'CI/CD Pipeline',
+        VITE_BUILD_WORKFLOW_RUNNER: 'GitHub Actions',
         VITE_BUILD_WORKFLOW_RUN_NUMBER: 42,
         VITE_BUILD_WORKFLOW_RUN_ATTEMPT: 1,
         VITE_BASE_URL_API: 'https://api.example.com',
@@ -396,6 +412,7 @@ describe('config', () => {
         expect(typeof config.VITE_BUILD_COMMIT_SHA).toBe('string');
         expect(typeof config.VITE_BUILD_ENV_CODE).toBe('string');
         expect(typeof config.VITE_BUILD_WORKFLOW_NAME).toBe('string');
+        expect(typeof config.VITE_BUILD_WORKFLOW_RUNNER).toBe('string');
         expect(typeof config.VITE_BUILD_WORKFLOW_RUN_NUMBER).toBe('number');
         expect(typeof config.VITE_BUILD_WORKFLOW_RUN_ATTEMPT).toBe('number');
         expect(typeof config.VITE_BASE_URL_API).toBe('string');
