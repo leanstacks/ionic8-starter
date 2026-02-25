@@ -47,8 +47,9 @@ The project uses GitHub Actions for CI/CD. Below is a detailed description of ea
   7. Build application (`npm run build`)
   8. Run unit tests with CI mode (`npm run test:ci`)
   9. Configure AWS credentials using OIDC (role: `AWS_ROLE_ARN_DEV`)
-  10. Synthesize CDK stacks (`npm run synth` in infrastructure directory)
-  11. Clean up sensitive files (`.env`, `cdk.out` in infrastructure directory)
+  10. Install infrastructure dependencies (`npm ci` in the infrastructure directory)
+  11. Synthesize CDK stacks (`npm run synth` in infrastructure directory)
+  12. Clean up sensitive files (`.env`, `cdk.out` in infrastructure directory)
 - **Importance:** Ensures that all code merged into `main` passes linting, formatting, builds successfully, is covered by tests, and that the AWS CDK infrastructure code synthesizes correctly. This prevents broken or low-quality code from being merged and keeps the main branch stable.
 
 ### Code Quality Workflow (`code-quality.yml`)
