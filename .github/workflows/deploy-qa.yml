@@ -47,9 +47,9 @@ jobs:
       - name: Create Environment Configuration
         run: |
           echo "${{ env.ENV_FILE }}" > .env
-          echo "VITE_BUILD_DATE=$(date +'%Y-%m-%d')" >> .env
-          echo "VITE_BUILD_TIME=$(date +'%H:%M:%S%z')" >> .env
-          echo "VITE_BUILD_TS=$(date +'%Y-%m-%dT%H:%M:%S%z')" >> .env
+          echo "VITE_BUILD_DATE=$(date -u +'%Y-%m-%d')" >> .env
+          echo "VITE_BUILD_TIME=$(date -u +'%H:%M:%S')" >> .env
+          echo "VITE_BUILD_TS=$(date -u +'%Y-%m-%dT%H:%M:%SZ')" >> .env
           echo "VITE_BUILD_COMMIT_SHA=${{ github.sha }}" >> .env
           echo "VITE_BUILD_ENV_CODE=${{ env.AWS_ENV_CODE }}" >> .env
           echo "VITE_BUILD_WORKFLOW_RUNNER=GitHub Actions" >> .env

@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 import { useAxios } from 'common/hooks/useAxios';
-import { useConfig } from 'common/hooks/useConfig';
+import { config } from 'common/utils/config';
 import { User } from 'common/models/user';
 import { QueryKey } from 'common/utils/constants';
 
@@ -28,7 +28,6 @@ export type CreateUserVariables = {
 export const useCreateUser = () => {
   const axios = useAxios();
   const queryClient = useQueryClient();
-  const config = useConfig();
 
   /**
    * Create a `User`.

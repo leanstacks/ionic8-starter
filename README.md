@@ -138,6 +138,33 @@ The application is configured using Environment Variables. Because single-page a
 
 After project installation and before running the application locally, create the following `.env` files in the project base directory. Learn more in the official [Vite guide for environment variables and modes](https://vitejs.dev/guide/env-and-mode.html).
 
+#### Setup
+
+1. **Copy the example configuration file:**
+
+   ```bash
+   cp .env.example .env
+   ```
+
+2. **Update variables for your environment:**
+
+   ```env
+   VITE_BASE_URL_API=https://your-api.example.com
+   VITE_TOAST_AUTO_DISMISS_MILLIS=5000
+   ```
+
+3. **Build information** (typically set by CI/CD pipeline):
+   ```env
+   VITE_BUILD_DATE=2026-02-10
+   VITE_BUILD_TIME=14:30:00
+   VITE_BUILD_TS=2026-02-10T14:30:00Z
+   VITE_BUILD_COMMIT_SHA=abc123def456
+   VITE_BUILD_ENV_CODE=dev
+   VITE_BUILD_WORKFLOW_NAME=Build
+   VITE_BUILD_WORKFLOW_RUN_NUMBER=42
+   VITE_BUILD_WORKFLOW_RUN_ATTEMPT=1
+   ```
+
 #### `.env.local`
 
 The `.env.local` configuration file provides the configuration values when the application is started on a developer's local machine.

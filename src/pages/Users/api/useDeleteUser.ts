@@ -2,7 +2,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import reject from 'lodash/reject';
 
 import { useAxios } from 'common/hooks/useAxios';
-import { useConfig } from 'common/hooks/useConfig';
+import { config } from 'common/utils/config';
 import { User } from 'common/models/user';
 import { QueryKey } from 'common/utils/constants';
 
@@ -25,7 +25,6 @@ export type DeleteUserVariables = {
 export const useDeleteUser = () => {
   const axios = useAxios();
   const queryClient = useQueryClient();
-  const config = useConfig();
 
   /**
    * Delete a `User`.

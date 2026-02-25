@@ -15,7 +15,7 @@ import { useTranslation } from 'react-i18next';
 import dayjs from 'dayjs';
 
 import { PropsWithTestId } from 'common/components/types';
-import { useConfig } from 'common/hooks/useConfig';
+import { config } from 'common/utils/config';
 import ProgressProvider from 'common/providers/ProgressProvider';
 import Header from 'common/components/Header/Header';
 import SettingsForm from './components/Settings/SettingsForm';
@@ -29,7 +29,6 @@ import List from 'common/components/List/List';
  */
 const AccountPage = ({ testid = 'page-account' }: PropsWithTestId) => {
   const [diagnosticsCount, setDiagnosticsCount] = useState<number>(0);
-  const config = useConfig();
   const router = useIonRouter();
   const { t } = useTranslation();
 
