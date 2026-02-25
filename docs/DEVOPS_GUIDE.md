@@ -35,6 +35,7 @@ The project uses GitHub Actions for CI/CD. Below is a detailed description of ea
 - **Prerequisites:**
   - GitHub Actions variables must be configured:
     - `ENV_CI` - Application environment variables for CI
+    - `CDK_ENV_DEV` - Infrastructure environment variables for DEV
     - `AWS_ROLE_ARN_DEV` - AWS IAM Role ARN for development environment
     - `AWS_REGION` - AWS region for deployment
 - **Main Steps:**
@@ -46,10 +47,13 @@ The project uses GitHub Actions for CI/CD. Below is a detailed description of ea
   6. Check code formatting (`npm run format:check`)
   7. Build application (`npm run build`)
   8. Run unit tests with CI mode (`npm run test:ci`)
-  9. Configure AWS credentials using OIDC (role: `AWS_ROLE_ARN_DEV`)
-  10. Install infrastructure dependencies (`npm ci` in the infrastructure directory)
-  11. Synthesize CDK stacks (`npm run synth` in infrastructure directory)
-  12. Clean up sensitive files (`.env`, `cdk.out` in infrastructure directory)
+  9. Install infrastructure dependencies (`npm ci` in the infrastructure directory)
+  10. Build infrastructure (`npm run build` in the infrastructure directory)
+  11. Run infrastructure tests with coverage (`npm run test:coverage` in the infrastructure directory)
+  12. Create infrastructure .env file
+  13. Configure AWS credentials using OIDC (role: `AWS_ROLE_ARN_DEV`)
+  14. Synthesize CDK stacks (`npm run synth` in infrastructure directory)
+  15. Clean up sensitive files (`.env`, `cdk.out` in infrastructure directory)
 - **Importance:** Ensures that all code merged into `main` passes linting, formatting, builds successfully, is covered by tests, and that the AWS CDK infrastructure code synthesizes correctly. This prevents broken or low-quality code from being merged and keeps the main branch stable.
 
 ### Code Quality Workflow (`code-quality.yml`)
