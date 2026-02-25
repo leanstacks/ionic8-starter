@@ -3,6 +3,17 @@
 A template to kickstart Ionic + React applications utilizing an opinionated technology stack for optimal testability, maintainability, and operability.
 
 [![CI](https://github.com/leanstacks/ionic8-starter/actions/workflows/ci.yml/badge.svg)](https://github.com/leanstacks/ionic8-starter/actions/workflows/ci.yml)
+&nbsp;
+&nbsp;
+[![Code Quality](https://github.com/leanstacks/ionic8-starter/actions/workflows/code-quality.yml/badge.svg)](https://github.com/leanstacks/ionic8-starter/actions/workflows/code-quality.yml)
+
+## License
+
+This project is licensed under the MIT License - see [LICENSE](./LICENSE) file for details.
+
+## Documentation
+
+For detailed guides and reference materials, see the [Project Documentation](docs/README.md).
 
 ## Helpful Hints
 
@@ -28,7 +39,7 @@ This project was bootstrapped with the [Ionic CLI](https://ionicframework.com/do
 ionic start ionic8-starter blank --type=react
 ```
 
-The technology stack includes:
+The application production technology stack includes:
 
 - Ionic - the foundation
 - Vite - React development environment
@@ -37,15 +48,25 @@ The technology stack includes:
 - TanStack Query - data fetching, caching, and asynchronous state management
 - Axios - HTTP client
 - Formik - form management
-- Yup - validation
+- Yup - schema-based validation (deprecated)
+- Zod - schema-based validation
 - Lodash - utility functions
 - DayJS - date utility functions
 - i18next - internationalization framework
-- Testing Library React - unit tests
+
+The application development technology stack includes:
+
 - Vitest - unit tests
+- Testing Library React - unit tests
 - MSW - API mocking
 - Cypress - end-to-end tests
 - TypeScript
+
+The infrastructure technology stack includes:
+
+- AWS CDK - framework for provisioning AWS cloud infrastructure
+- Zod - schema based validation
+- Jest: unit test framework
 
 ### Repository
 
@@ -126,92 +147,7 @@ Install the _Prettier_ extension to ensure that all project participants' contri
 
 ## Configuration
 
-The application is configured using Environment Variables. Because single-page applications are static, environment variable values are injected into the application during the build. The environment variables may be sourced from the environment or `.env` files as described in the [Vite documentation](https://vitejs.dev/guide/env-and-mode.html).
-
-> **NOTE:** Ionic Config provides a way to change the properties of Ionic components globally. This is different from application configuration. See the [Ionic Config](https://ionicframework.com/docs/developing/config) docs for more details.
-
-### `.env` files
-
-> **NOTE:** Because they may contain sensitive information, `.env` files are not committed to the repository.
-
-> **TIP:** When configuration values are modified, notify your DevOps team to modify the values in automation pipelines accordingly.
-
-After project installation and before running the application locally, create the following `.env` files in the project base directory. Learn more in the official [Vite guide for environment variables and modes](https://vitejs.dev/guide/env-and-mode.html).
-
-#### Setup
-
-1. **Copy the example configuration file:**
-
-   ```bash
-   cp .env.example .env
-   ```
-
-2. **Update variables for your environment:**
-
-   ```env
-   VITE_BASE_URL_API=https://your-api.example.com
-   VITE_TOAST_AUTO_DISMISS_MILLIS=5000
-   ```
-
-3. **Build information** (typically set by CI/CD pipeline):
-   ```env
-   VITE_BUILD_DATE=2026-02-10
-   VITE_BUILD_TIME=14:30:00
-   VITE_BUILD_TS=2026-02-10T14:30:00Z
-   VITE_BUILD_COMMIT_SHA=abc123def456
-   VITE_BUILD_ENV_CODE=dev
-   VITE_BUILD_WORKFLOW_NAME=Build
-   VITE_BUILD_WORKFLOW_RUN_NUMBER=42
-   VITE_BUILD_WORKFLOW_RUN_ATTEMPT=1
-   ```
-
-#### `.env.local`
-
-The `.env.local` configuration file provides the configuration values when the application is started on a developer's local machine.
-
-```
-# Provided by Pipeline (Simulated)
-VITE_BUILD_DATE=1970-01-01
-VITE_BUILD_TIME=00:00:00
-VITE_BUILD_TS=1970-01-01T00:00:00+0000
-VITE_BUILD_COMMIT_SHA=local
-VITE_BUILD_ENV_CODE=local
-VITE_BUILD_WORKFLOW_RUNNER=local
-VITE_BUILD_WORKFLOW_NAME=local
-VITE_BUILD_WORKFLOW_RUN_NUMBER=1
-VITE_BUILD_WORKFLOW_RUN_ATTEMPT=1
-
-# API Configuration
-VITE_BASE_URL_API=https://jsonplaceholder.typicode.com
-
-# Toasts Configuration
-VITE_TOAST_AUTO_DISMISS_MILLIS=5000
-```
-
-#### `.env.test.local`
-
-The `.env.test.local` configuration file provides configuration values used when tests are executed on a developer's local machine.
-
-> **NOTE:** Use the same values when running tests in a CI/CD pipeline.
-
-```
-# Provided by Pipeline (Simulated)
-VITE_BUILD_DATE=1970-01-01
-VITE_BUILD_TIME=00:00:00
-VITE_BUILD_TS=1970-01-01T00:00:00+0000
-VITE_BUILD_COMMIT_SHA=test
-VITE_BUILD_ENV_CODE=test
-VITE_BUILD_WORKFLOW_RUNNER=test
-VITE_BUILD_WORKFLOW_NAME=test
-VITE_BUILD_WORKFLOW_RUN_NUMBER=1
-VITE_BUILD_WORKFLOW_RUN_ATTEMPT=1
-
-# API Configuration
-VITE_BASE_URL_API=https://jsonplaceholder.typicode.com
-
-# Toasts Configuration
-VITE_TOAST_AUTO_DISMISS_MILLIS=1500
-```
+See the [Configuration Guide](./docs/CONFIGURATION_GUIDE.md) in the [project docs](./docs/README.md) for detailed information about application and infrastructure configuration.
 
 # Available Scripts
 
@@ -260,34 +196,17 @@ Runs the [ESLint][eslint] static code analysis and prints the results to the con
 
 ## DevOps
 
-### Cloud Resources
+### Automation
 
-The AWS resources for this application component are provisioned via AWS CloudFormation. The `template.yml` file is the CloudFormation template.
+See the [DevOps Guide](./docs/DEVOPS_GUIDE.md) in the [project docs](./docs/README.md) for detailed information about DevOps automation workflows.
 
-The resources provisioned are:
+### Infrastructure
 
-| Resource                | Description                                                                   |
-| ----------------------- | ----------------------------------------------------------------------------- |
-| S3 Bucket               | Contains the published application.                                           |
-| S3 Bucket Policy        | Provides access to the S3 Bucket from AWS CloudFront.                         |
-| CloudFront Distribution | A CloudFront distribution to serve the SPA application.                       |
-| CloudFront Distribution | A CloudFront distribution to serve the full-stack application (UI, API, etc). |
-| Route53 RecordSet       | An `A` record for the application distribution.                               |
-| Route53 RecordSet       | An `AAAA` record for the application distribution.                            |
+See the [Infrastructure Guide](./docs/INFRASTRUCTURE_GUIDE.md) in the [project docs](./docs/README.md) for detailed information about the AWS infrastructure and the AWS CDK application to provision those resources.
 
-### CI/CD Pipelines
+## Further Reading
 
-This project uses GitHub Actions to perform DevOps automation activities such as Continuous Integration and Continous Deployment. See all project [GitHub Actions workflow runs](https://github.com/mwarman/ionic8-playground/actions).
-
-| Workflow              | Trigger                        | Description                                                                          |
-| --------------------- | ------------------------------ | ------------------------------------------------------------------------------------ |
-| CI                    | Pull Request for `main` branch | Builds, lints, and tests the application. Validates the AWS CloudFormation template. |
-| Deploy to Development | Push to `main` branch          | Deploys AWS CloudFormation stack. Builds and deploys the application.                |
-| Deploy to QA          | Push to `release/*` branch     | Deploys AWS CloudFormation stack. Builds and deploys the application.                |
-| Deploy to Production  | Publish a Release              | Deploys AWS CloudFormation stack. Builds and deploys the application.                |
-
-## Related Information
-
+- [Project Documentation](./docs/README.md)
 - [Ionic][ionic]
 - [Vite][vite]
 - [React][react]
@@ -295,6 +214,7 @@ This project uses GitHub Actions to perform DevOps automation activities such as
 - [Axios][axios]
 - [Formik][formik]
 - [Yup][yup]
+- [Zod][zod]
 - [Testing Library][testing-library]
 - [Vitest][vitest]
 - [Cypress][cypress]
@@ -315,3 +235,4 @@ This project uses GitHub Actions to perform DevOps automation activities such as
 [ghactions]: https://docs.github.com/en/actions 'GitHub Actions'
 [eslint]: https://eslint.org/docs/latest/ 'ESLint'
 [cypress]: https://docs.cypress.io/guides/overview/why-cypress 'Cypress Testing Framework'
+[zod]: https://zod.dev/ 'Zod'
