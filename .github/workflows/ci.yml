@@ -59,6 +59,10 @@ jobs:
           role-to-assume: ${{ vars.AWS_ROLE_ARN_DEV }}
           role-session-name: ci-ionic8-starter
 
+      - name: Install infrastructure dependencies
+        working-directory: ./infrastructure
+        run: npm ci
+
       - name: Synthesize CDK stacks
         working-directory: ./infrastructure
         run: npm run synth
