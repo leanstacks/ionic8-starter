@@ -13,13 +13,7 @@ concurrency:
   cancel-in-progress: false
 
 env:
-  APP_NAME: ionic8-playground.leanstacks.net
-  AWS_CFN_STACK_NAME: ls-ui-ionic8playground-resources-dev
-  AWS_CFN_TEMPLATE: template.yml
   AWS_ENV_CODE: dev
-  AWS_REGION: ${{ vars.AWS_REGION }}
-  AWS_ROLE_ARN: ${{ vars.AWS_ROLE_ARN_DEV }}
-  ENV_FILE: ${{ vars.ENV_DEV }}
 
 jobs:
   deploy:
@@ -47,7 +41,7 @@ jobs:
 
       - name: Create Environment Configuration
         run: |
-          echo "${{ env.ENV_FILE }}" > .env
+          echo "${{ vars.ENV_DEV }}" > .env
           echo "VITE_BUILD_DATE=$(date -u +'%Y-%m-%d')" >> .env
           echo "VITE_BUILD_TIME=$(date -u +'%H:%M:%S')" >> .env
           echo "VITE_BUILD_TS=$(date -u +'%Y-%m-%dT%H:%M:%SZ')" >> .env
@@ -64,28 +58,49 @@ jobs:
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v6
         with:
-          aws-region: ${{ env.AWS_REGION }}
-          role-to-assume: ${{ env.AWS_ROLE_ARN }}
+          aws-region: ${{ vars.AWS_REGION }}
+          role-to-assume: ${{ vars.AWS_ROLE_ARN_DEV }}
           role-session-name: deploy-ionic8-starter-dev
 
-      - name: Deploy AWS CloudFormation Stack
-        run: |-
-          aws cloudformation deploy \
-          --stack-name ${{ env.AWS_CFN_STACK_NAME }} \
-          --template-file ${{ env.AWS_CFN_TEMPLATE }} \
-          --parameter-overrides EnvironmentCode=${{ env.AWS_ENV_CODE }} \
-          --tags App=${{ env.APP_NAME }} Env=${{ env.AWS_ENV_CODE }} OU=leanstacks Owner='Matthew Warman'
+      - name: Install infrastructure dependencies
+        working-directory: ./infrastructure
+        run: npm ci
 
-      - name: Get CloudFormation Stack Outputs
-        id: cloudformation
-        run: |-
-          APP_BUCKET_NAME=$(
-            aws cloudformation describe-stacks \
-            --stack-name ${{ env.AWS_CFN_STACK_NAME }} \
-            --query "Stacks[0].Outputs[?OutputKey=='AppBucketName'].OutputValue | [0]"
-          )
-          echo "APP_BUCKET_NAME=$APP_BUCKET_NAME" >> "$GITHUB_OUTPUT"
-
-      - name: Deploy to AWS S3
+      - name: Create infrastructure .env file
+        working-directory: ./infrastructure
         run: |
-          aws s3 sync dist s3://${{ steps.cloudformation.outputs.APP_BUCKET_NAME }} --delete
+          echo "${{ vars.CDK_ENV_DEV }}" > .env
+          echo "✅ Infrastructure .env file created"
+
+      - name: Build infrastructure
+        working-directory: ./infrastructure
+        run: npm run build
+
+      - name: Bootstrap CDK
+        working-directory: ./infrastructure
+        run: |
+          echo "⚡ Checking if CDK bootstrap is needed..."
+          # Try to describe the bootstrap stack to see if it exists
+          if ! aws cloudformation describe-stacks --stack-name CDKToolkit --region ${{ vars.AWS_REGION }} >/dev/null 2>&1; then
+            echo "🚀 CDK not bootstrapped, bootstrapping now..."
+            npm run bootstrap
+          else
+            echo "✅ CDK already bootstrapped, skipping..."
+          fi
+
+      - name: Synthesize CDK stacks
+        working-directory: ./infrastructure
+        run: npm run synth
+
+      - name: Deploy CDK stacks
+        working-directory: ./infrastructure
+        run: npm run deploy:all -- --require-approval never
+
+      - name: Clean up sensitive files
+        if: always()
+        working-directory: ./infrastructure
+        run: |
+          echo "🧹 Cleaning up sensitive files..."
+          rm -f .env
+          rm -rf cdk.out
+          echo "✅ Sensitive files cleaned up"

@@ -17,7 +17,7 @@ export default defineConfig({
     },
   },
   test: {
-    exclude: [...configDefaults.exclude],
+    exclude: [...configDefaults.exclude, '**/infrastructure/**'],
     coverage: {
       provider: 'v8',
       exclude: [

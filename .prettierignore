@@ -1,2 +1,7 @@
 # Android native code and build files
 android
+
+# Infrastructure outputs and build artifacts
+infrastructure/cdk.out
+infrastructure/dist
+infrastructure/coverage

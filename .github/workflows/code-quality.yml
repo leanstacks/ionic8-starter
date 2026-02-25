@@ -144,85 +144,88 @@ jobs:
             echo "✅ All packages are up to date" >> $GITHUB_STEP_SUMMARY
           fi
 
-      # - name: Install infrastructure dependencies
-      #   working-directory: ./infrastructure
-      #   run: npm ci
+      - name: Install infrastructure dependencies
+        working-directory: ./infrastructure
+        run: npm ci
 
-      # - name: Run infrastructure tests with detailed coverage
-      #   working-directory: ./infrastructure
-      #   run: |
-      #     echo "" >> $GITHUB_STEP_SUMMARY
-      #     echo "## Infrastructure Test Coverage Analysis" >> $GITHUB_STEP_SUMMARY
-      #     echo "" >> $GITHUB_STEP_SUMMARY
-      #     npm run test:coverage
+      - name: Run infrastructure tests with detailed coverage
+        working-directory: ./infrastructure
+        run: |
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "## Infrastructure Test Coverage Analysis" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          npm run test:coverage
 
-      #     # Extract coverage summary
-      #     if [ -f coverage/coverage-summary.json ]; then
-      #       echo "### Infrastructure Coverage Summary:" >> $GITHUB_STEP_SUMMARY
-      #       echo "" >> $GITHUB_STEP_SUMMARY
+          # Extract coverage summary
+          if [ -f coverage/coverage-summary.json ]; then
+            echo "### Infrastructure Coverage Summary:" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
 
-      #       # Use Node.js to parse JSON and create a table
-      #       node -e "
-      #         const fs = require('fs');
-      #         const coverage = JSON.parse(fs.readFileSync('coverage/coverage-summary.json', 'utf8'));
-      #         const total = coverage.total;
+            # Use Node.js to parse JSON and create a table
+            node -e "
+              const fs = require('fs');
+              const coverage = JSON.parse(fs.readFileSync('coverage/coverage-summary.json', 'utf8'));
+              const total = coverage.total;
 
-      #         console.log('| Metric | Percentage | Covered/Total |');
-      #         console.log('|--------|------------|---------------|');
-      #         console.log(\`| Lines | \${total.lines.pct}% | \${total.lines.covered}/\${total.lines.total} |\`);
-      #         console.log(\`| Functions | \${total.functions.pct}% | \${total.functions.covered}/\${total.functions.total} |\`);
-      #         console.log(\`| Branches | \${total.branches.pct}% | \${total.branches.covered}/\${total.branches.total} |\`);
-      #         console.log(\`| Statements | \${total.statements.pct}% | \${total.statements.covered}/\${total.statements.total} |\`);
-      #       " >> $GITHUB_STEP_SUMMARY
-      #     fi
+              console.log('| Metric | Percentage | Covered/Total |');
+              console.log('|--------|------------|---------------|');
+              console.log(\`| Lines | \${total.lines.pct}% | \${total.lines.covered}/\${total.lines.total} |\`);
+              console.log(\`| Functions | \${total.functions.pct}% | \${total.functions.covered}/\${total.functions.total} |\`);
+              console.log(\`| Branches | \${total.branches.pct}% | \${total.branches.covered}/\${total.branches.total} |\`);
+              console.log(\`| Statements | \${total.statements.pct}% | \${total.statements.covered}/\${total.statements.total} |\`);
+            " >> $GITHUB_STEP_SUMMARY
+          fi
 
-      # - name: Infrastructure build check
-      #   run: |
-      #     echo "" >> $GITHUB_STEP_SUMMARY
-      #     echo "## Infrastructure Build" >> $GITHUB_STEP_SUMMARY
-      #     echo "" >> $GITHUB_STEP_SUMMARY
-      #     npm run build > infra-tsc-output.txt 2>&1
-      #     if [ $? -eq 0 ]; then
-      #       echo "✅ Build successful" >> $GITHUB_STEP_SUMMARY
-      #     else
-      #       echo "❌ Build failed:" >> $GITHUB_STEP_SUMMARY
-      #       echo '```' >> $GITHUB_STEP_SUMMARY
-      #       cat infra-tsc-output.txt >> $GITHUB_STEP_SUMMARY
-      #       echo '```' >> $GITHUB_STEP_SUMMARY
-      #     fi
+      - name: Infrastructure build check
+        working-directory: ./infrastructure
+        run: |
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "## Infrastructure Build" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          npm run build > infra-tsc-output.txt 2>&1
+          if [ $? -eq 0 ]; then
+            echo "✅ Build successful" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "❌ Build failed:" >> $GITHUB_STEP_SUMMARY
+            echo '```' >> $GITHUB_STEP_SUMMARY
+            cat infra-tsc-output.txt >> $GITHUB_STEP_SUMMARY
+            echo '```' >> $GITHUB_STEP_SUMMARY
+          fi
 
-      # - name: Infrastructure security audit
-      #   run: |
-      #     echo "" >> $GITHUB_STEP_SUMMARY
-      #     echo "## Infrastructure Security Audit" >> $GITHUB_STEP_SUMMARY
-      #     echo "" >> $GITHUB_STEP_SUMMARY
-      #     npm audit --audit-level=moderate --omit=dev > infra-security-output.txt 2>&1 || true
+      - name: Infrastructure security audit
+        working-directory: ./infrastructure
+        run: |
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "## Infrastructure Security Audit" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          npm audit --audit-level=moderate --omit=dev > infra-security-output.txt 2>&1 || true
 
-      #     if grep -q "found 0 vulnerabilities" infra-security-output.txt; then
-      #       echo "✅ No security vulnerabilities found" >> $GITHUB_STEP_SUMMARY
-      #     else
-      #       echo "⚠️ Security vulnerabilities detected:" >> $GITHUB_STEP_SUMMARY
-      #       echo '```' >> $GITHUB_STEP_SUMMARY
-      #       cat infra-security-output.txt >> $GITHUB_STEP_SUMMARY
-      #       echo '```' >> $GITHUB_STEP_SUMMARY
-      #     fi
+          if grep -q "found 0 vulnerabilities" infra-security-output.txt; then
+            echo "✅ No security vulnerabilities found" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "⚠️ Security vulnerabilities detected:" >> $GITHUB_STEP_SUMMARY
+            echo '```' >> $GITHUB_STEP_SUMMARY
+            cat infra-security-output.txt >> $GITHUB_STEP_SUMMARY
+            echo '```' >> $GITHUB_STEP_SUMMARY
+          fi
 
-      # - name: Infrastructure package analysis
-      #   run: |
-      #     echo "" >> $GITHUB_STEP_SUMMARY
-      #     echo "## Infrastructure Package Analysis" >> $GITHUB_STEP_SUMMARY
-      #     echo "" >> $GITHUB_STEP_SUMMARY
+      - name: Infrastructure package analysis
+        working-directory: ./infrastructure
+        run: |
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "## Infrastructure Package Analysis" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
 
-      #     # Check for outdated packages
-      #     echo "### Outdated Packages:" >> $GITHUB_STEP_SUMMARY
-      #     npm outdated > infra-outdated-output.txt 2>&1 || true
-      #     if [ -s infra-outdated-output.txt ]; then
-      #       echo '```' >> $GITHUB_STEP_SUMMARY
-      #       cat infra-outdated-output.txt >> $GITHUB_STEP_SUMMARY
-      #       echo '```' >> $GITHUB_STEP_SUMMARY
-      #     else
-      #       echo "✅ All packages are up to date" >> $GITHUB_STEP_SUMMARY
-      #     fi
+          # Check for outdated packages
+          echo "### Outdated Packages:" >> $GITHUB_STEP_SUMMARY
+          npm outdated > infra-outdated-output.txt 2>&1 || true
+          if [ -s infra-outdated-output.txt ]; then
+            echo '```' >> $GITHUB_STEP_SUMMARY
+            cat infra-outdated-output.txt >> $GITHUB_STEP_SUMMARY
+            echo '```' >> $GITHUB_STEP_SUMMARY
+          else
+            echo "✅ All packages are up to date" >> $GITHUB_STEP_SUMMARY
+          fi
 
       - name: Archive test results
         if: always()

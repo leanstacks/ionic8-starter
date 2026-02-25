@@ -1,0 +1,35 @@
+{
+  "name": "ionic8-starter-infrastructure",
+  "version": "1.1.0-alpha.1",
+  "private": true,
+  "scripts": {
+    "build": "tsc",
+    "clean": "rimraf cdk.out coverage dist",
+    "cdk": "cdk",
+    "deploy": "cdk deploy",
+    "deploy:all": "cdk deploy --all",
+    "destroy": "cdk destroy",
+    "destroy:all": "cdk destroy --all",
+    "diff": "cdk diff",
+    "synth": "cdk synth",
+    "test": "jest --coverage=false --silent --verbose",
+    "test:coverage": "jest --coverage --silent --verbose",
+    "test:watch": "jest --watch"
+  },
+  "devDependencies": {
+    "@types/jest": "30.0.0",
+    "@types/node": "25.3.0",
+    "aws-cdk": "2.1107.0",
+    "jest": "30.2.0",
+    "rimraf": "6.1.3",
+    "ts-jest": "29.4.6",
+    "ts-node": "10.9.2",
+    "typescript": "5.9.3"
+  },
+  "dependencies": {
+    "aws-cdk-lib": "2.240.0",
+    "constructs": "10.5.1",
+    "dotenv": "17.3.1",
+    "zod": "4.3.6"
+  }
+}
