@@ -84,8 +84,8 @@ The Ionic Starter frontend application is deployed on AWS using a modern, global
 # Application CDN configuration
 CDK_ASSET_PATH=../dist                          # Path to React build output
 CDK_DOMAIN_NAME=app.example.com                 # Custom domain (optional)
-CDK_CERTIFICATE_ARN=arn:aws:acm:us-east-1:...  # SSL certificate (optional)
-CDK_HOSTED_ZONE_ID=Z1234567890ABC              # Route 53 zone ID (optional)
+CDK_CERTIFICATE_ARN=arn:aws:acm:us-east-1:...   # SSL certificate (optional)
+CDK_HOSTED_ZONE_ID=Z1234567890ABC               # Route 53 zone ID (optional)
 CDK_HOSTED_ZONE_NAME=example.com                # Route 53 zone name (optional)
 ```
 
@@ -149,7 +149,7 @@ The stack exports the following values for each environment:
    ```bash
    cd infrastructure
    cp .env.example .env
-   # Edit .env with your AWS account, region, and domain configuration
+   # Edit .env with your environment-specific configuration
    ```
 
 3. **Install Infrastructure Dependencies**:
@@ -169,7 +169,7 @@ The stack exports the following values for each environment:
 5. **Deploy Infrastructure** (with confirmation):
 
    ```bash
-   npm run deploy
+   npm run deploy:all
    ```
 
    Or deploy specific stacks:
@@ -178,8 +178,8 @@ The stack exports the following values for each environment:
    # Deploy only the application CDN
    npm run deploy -- "*ui-cdn*"
 
-   # Deploy all stacks
-   npm run deploy:all
+   # Deploy all stacks (without confirmation)
+   npm run deploy:all -- --require-approval never
    ```
 
 6. **Verify Deployment**:
