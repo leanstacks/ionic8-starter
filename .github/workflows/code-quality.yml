@@ -177,6 +177,7 @@ jobs:
           fi
 
       - name: Infrastructure build check
+        working-directory: ./infrastructure
         run: |
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "## Infrastructure Build" >> $GITHUB_STEP_SUMMARY
@@ -192,6 +193,7 @@ jobs:
           fi
 
       - name: Infrastructure security audit
+        working-directory: ./infrastructure
         run: |
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "## Infrastructure Security Audit" >> $GITHUB_STEP_SUMMARY
@@ -208,6 +210,7 @@ jobs:
           fi
 
       - name: Infrastructure package analysis
+        working-directory: ./infrastructure
         run: |
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "## Infrastructure Package Analysis" >> $GITHUB_STEP_SUMMARY
