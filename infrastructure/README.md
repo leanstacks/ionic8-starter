@@ -50,4 +50,4 @@ AWS CDK infrastructure for the Ionic Starter application.
 
 ## Further Reading
 
-See [../docs/infrastructure.md](../docs/infrastructure.md) for complete documentation.
+See the [Infrastructure Guide](../docs/INFRASTRUCTURE_GUIDE.md) for complete documentation.
