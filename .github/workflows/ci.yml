@@ -59,7 +59,16 @@ jobs:
           role-to-assume: ${{ vars.AWS_ROLE_ARN_DEV }}
           role-session-name: ci-ionic8-starter
 
-      - name: Validate AWS CloudFormation Template
-        run: |-
-          aws cloudformation validate-template \
-          --template-body file://template.yml
+      - name: Synthesize CDK stacks
+        working-directory: ./infrastructure
+        run: npm run synth
+
+      # Final Step: Clean up sensitive infrastructure files
+      - name: Clean up sensitive files
+        if: always()
+        working-directory: ./infrastructure
+        run: |
+          echo "🧹 Cleaning up sensitive files..."
+          rm -f .env
+          rm -rf cdk.out
+          echo "✅ Sensitive files cleaned up"
