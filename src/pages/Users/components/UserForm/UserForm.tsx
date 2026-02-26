@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react';
-import { IonButton } from '@ionic/react';
+import { IonButton, useIonViewDidEnter } from '@ionic/react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
@@ -39,6 +39,14 @@ const UserForm = ({ className, onSubmit, user, testid = 'form-user' }: UserFormP
   useEffect(() => {
     focusInput.current?.setFocus();
   }, []);
+
+  /**
+   * Focus the first input when the view is entered.
+   */
+  useIonViewDidEnter(() => {
+    // TODO: fix focus using Ionic's focus management system instead of directly manipulating the DOM element
+    focusInput.current?.setFocus();
+  });
 
   /**
    * User form validation schema.
