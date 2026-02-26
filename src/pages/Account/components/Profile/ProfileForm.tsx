@@ -1,7 +1,8 @@
 import { IonButton, useIonRouter, useIonViewDidEnter } from '@ionic/react';
 import { useRef, useState } from 'react';
-import { Form, Formik } from 'formik';
-import { date, object, string } from 'yup';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { z } from 'zod';
 import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
 
@@ -36,7 +37,6 @@ interface ProfileFormProps extends BaseComponentProps {
 /**
  * The `ProfileForm` component renders a Formik form to edit a user profile.
  * @param {ProfileFormProps} props - Component propeties.
- * @returns {JSX.Element} JSX
  */
 const ProfileForm = ({ className, testid = 'form-profile', profile }: ProfileFormProps) => {
   const focusInput = useRef<HTMLIonInputElement>(null);
@@ -50,11 +50,25 @@ const ProfileForm = ({ className, testid = 'form-profile', profile }: ProfileFor
   /**
    * Profile form validation schema.
    */
-  const validationSchema = object<ProfileFormValues>({
-    name: string().required(t('validation.required')),
-    email: string().required(t('validation.required')).email(t('validation.email')),
-    bio: string().max(500, ({ max }) => t('validation.max', { max })),
-    dateOfBirth: date().required(t('validation.required')),
+  const profileFormSchema = z.object({
+    name: z.string().min(1, { message: t('validation.required') }),
+    email: z.email({ message: t('validation.email') }).min(1, { message: t('validation.required') }),
+    bio: z
+      .string()
+      .max(500, { message: t('validation.max', { max: 500 }) })
+      .optional(),
+    dateOfBirth: z.iso.date().optional(),
+  });
+
+  const { control, formState, handleSubmit } = useForm<ProfileFormValues>({
+    defaultValues: {
+      email: profile.email,
+      name: profile.name,
+      bio: profile.bio,
+      dateOfBirth: profile.dateOfBirth,
+    },
+    mode: 'all',
+    resolver: zodResolver(profileFormSchema),
   });
 
   useIonViewDidEnter(() => {
@@ -63,6 +77,30 @@ const ProfileForm = ({ className, testid = 'form-profile', profile }: ProfileFor
 
   const onCancel = () => {
     router.goBack();
+  };
+
+  const onFormSubmit = (values: ProfileFormValues) => {
+    setProgress(true);
+    setError('');
+    updateProfile(
+      { profile: values },
+      {
+        onSuccess: () => {
+          createToast({
+            message: t('profile.updated-profile', { ns: 'account' }),
+            duration: 5000,
+            buttons: [DismissButton()],
+          });
+          router.goBack();
+        },
+        onError: (err) => {
+          setError(err.message);
+        },
+        onSettled: () => {
+          setProgress(false);
+        },
+      },
+    );
   };
 
   return (
@@ -75,111 +113,78 @@ const ProfileForm = ({ className, testid = 'form-profile', profile }: ProfileFor
         />
       )}
 
-      <Formik<ProfileFormValues>
-        enableReinitialize={true}
-        initialValues={{
-          email: profile.email,
-          name: profile.name,
-          bio: profile.bio,
-          dateOfBirth: profile.dateOfBirth,
-        }}
-        onSubmit={(values, { setSubmitting }) => {
-          setProgress(true);
-          setError('');
-          updateProfile(
-            { profile: values },
-            {
-              onSuccess: () => {
-                createToast({
-                  message: t('profile.updated-profile', { ns: 'account' }),
-                  duration: 5000,
-                  buttons: [DismissButton()],
-                });
-                router.goBack();
-              },
-              onError: (err) => {
-                setError(err.message);
-              },
-              onSettled: () => {
-                setProgress(false);
-                setSubmitting(false);
-              },
-            },
-          );
-        }}
-        validationSchema={validationSchema}
-      >
-        {({ dirty, isSubmitting }) => (
-          <Form>
-            <Input
-              name="name"
-              label={t('profile.label.name', { ns: 'account' })}
-              labelPlacement="stacked"
-              disabled={isSubmitting}
-              autocomplete="off"
-              className="ls-profile-form__input"
-              ref={focusInput}
-              data-testid={`${testid}-field-name`}
-            />
+      <form onSubmit={handleSubmit(onFormSubmit)} noValidate data-testid={`${testid}-form`}>
+        <Input
+          control={control}
+          name="name"
+          label={t('profile.label.name', { ns: 'account' })}
+          labelPlacement="stacked"
+          disabled={formState.isSubmitting}
+          autocomplete="off"
+          className="ls-profile-form__input"
+          ref={focusInput}
+          data-testid={`${testid}-field-name`}
+        />
 
-            <Input
-              name="email"
-              type="email"
-              label={t('profile.label.email', { ns: 'account' })}
-              labelPlacement="stacked"
-              disabled={isSubmitting}
-              autocomplete="off"
-              className="ls-profile-form__input"
-              data-testid={`${testid}-field-email`}
-            />
+        <Input
+          control={control}
+          name="email"
+          type="email"
+          label={t('profile.label.email', { ns: 'account' })}
+          labelPlacement="stacked"
+          disabled={formState.isSubmitting}
+          autocomplete="off"
+          className="ls-profile-form__input"
+          data-testid={`${testid}-field-email`}
+        />
 
-            <Textarea
-              name="bio"
-              label={t('profile.label.bio', { ns: 'account' })}
-              labelPlacement="stacked"
-              autoGrow
-              counter
-              maxlength={500}
-              disabled={isSubmitting}
-              className="ls-profile-form__input"
-              data-testid={`${testid}-field-bio`}
-            />
+        <Textarea
+          control={control}
+          name="bio"
+          label={t('profile.label.bio', { ns: 'account' })}
+          labelPlacement="stacked"
+          autoGrow
+          counter
+          maxlength={500}
+          disabled={formState.isSubmitting}
+          className="ls-profile-form__input"
+          data-testid={`${testid}-field-bio`}
+        />
 
-            <DateInput
-              name="dateOfBirth"
-              label={t('profile.label.birthday', { ns: 'account' })}
-              labelPlacement="stacked"
-              disabled={isSubmitting}
-              className="ls-profile-form__input"
-              showClearButton
-              showDefaultButtons
-              showDefaultTitle
-              testid={`${testid}-field-dateofbirth`}
-            />
+        <DateInput
+          control={control}
+          name="dateOfBirth"
+          label={t('profile.label.birthday', { ns: 'account' })}
+          labelPlacement="stacked"
+          disabled={formState.isSubmitting}
+          className="ls-profile-form__input"
+          showClearButton
+          showDefaultButtons
+          showDefaultTitle
+          testid={`${testid}-field-dateofbirth`}
+        />
 
-            <ButtonRow className="ls-profile-form__button-row" expand="block">
-              <IonButton
-                type="button"
-                color="secondary"
-                fill="clear"
-                disabled={isSubmitting}
-                onClick={onCancel}
-                data-testid={`${testid}-button-cancel`}
-              >
-                {t('label.cancel')}
-              </IonButton>
-              <IonButton
-                type="submit"
-                color="primary"
-                disabled={isSubmitting || !dirty}
-                data-testid={`${testid}-button-submit`}
-              >
-                {t('label.save')}
-              </IonButton>
-            </ButtonRow>
-          </Form>
-        )}
-      </Formik>
+        <ButtonRow className="ls-profile-form__button-row" expand="block">
+          <IonButton
+            type="button"
+            color="secondary"
+            fill="clear"
+            disabled={formState.isSubmitting}
+            onClick={onCancel}
+            data-testid={`${testid}-button-cancel`}
+          >
+            {t('label.cancel')}
+          </IonButton>
+          <IonButton
+            type="submit"
+            color="primary"
+            disabled={formState.isSubmitting || !formState.isDirty}
+            data-testid={`${testid}-button-submit`}
+          >
+            {t('label.save')}
+          </IonButton>
+        </ButtonRow>
+      </form>
     </div>
   );
 };

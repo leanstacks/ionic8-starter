@@ -1,56 +1,66 @@
-import { InputInputEventDetail, IonInput } from '@ionic/react';
+import { forwardRef } from 'react';
+import { IonInput } from '@ionic/react';
+import { Control, FieldValues, useController, FieldPath } from 'react-hook-form';
 import classNames from 'classnames';
 
 import { BaseComponentProps } from '../types';
-import { useField } from 'formik';
-import { forwardRef } from 'react';
 
 /**
  * Properties for the `Input` component.
  * @see {@link BaseComponentProps}
  * @see {@link IonInput}
  */
-interface InputProps
-  extends
-    BaseComponentProps,
-    Omit<React.ComponentPropsWithoutRef<typeof IonInput>, 'name'>,
-    Required<Pick<React.ComponentPropsWithoutRef<typeof IonInput>, 'name'>> {}
+interface InputProps<T extends FieldValues>
+  extends BaseComponentProps, Omit<React.ComponentPropsWithoutRef<typeof IonInput>, 'name'> {
+  control: Control<T>;
+  name: FieldPath<T>;
+}
 
 /**
  * The `Input` component renders a standardized `IonInput` which is integrated
- * with Formik.
+ * with React Hook Form.
  *
  * Optionally accepts a forwarded `ref` which allows the parent to manipulate
  * the input, performing actions programmatically such as giving focus.
  *
  * @param {InputProps} props - Component properties.
  * @param {ForwardedRef<HTMLIonInputElement>} [ref] - Optional. A forwarded `ref`.
- * @returns {JSX.Element} JSX
  */
-const Input = forwardRef<HTMLIonInputElement, InputProps>(
-  ({ className, testid = 'input', ...props }: InputProps, ref) => {
-    const [field, meta, helpers] = useField(props.name);
-    const errorText: string | undefined = meta.touched ? meta.error : undefined;
+const InputComponent = <T extends FieldValues>(
+  { className, control, name, testid = 'input', ...props }: InputProps<T>,
+  ref: React.ForwardedRef<HTMLIonInputElement>,
+) => {
+  const {
+    field,
+    fieldState: { error, isTouched },
+  } = useController({
+    name,
+    control,
+  });
 
-    return (
-      <IonInput
-        className={classNames(
-          'ls-input',
-          className,
-          { 'ion-touched': meta.touched },
-          { 'ion-invalid': meta.error },
-          { 'ion-valid': meta.touched && !meta.error },
-        )}
-        onIonInput={async (e: CustomEvent<InputInputEventDetail>) => await helpers.setValue(e.detail.value)}
-        data-testid={testid}
-        {...field}
-        {...props}
-        errorText={errorText}
-        ref={ref}
-      ></IonInput>
-    );
-  },
-);
-Input.displayName = 'Input';
+  const errorText: string | undefined = isTouched ? error?.message : undefined;
+
+  return (
+    <IonInput
+      id={props.id || name}
+      className={classNames(
+        'ls-input',
+        className,
+        { 'ion-touched': isTouched },
+        { 'ion-invalid': error },
+        { 'ion-valid': isTouched && !error },
+      )}
+      {...props}
+      {...field}
+      errorText={errorText}
+      ref={ref}
+      data-testid={testid}
+    ></IonInput>
+  );
+};
+
+const Input = forwardRef(InputComponent) as <T extends FieldValues>(
+  props: InputProps<T> & { ref?: React.ForwardedRef<HTMLIonInputElement> },
+) => React.ReactElement;
 
 export default Input;

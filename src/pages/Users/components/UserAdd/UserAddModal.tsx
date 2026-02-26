@@ -83,7 +83,7 @@ const UserAddModal = ({
           />
         )}
         <UserForm
-          onSubmit={(values, { setSubmitting }) => {
+          onSubmit={(values) => {
             setProgress(true);
             setError('');
             createUser(
@@ -91,7 +91,6 @@ const UserAddModal = ({
               {
                 onSuccess: (user) => {
                   setProgress(false);
-                  setSubmitting(false);
                   createToast({
                     buttons: [DismissButton()],
                     duration: 5000,
@@ -103,7 +102,6 @@ const UserAddModal = ({
                 onError(error) {
                   setProgress(false);
                   setError(error.message);
-                  setSubmitting(false);
                 },
               },
             );

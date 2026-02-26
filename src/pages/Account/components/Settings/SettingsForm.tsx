@@ -1,8 +1,8 @@
-import { JSX } from 'react';
 import { IonItem, IonLabel, IonListHeader, IonRadio, IonSelectOption } from '@ionic/react';
 import classNames from 'classnames';
-import { Form, Formik } from 'formik';
-import { boolean, number, object, string } from 'yup';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { z } from 'zod';
 import orderBy from 'lodash/orderBy';
 import map from 'lodash/map';
 import { useTranslation } from 'react-i18next';
@@ -32,11 +32,10 @@ import RadioGroupInput from 'common/components/Input/RadioGroupInput';
 type SettingsFormValues = Pick<Settings, 'allowNotifications' | 'brightness' | 'fontSize' | 'language'>;
 
 /**
- * The `SettingsForm` component renders a Formik form to edit user settings.
+ * The `SettingsForm` component renders a form to edit user settings.
  * @param {BaseComponentProps} props - Component properties.
- * @returns {JSX.Element} JSX
  */
-const SettingsForm = ({ className, testid = 'form-settings' }: BaseComponentProps): JSX.Element | false => {
+const SettingsForm = ({ className, testid = 'form-settings' }: BaseComponentProps) => {
   const { data: settings, isLoading } = useGetSettings();
   const { mutate: updateSettings } = useUpdateSettings();
   const { setProgress } = useProgress();
@@ -46,14 +45,59 @@ const SettingsForm = ({ className, testid = 'form-settings' }: BaseComponentProp
   /**
    * Settings form validation schema.
    */
-  const validationSchema = object<SettingsFormValues>({
-    allowNotifications: boolean(),
-    brightness: number().min(0).max(100),
-    fontSize: string()
-      .required(t('validation.required'))
-      .oneOf(['smaller', 'default', 'larger'], ({ values }) => t('validation.oneOf', { values })),
-    language: string().oneOf(map(LANGUAGES, 'code'), ({ values }) => t('validation.oneOf', { values })),
+  const settingsFormSchema = z.object({
+    allowNotifications: z.boolean(),
+    brightness: z.number().min(0).max(100),
+    fontSize: z
+      .string()
+      .optional()
+      .default('default')
+      .refine((value) => ['smaller', 'default', 'larger'].includes(value), {
+        message: t('validation.oneOf', { values: ['smaller', 'default', 'larger'].join(', ') }),
+      }),
+    language: z.enum(map(LANGUAGES, 'code') as [string, ...string[]], {
+      message: t('validation.oneOf', { values: map(LANGUAGES, 'code').join(', ') }),
+    }),
   });
+
+  const { control, formState, handleSubmit } = useForm<SettingsFormValues>({
+    defaultValues: {
+      allowNotifications: settings?.allowNotifications ?? false,
+      brightness: settings?.brightness ?? 50,
+      fontSize: settings?.fontSize ?? 'default',
+      language: settings?.language ?? 'en',
+    },
+    resolver: zodResolver(settingsFormSchema),
+  });
+
+  const onFormSubmit = (values: SettingsFormValues) => {
+    setProgress(true);
+    updateSettings(
+      { settings: values },
+      {
+        onSuccess: (settings) => {
+          createToast({
+            message: t('settings.update-success', { ns: 'account' }),
+            duration: 3000,
+            buttons: [DismissButton()],
+          });
+          // store the preferred language for i18n language detection
+          storage.setItem(StorageKey.Language, settings.language);
+          i18n.changeLanguage(settings.language);
+        },
+        onError: () => {
+          createToast({
+            message: t('settings.unable-to-update', { ns: 'account' }),
+            buttons: [DismissButton()],
+            color: 'danger',
+          });
+        },
+        onSettled: () => {
+          setProgress(false);
+        },
+      },
+    );
+  };
 
   if (isLoading) {
     return (
@@ -89,126 +133,102 @@ const SettingsForm = ({ className, testid = 'form-settings' }: BaseComponentProp
 
   if (settings) {
     return (
-      <Formik<SettingsFormValues>
-        enableReinitialize={true}
-        initialValues={{
-          allowNotifications: settings.allowNotifications,
-          brightness: settings.brightness,
-          fontSize: settings.fontSize,
-          language: settings.language,
-        }}
-        onSubmit={(values, { setSubmitting }) => {
-          setProgress(true);
-          updateSettings(
-            { settings: values },
-            {
-              onSuccess: (settings) => {
-                createToast({
-                  message: t('settings.update-success', { ns: 'account' }),
-                  duration: 3000,
-                  buttons: [DismissButton()],
-                });
-                // store the preferred language for i18n language detection
-                storage.setItem(StorageKey.Language, settings.language);
-                i18n.changeLanguage(settings.language);
-              },
-              onError: () => {
-                createToast({
-                  message: t('settings.unable-to-update', { ns: 'account' }),
-                  buttons: [DismissButton()],
-                  color: 'danger',
-                });
-              },
-              onSettled: () => {
-                setProgress(false);
-                setSubmitting(false);
-              },
-            },
-          );
-        }}
-        validationSchema={validationSchema}
+      <form
+        onSubmit={handleSubmit(onFormSubmit)}
+        noValidate
+        data-testid={testid}
+        className={classNames('ls-settings-form', className)}
       >
-        {({ isSubmitting, submitForm }) => (
-          <Form data-testid={testid} className={classNames('ls-settings-form', className)}>
-            <List>
-              <IonListHeader>
-                <IonLabel>{t('settings.settings', { ns: 'account' })}</IonLabel>
-              </IonListHeader>
+        <List>
+          <IonListHeader>
+            <IonLabel>{t('settings.settings', { ns: 'account' })}</IonLabel>
+          </IonListHeader>
 
-              <IonItem className="text-sm font-medium">
-                <ToggleInput
-                  name="allowNotifications"
-                  disabled={isSubmitting}
-                  onIonChange={() => submitForm()}
-                  testid={`${testid}-field-allowNotifications`}
-                >
-                  {t('settings.label.notifications', { ns: 'account' })}
-                </ToggleInput>
-              </IonItem>
+          <IonItem className="text-sm font-medium">
+            <ToggleInput
+              control={control}
+              name="allowNotifications"
+              disabled={formState.isSubmitting}
+              onIonChange={() => handleSubmit(onFormSubmit)()}
+              testid={`${testid}-field-allowNotifications`}
+            >
+              {t('settings.label.notifications', { ns: 'account' })}
+            </ToggleInput>
+          </IonItem>
 
-              <IonItem className="text-sm font-medium">
-                <RangeInput
-                  name="brightness"
-                  label={t('settings.label.brightness', { ns: 'account' })}
-                  labelPlacement="start"
-                  disabled={isSubmitting}
-                  onIonChange={() => submitForm()}
-                  testid={`${testid}-field-brightness`}
-                >
-                  <Icon icon="minus" slot="start" />
-                  <Icon icon="plus" slot="end" />
-                </RangeInput>
-              </IonItem>
+          <IonItem className="text-sm font-medium">
+            <RangeInput
+              control={control}
+              name="brightness"
+              label={t('settings.label.brightness', { ns: 'account' })}
+              labelPlacement="start"
+              disabled={formState.isSubmitting}
+              onIonChange={() => handleSubmit(onFormSubmit)()}
+              testid={`${testid}-field-brightness`}
+            >
+              <Icon icon="minus" slot="start" />
+              <Icon icon="plus" slot="end" />
+            </RangeInput>
+          </IonItem>
 
-              <IonItem className="text-sm font-medium">
-                <SelectInput
-                  name="language"
-                  label={t('settings.label.language', { ns: 'account' })}
-                  interface="popover"
-                  disabled={isSubmitting}
-                  onIonChange={() => submitForm()}
-                  testid={`${testid}-field-language`}
-                >
-                  {orderBy(LANGUAGES, ['value']).map((language) => (
-                    <IonSelectOption key={language.code} value={language.code}>
-                      {t(`settings.language.${language.code}`, { ns: 'account' })}
-                    </IonSelectOption>
-                  ))}
-                </SelectInput>
-              </IonItem>
+          <IonItem className="text-sm font-medium">
+            <SelectInput
+              control={control}
+              name="language"
+              label={t('settings.label.language', { ns: 'account' })}
+              interface="popover"
+              disabled={formState.isSubmitting}
+              onIonChange={() => handleSubmit(onFormSubmit)()}
+              testid={`${testid}-field-language`}
+            >
+              {orderBy(LANGUAGES, ['value']).map((language) => (
+                <IonSelectOption key={language.code} value={language.code}>
+                  {t(`settings.language.${language.code}`, { ns: 'account' })}
+                </IonSelectOption>
+              ))}
+            </SelectInput>
+          </IonItem>
 
-              <IonItem lines="none" className="text-sm font-medium">
-                <IonLabel>{t('settings.label.font-size', { ns: 'account' })}</IonLabel>
-              </IonItem>
+          <IonItem lines="none" className="text-sm font-medium">
+            <IonLabel>{t('settings.label.font-size', { ns: 'account' })}</IonLabel>
+          </IonItem>
 
-              <IonItem>
-                <RadioGroupInput name="fontSize" onIonChange={() => submitForm()} testid={`${testid}-field-fontSize`}>
-                  <IonRadio
-                    className="ls-settings-form__input-fontsize-radio text-xs"
-                    disabled={isSubmitting}
-                    value="smaller"
-                  >
-                    {t('settings.font-size.smaller', { ns: 'account' })}
-                  </IonRadio>
-                  <IonRadio className="ls-settings-form__input-fontsize-radio" disabled={isSubmitting} value="default">
-                    {t('settings.font-size.default', { ns: 'account' })}
-                  </IonRadio>
-                  <IonRadio
-                    className="ls-settings-form__input-fontsize-radio text-xl"
-                    disabled={isSubmitting}
-                    value="larger"
-                  >
-                    {t('settings.font-size.larger', { ns: 'account' })}
-                  </IonRadio>
-                </RadioGroupInput>
-              </IonItem>
-            </List>
-          </Form>
-        )}
-      </Formik>
+          <IonItem>
+            <RadioGroupInput
+              name="fontSize"
+              control={control}
+              onIonChange={() => handleSubmit(onFormSubmit)()}
+              testid={`${testid}-field-fontSize`}
+            >
+              <IonRadio
+                className="ls-settings-form__input-fontsize-radio text-xs"
+                disabled={formState.isSubmitting}
+                value="smaller"
+              >
+                {t('settings.font-size.smaller', { ns: 'account' })}
+              </IonRadio>
+              <IonRadio
+                className="ls-settings-form__input-fontsize-radio"
+                disabled={formState.isSubmitting}
+                value="default"
+              >
+                {t('settings.font-size.default', { ns: 'account' })}
+              </IonRadio>
+              <IonRadio
+                className="ls-settings-form__input-fontsize-radio text-xl"
+                disabled={formState.isSubmitting}
+                value="larger"
+              >
+                {t('settings.font-size.larger', { ns: 'account' })}
+              </IonRadio>
+            </RadioGroupInput>
+          </IonItem>
+        </List>
+      </form>
     );
   } else {
-    return false;
+    // if settings failed to load, render nothing (the error state is handled in the parent component)
+    return null;
   }
 };
 

@@ -8,8 +8,9 @@ import {
 } from '@ionic/react';
 import { useRef, useState } from 'react';
 import classNames from 'classnames';
-import { Form, Formik } from 'formik';
-import { boolean, object, string } from 'yup';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { z } from 'zod';
 import { useTranslation } from 'react-i18next';
 
 import './SignInForm.scss';
@@ -29,6 +30,7 @@ import CheckboxInput from 'common/components/Input/CheckboxInput';
  * Sign in form values.
  * @param {string} username - A username.
  * @param {string} password - A password.
+ * @param {boolean} rememberMe - Whether to remember the username for future sign-ins.
  */
 interface SignInFormValues {
   username: string;
@@ -39,7 +41,6 @@ interface SignInFormValues {
 /**
  * The `SignInForm` component renders a Formik form for user authentication.
  * @param {BaseComponentProps} props - Component properties.
- * @returns {JSX.Element} JSX
  */
 const SignInForm = ({ className, testid = 'form-signin' }: BaseComponentProps) => {
   const focusInput = useRef<HTMLIonInputElement>(null);
@@ -52,14 +53,55 @@ const SignInForm = ({ className, testid = 'form-signin' }: BaseComponentProps) =
   /**
    * Sign in form validation schema.
    */
-  const validationSchema = object<SignInFormValues>({
-    username: string().required(t('validation.required')),
-    password: string().required(t('validation.required')),
-    rememberMe: boolean().default(false),
+  const signInFormSchema = z.object({
+    username: z.string().min(1, { message: t('validation.required') }),
+    password: z.string().min(1, { message: t('validation.required') }),
+    rememberMe: z.boolean(),
   });
 
-  // remember me details
+  // Fetch remembered username from storage, if it exists, to pre-populate the form.
   const rememberMe = storage.getJsonItem<RememberMe>(StorageKey.RememberMe);
+
+  /**
+   * Initializes the form using React Hook Form with Zod validation.
+   */
+  const { control, formState, handleSubmit } = useForm<SignInFormValues>({
+    defaultValues: {
+      username: rememberMe?.username ?? '',
+      password: '',
+      rememberMe: !!rememberMe,
+    },
+    mode: 'all',
+    resolver: zodResolver(signInFormSchema),
+  });
+
+  /**
+   * Handles form submission.
+   * @param values - The form values.
+   */
+  const onFormSubmit = (values: SignInFormValues) => {
+    console.log('Form submitted with values:', values);
+    setError('');
+    setShowProgress(true);
+    signIn(values.username, {
+      onSuccess: () => {
+        if (values.rememberMe) {
+          storage.setJsonItem<RememberMe>(StorageKey.RememberMe, {
+            username: values.username,
+          });
+        } else {
+          storage.removeItem(StorageKey.RememberMe);
+        }
+        router.push('/tabs', 'forward', 'replace');
+      },
+      onError: (err: Error) => {
+        setError(err.message);
+      },
+      onSettled: () => {
+        setShowProgress(false);
+      },
+    });
+  };
 
   useIonViewDidEnter(() => {
     focusInput.current?.setFocus();
@@ -75,103 +117,71 @@ const SignInForm = ({ className, testid = 'form-signin' }: BaseComponentProps) =
         />
       )}
 
-      <Formik<SignInFormValues>
-        enableReinitialize={true}
-        initialValues={{
-          username: rememberMe?.username ?? '',
-          password: '',
-          rememberMe: !!rememberMe,
-        }}
-        onSubmit={(values, { setSubmitting }) => {
-          setError('');
-          setShowProgress(true);
-          signIn(values.username, {
-            onSuccess: () => {
-              if (values.rememberMe) {
-                storage.setJsonItem<RememberMe>(StorageKey.RememberMe, {
-                  username: values.username,
-                });
-              } else {
-                storage.removeItem(StorageKey.RememberMe);
-              }
-              router.push('/tabs', 'forward', 'replace');
-            },
-            onError: (err: Error) => {
-              setError(err.message);
-            },
-            onSettled: () => {
-              setShowProgress(false);
-              setSubmitting(false);
-            },
-          });
-        }}
-        validationSchema={validationSchema}
-      >
-        {({ dirty, isSubmitting }) => (
-          <Form data-testid={`${testid}-form`}>
-            <HeaderRow border>
-              <div>{t('signin', { ns: 'auth' })}</div>
-              <Icon id="signinInfo" icon="circleInfo" color="secondary" />
-            </HeaderRow>
+      <form onSubmit={handleSubmit(onFormSubmit)} noValidate data-testid={`${testid}-form`}>
+        <HeaderRow border>
+          <div>{t('signin', { ns: 'auth' })}</div>
+          <Icon id="signinInfo" icon="circleInfo" color="secondary" />
+        </HeaderRow>
 
-            <Input
-              name="username"
-              label={t('label.username', { ns: 'auth' })}
-              labelPlacement="stacked"
-              maxlength={30}
-              autocomplete="off"
-              className="ls-signin-form__input"
-              ref={focusInput}
-              data-testid={`${testid}-field-username`}
-            />
-            <Input
-              type="password"
-              name="password"
-              label={t('label.password', { ns: 'auth' })}
-              labelPlacement="stacked"
-              maxlength={30}
-              autocomplete="off"
-              className="ls-signin-form__input"
-              data-testid={`${testid}-field-password`}
-            >
-              <IonInputPasswordToggle slot="end"></IonInputPasswordToggle>
-            </Input>
+        <Input
+          control={control}
+          name="username"
+          label={t('label.username', { ns: 'auth' })}
+          labelPlacement="stacked"
+          maxlength={30}
+          autocomplete="off"
+          className="ls-signin-form__input"
+          ref={focusInput}
+          data-testid={`${testid}-field-username`}
+        />
+        <Input
+          control={control}
+          type="password"
+          name="password"
+          label={t('label.password', { ns: 'auth' })}
+          labelPlacement="stacked"
+          maxlength={30}
+          autocomplete="off"
+          className="ls-signin-form__input"
+          data-testid={`${testid}-field-password`}
+        >
+          <IonInputPasswordToggle slot="end"></IonInputPasswordToggle>
+        </Input>
 
-            <CheckboxInput
-              name="rememberMe"
-              className="ls-signin-form__input ls-signin-form__input-checkbox"
-              testid={`${testid}-field-rememberme`}
-            >
-              {t('label.remember-me', { ns: 'auth' })}
-            </CheckboxInput>
+        <CheckboxInput
+          control={control}
+          name="rememberMe"
+          className="ls-signin-form__input ls-signin-form__input-checkbox"
+          testid={`${testid}-field-rememberme`}
+        >
+          {t('label.remember-me', { ns: 'auth' })}
+        </CheckboxInput>
 
-            <IonButton
-              type="submit"
-              color="primary"
-              className="ls-signin-form__button"
-              expand="block"
-              disabled={isSubmitting || !dirty}
-              data-testid={`${testid}-button-submit`}
-            >
-              {t('signin', { ns: 'auth' })}
-            </IonButton>
+        <IonButton
+          type="submit"
+          color="primary"
+          className="ls-signin-form__button"
+          expand="block"
+          disabled={formState.isSubmitting || !formState.isDirty}
+          data-testid={`${testid}-button-submit`}
+        >
+          {t('signin', { ns: 'auth' })}
+        </IonButton>
 
-            <IonPopover trigger="signinInfo" triggerAction="hover" className="ls-signin-form-popover">
-              <IonContent className="ion-padding">
-                <p>
-                  {t('info-username.part1', { ns: 'auth' })}
-                  <a href="https://jsonplaceholder.typicode.com/users" target="_blank" rel="noreferrer">
-                    {t('info-username.part2', { ns: 'auth' })}
-                  </a>
-                  . {t('info-username.part3', { ns: 'auth' })} <span className="inline-code">Bret</span>{' '}
-                  {t('info-username.part4', { ns: 'auth' })} <span className="inline-code">Samantha</span>.
-                </p>
-                <p>{t('info-username.part5', { ns: 'auth' })}</p>
-              </IonContent>
-            </IonPopover>
-          </Form>
-        )}
-      </Formik>
+        <IonPopover trigger="signinInfo" triggerAction="hover" className="ls-signin-form-popover">
+          <IonContent className="ion-padding">
+            <p>
+              {t('info-username.part1', { ns: 'auth' })}
+              <a href="https://jsonplaceholder.typicode.com/users" target="_blank" rel="noreferrer">
+                {t('info-username.part2', { ns: 'auth' })}
+              </a>
+              . {t('info-username.part3', { ns: 'auth' })} <span className="inline-code">Bret</span>{' '}
+              {t('info-username.part4', { ns: 'auth' })} <span className="inline-code">Samantha</span>.
+            </p>
+            <p>{t('info-username.part5', { ns: 'auth' })}</p>
+          </IonContent>
+        </IonPopover>
+      </form>
     </div>
   );
 };

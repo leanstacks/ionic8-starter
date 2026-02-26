@@ -1,6 +1,6 @@
 import { ComponentPropsWithoutRef } from 'react';
 import { CheckboxCustomEvent, IonCheckbox } from '@ionic/react';
-import { useField } from 'formik';
+import { Control, FieldPath, FieldValues, useController } from 'react-hook-form';
 import classNames from 'classnames';
 
 import './CheckboxInput.scss';
@@ -11,15 +11,15 @@ import { PropsWithTestId } from '../types';
  * @see {@link PropsWithTestId}
  * @see {@link IonCheckbox}
  */
-interface CheckboxInputProps
-  extends
-    PropsWithTestId,
-    Omit<ComponentPropsWithoutRef<typeof IonCheckbox>, 'name'>,
-    Required<Pick<ComponentPropsWithoutRef<typeof IonCheckbox>, 'name'>> {}
+interface CheckboxInputProps<T extends FieldValues>
+  extends PropsWithTestId, Omit<ComponentPropsWithoutRef<typeof IonCheckbox>, 'name'> {
+  control: Control<T>;
+  name: FieldPath<T>;
+}
 
 /**
  * The `CheckboxInput` component renders a standardized `IonCheckbox` which is
- * integrated with Formik.
+ * integrated with React Hook Form.
  *
  * CheckboxInput supports two types of field values: `boolean` and `string[]`.
  *
@@ -30,20 +30,21 @@ interface CheckboxInputProps
  * with the same `name` and a unique `value` property.
  *
  * @param {CheckboxInputProps} props - Component properties.
- * @returns {JSX.Element} JSX
  */
-const CheckboxInput = ({
+const CheckboxInput = <T extends FieldValues>({
   className,
+  control,
   name,
   onIonChange,
   testid = 'input-checkbox',
-  value,
   ...checkboxProps
-}: CheckboxInputProps) => {
-  const [field, meta, helpers] = useField({
+}: CheckboxInputProps<T>) => {
+  const {
+    field,
+    fieldState: { error, isTouched },
+  } = useController({
     name,
-    type: 'checkbox',
-    value,
+    control,
   });
 
   /**
@@ -51,25 +52,21 @@ const CheckboxInput = ({
    * @param {CheckboxCustomEvent} e - The event.
    */
   const onChange = async (e: CheckboxCustomEvent): Promise<void> => {
-    if (typeof meta.value === 'boolean') {
-      await helpers.setValue(e.detail.checked);
-    } else if (Array.isArray(meta.value)) {
-      if (e.detail.checked) {
-        await helpers.setValue([...meta.value, e.detail.value]);
-      } else {
-        await helpers.setValue(meta.value.filter((val) => val !== e.detail.value));
-      }
-    }
+    field.onChange(!field.value);
     onIonChange?.(e);
   };
+
+  const errorText: string | undefined = isTouched ? error?.message : undefined;
 
   return (
     <IonCheckbox
       className={classNames('ls-checkbox-input', className)}
-      data-testid={testid}
       onIonChange={onChange}
-      {...field}
+      value={field.value}
+      checked={field.value}
       {...checkboxProps}
+      errorText={errorText}
+      data-testid={testid}
     ></IonCheckbox>
   );
 };
