@@ -1,7 +1,7 @@
 import { IonButton, IonButtons, IonContent, IonFooter, IonPage, IonToolbar } from '@ionic/react';
 import { FallbackProps } from 'react-error-boundary';
 import { useTranslation } from 'react-i18next';
-import { ValidationError } from 'yup';
+import { ZodError } from 'zod';
 import { AxiosError } from 'axios';
 
 import image from 'assets/img/face_surprise_melting.png';
@@ -26,9 +26,9 @@ const ErrorPage = ({ error, resetErrorBoundary, testid = 'page-error' }: ErrorPa
 
   let title;
   let message;
-  if (error instanceof ValidationError) {
+  if (error instanceof ZodError) {
     title = t('error-validation');
-    message = error.errors.reduce((msg, error) => `${msg} ${error}`);
+    message = error.issues.map((issue) => `${issue.path.join('.')} - ${issue.message}`).join('; ');
   } else if (error instanceof AxiosError) {
     title = error.status ?? error.code;
     message = `${error.message}. ${error.config?.url}`;
