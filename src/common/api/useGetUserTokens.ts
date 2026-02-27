@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import dayjs from 'dayjs';
+import { isBefore } from 'date-fns';
 
 import { UserTokens } from 'common/models/auth';
 import { QueryKey, StorageKey } from 'common/utils/constants';
@@ -20,8 +20,8 @@ export const useGetUserTokens = () => {
       if (storedTokens) {
         // tokens found
         const tokens = JSON.parse(storedTokens) as unknown as UserTokens;
-        const now = dayjs();
-        if (now.isBefore(tokens.expires_at)) {
+        const now = new Date();
+        if (isBefore(now, new Date(tokens.expires_at))) {
           // tokens not expired
           return resolve(tokens);
         } else {

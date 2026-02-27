@@ -3,7 +3,7 @@ import { ModalCustomEvent } from '@ionic/core';
 import { DatetimeCustomEvent, IonButton, IonDatetime, IonInput, IonModal } from '@ionic/react';
 import { Control, FieldPath, FieldValues, useController } from 'react-hook-form';
 import classNames from 'classnames';
-import dayjs from 'dayjs';
+import { format } from 'date-fns';
 
 import './DateInput.scss';
 import { PropsWithTestId } from '../types';
@@ -83,7 +83,7 @@ const DateInput = <T extends FieldValues>({
   const onChange = async (e: DatetimeCustomEvent): Promise<void> => {
     const value = e.detail.value as DateValue;
     if (value) {
-      const isoDate = dayjs(value).format('YYYY-MM-DD');
+      const isoDate = format(new Date(value), 'yyyy-MM-dd');
       field.onChange(isoDate);
     } else {
       field.onChange(null);
@@ -117,7 +117,7 @@ const DateInput = <T extends FieldValues>({
 
   // format the value for the IonDatetime. it must be a local ISO date or null/undefined
   const datetimeValue = useMemo(() => {
-    return field.value ? dayjs(field.value).format('YYYY-MM-DD[T]HH:mm') : null;
+    return field.value ? format(new Date(field.value), "yyyy-MM-dd'T'HH:mm") : null;
   }, [field.value]);
 
   return (

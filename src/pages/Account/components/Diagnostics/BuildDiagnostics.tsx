@@ -1,6 +1,6 @@
 import { IonItem, IonLabel, IonListHeader, IonText } from '@ionic/react';
 import classNames from 'classnames';
-import dayjs from 'dayjs';
+import { format } from 'date-fns';
 import { useTranslation } from 'react-i18next';
 
 import { BaseComponentProps } from 'common/components/types';
@@ -31,7 +31,9 @@ const BuildDiagnostics = ({ className, testid = 'diagnostics-build' }: BaseCompo
       </IonItem>
       <IonItem className="text-sm">
         <IonLabel className="font-medium ion-margin-end">{t('diagnostics.label.time', { ns: 'account' })}</IonLabel>
-        <IonText data-testid={`${testid}-time`}>{dayjs(config.VITE_BUILD_TS).format('YYYY-MM-DD HH:mm:ss Z')}</IonText>
+        <IonText data-testid={`${testid}-time`}>
+          {format(new Date(config.VITE_BUILD_TS), 'yyyy-MM-dd HH:mm:ss xxx')}
+        </IonText>
       </IonItem>
       <IonItem className="text-sm">
         <IonLabel className="font-medium ion-margin-end">{t('diagnostics.label.sha', { ns: 'account' })}</IonLabel>

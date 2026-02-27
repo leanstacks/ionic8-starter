@@ -12,7 +12,7 @@ import {
 } from '@ionic/react';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import dayjs from 'dayjs';
+import { format } from 'date-fns';
 
 import { PropsWithTestId } from 'common/components/types';
 import { config } from 'common/utils/config';
@@ -31,7 +31,7 @@ const AccountPage = ({ testid = 'page-account' }: PropsWithTestId) => {
   const router = useIonRouter();
   const { t } = useTranslation();
 
-  const versionTs = dayjs(config.VITE_BUILD_TS).format('YY.MM.DD.hhmm');
+  const versionTs = format(new Date(config.VITE_BUILD_TS), 'yy.MM.dd.HHmm');
   const sha = config.VITE_BUILD_COMMIT_SHA.substring(0, 7);
   const version = `${versionTs}.${sha}`;
 
