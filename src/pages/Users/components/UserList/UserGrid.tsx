@@ -26,7 +26,6 @@ interface UserGridProps extends BaseComponentProps {
  * The `UserGrid` component renders a grid of `UserCard`s. Uses the `IonGrid`
  * component to provide base functionality.
  * @param {UserGridProps} props - Component properties.
- * @returns JSX
  * @see {@link IonGrid}
  */
 const UserGrid = ({ className, filterBy, testid = 'grid-user' }: UserGridProps) => {

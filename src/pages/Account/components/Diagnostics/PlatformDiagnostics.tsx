@@ -13,7 +13,6 @@ import { useTranslation } from 'react-i18next';
  * framework.
  *
  * @param {BaseComponentProps} props - Component properties.
- * @returns {JSX.Element} JSX
  */
 const PlatformDiagnostics = ({ className, testid = 'diagnostics-platform' }: BaseComponentProps) => {
   const { isNativePlatform, platforms } = usePlatform();

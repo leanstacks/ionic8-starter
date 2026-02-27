@@ -18,7 +18,6 @@ interface LoaderSkeletonProps extends BaseComponentProps {
  * a skeleton loader. This placeholder content is typically used to inform
  * the user that the content is loading.
  * @param {LoaderSkeletonProps} props - Component properties.
- * @returns JSX
  */
 const LoaderSkeleton = ({
   animated = false,

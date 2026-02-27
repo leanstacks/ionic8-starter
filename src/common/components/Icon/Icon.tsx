@@ -91,7 +91,6 @@ const icons: Record<IconName, IconProp> = {
  * The `Icon` component renders an icon. Wraps the `FontAwesomeIcon` component.
  *
  * @param {IconProps} props - Component properties.
- * @returns {JSX.Element} JSX
  * @see {@link FontAwesomeIcon}
  */
 const Icon = ({ className, color, icon, slot = '', testid = 'icon', ...iconProps }: IconProps) => {

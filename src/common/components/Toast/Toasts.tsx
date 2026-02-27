@@ -17,7 +17,6 @@ import Toast from './Toast';
  * of `Toast` components, ensuring that they are positioned appropriately
  * for the viewport size.
  * @param {BaseComponentProps} props - Component properties.
- * @returns {JSX.Element} JSX
  */
 const Toasts = ({ className, testid = 'toasts' }: BaseComponentProps) => {
   const { removeToast, toasts = [] } = useToasts();

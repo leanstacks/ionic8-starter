@@ -24,7 +24,6 @@ export interface HeaderRowProps extends BaseComponentProps, ComponentPropsWithou
  * used to render text only or several blocks of content.
  *
  * @param {HeaderRowProps} props - Component properties.
- * @returns {JSX.Element} JSX
  */
 const HeaderRow = ({
   border = false,

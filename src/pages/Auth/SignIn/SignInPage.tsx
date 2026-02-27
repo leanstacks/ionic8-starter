@@ -11,7 +11,6 @@ import Container from 'common/components/Content/Container';
 /**
  * The `SignInPage` renders the layout for user authentication.
  * @param {PropsWithTestId} props - Component properties.
- * @returns {JSX.Element} JSX
  */
 const SignInPage = ({ testid = 'page-signin' }: PropsWithTestId) => {
   const { t } = useTranslation();

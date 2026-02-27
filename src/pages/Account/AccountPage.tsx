@@ -25,7 +25,6 @@ import List from 'common/components/List/List';
  * The `AccountPage` component renders a list of account related items which
  * a user may perform.
  * @param {PropsWithTestId} props - Component properties.
- * @returns {JSX.Element} JSX
  */
 const AccountPage = ({ testid = 'page-account' }: PropsWithTestId) => {
   const [diagnosticsCount, setDiagnosticsCount] = useState<number>(0);

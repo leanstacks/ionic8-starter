@@ -29,7 +29,6 @@ interface UserListItemProps extends BaseComponentProps, Pick<ComponentPropsWithR
  *
  * When clicked, navigates to the user detail page.
  * @param {UserListItemProps} props - Component properties.
- * @returns JSX
  */
 const UserListItem = ({ className, lines, testid, user }: UserListItemProps) => {
   const testIdentifier = testid ?? `list-item-user-${user.id}`;

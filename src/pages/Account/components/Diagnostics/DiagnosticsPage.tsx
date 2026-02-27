@@ -13,7 +13,6 @@ import BuildDiagnostics from './BuildDiagnostics';
  * about the application to aid in support and problem resolution.
  *
  * @param {PropsWithTestId} props - Component properties.
- * @returns {JSX.Element} JSX
  */
 const DiagnosticsPage = ({ testid = 'page-diagnostics' }: PropsWithTestId) => {
   const { t } = useTranslation();

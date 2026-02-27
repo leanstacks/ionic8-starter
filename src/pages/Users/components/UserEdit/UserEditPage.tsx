@@ -21,7 +21,6 @@ interface UserEditPageRouteParams {
 /**
  * The `UserEditPage` component renders a form to edit the attributes of a
  * `User`.
- * @returns {JSX.Element} JSX
  */
 export const UserEditPage = () => {
   const testid = 'page-user-edit';

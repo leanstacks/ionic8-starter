@@ -20,7 +20,6 @@ interface ButtonRowProps extends BaseComponentProps, ComponentPropsWithoutRef<ty
  *
  * Use the `expand` property control how buttons are displayed within the row.
  * @param {ButtonRowProps} props - Component properties.
- * @returns {JSX.Element} JSX
  */
 const ButtonRow = ({ className, expand, testid = 'row-button', ...rowProps }: ButtonRowProps) => {
   return (

@@ -35,7 +35,6 @@ interface UserDeleteAlertProps extends BaseComponentProps, Pick<ComponentPropsWi
  * `UserDeleteAlert` component to render an alert to confirm the deletion
  * of a `User`.
  * @param {UserDeleteAlertProps} props - Component properties.
- * @returns {JSX.Element} JSX
  */
 const UserDeleteAlert = ({
   className,

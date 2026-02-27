@@ -39,7 +39,6 @@ interface UserAddModalProps extends PropsWithTestId, ComponentPropsWithoutRef<ty
  * form to create a new `User`.
  *
  * @param {UserAddModalProps} props - Component properties.
- * @returns {JSX.Element} JSX
  */
 const UserAddModal = ({
   onIonModalDidDismiss,

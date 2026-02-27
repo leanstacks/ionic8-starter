@@ -15,7 +15,6 @@ interface BadgesProps extends BaseComponentProps, PropsWithChildren {}
  * The `Badges` component renders a collection of `IonBadge` components in a
  * flexbox. The badges will wrap as needed.
  * @param {BadgesProps} props - Component properties.
- * @returns {JSX.Element} JSX
  */
 const Badges = ({ children, className, testid = 'badges' }: BadgesProps) => {
   return (

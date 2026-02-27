@@ -13,7 +13,6 @@ import SignOutPage from 'pages/Auth/SignOut/SignOutPage';
  *
  * This application uses Ionic tab navigation, therefore, the main
  * router redirect users to the `TabNavigation` component.
- * @returns JSX
  * @see {@link TabNavigation}
  */
 const AppRouter = () => {

@@ -22,7 +22,6 @@ interface RangeInputProps<T extends FieldValues>
  * integrated with React Hook Form.
  *
  * @param {RangeInputProps} props - Component properties.
- * @returns {JSX.Element} JSX
  */
 const RangeInput = <T extends FieldValues>({
   className,

@@ -31,7 +31,6 @@ export interface MessageCardProps
  * to make it flexible. A title line with optional icon.  A subtitle.
  * And the card content.
  * @param {MessageCardProps} props - Component properties.
- * @returns JSX
  */
 const MessageCard = ({
   className,

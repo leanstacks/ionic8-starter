@@ -15,7 +15,6 @@ interface SearchbarProps extends PropsWithTestId, ComponentPropsWithoutRef<typeo
 /**
  * The `Searchbar` component renders a standardized `IonSearchbar`.
  * @param {SearchbarProps} props - Component properties.
- * @returns {JSX.Element} JSX
  * @see {@link IonSearchbar}
  */
 const Searchbar = ({ className, testid = 'ls-searchbar', ...props }: SearchbarProps) => {

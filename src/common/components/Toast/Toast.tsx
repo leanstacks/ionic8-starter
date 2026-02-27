@@ -33,7 +33,6 @@ export const DismissButton = (): ToastButton => ({
  * When the toast is dismissed, the supplied `dismiss` function is invoked
  * when supplied in the properties.
  * @param {ToastProps} props - Component properties.
- * @returns {JSX.Element} JSX
  */
 const Toast = ({ className, dismiss, testid = 'toast', toast }: ToastProps) => {
   const [isOpen, setIsOpen] = useState<boolean>(true);

@@ -14,7 +14,6 @@ import LoaderSkeleton from 'common/components/Loader/LoaderSkeleton';
  * capacitor.
  *
  * @param {BaseComponentProps} props - Component properties.
- * @returns {JSX.Element} JSX
  */
 const AppDiagnostics = ({ className, testid = 'diagnostics-app' }: BaseComponentProps) => {
   const { isNativePlatform } = usePlatform();

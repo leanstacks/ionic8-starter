@@ -17,7 +17,6 @@ interface UserAddFabProps extends PropsWithTestId, ComponentPropsWithoutRef<type
  * The `UserAddFab` renders an Ionic Floating Action Button, or FAB.
  * The button navigates to the create new `User` form when clicked.
  * @param {UserAddFabProps} props - Component properties.
- * @returns {JSX.Element} JSX
  */
 const UserAddFab = ({
   className,

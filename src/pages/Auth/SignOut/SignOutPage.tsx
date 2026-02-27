@@ -10,7 +10,6 @@ import LoaderSpinner from 'common/components/Loader/LoaderSpinner';
  * The `SignOutPage` renders a loader while the application removes
  * authentication state from the currently signed in user.
  * @param {PropsWithTestId} props - Component properties.
- * @returns {JSX.Element} JSX
  */
 const SignOutPage = ({ testid = 'page-signout' }: PropsWithTestId) => {
   const router = useIonRouter();

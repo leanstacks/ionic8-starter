@@ -10,7 +10,6 @@ import { AuthContext, AuthContextValue } from './AuthContext';
  * The `AuthProvider` component creates and provides access to the `AuthContext`
  * value.
  * @param {PropsWithChildren} props - Component properties.
- * @returns {JSX.Element} JSX
  */
 const AuthProvider = ({ children }: PropsWithChildren) => {
   const { data: userTokens, isPending, isSuccess, refetch: refetchUserTokens } = useGetUserTokens();

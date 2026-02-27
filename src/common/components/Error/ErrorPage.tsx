@@ -19,7 +19,6 @@ interface ErrorPageProps extends FallbackProps, PropsWithTestId {}
 /**
  * The `ErrorPage` displays the attributes of an `Error`.
  * @param {ErrorPageProps} props - Component properties.
- * @returns {JSX.Element} JSX
  */
 const ErrorPage = ({ error, resetErrorBoundary, testid = 'page-error' }: ErrorPageProps) => {
   const { t } = useTranslation();
