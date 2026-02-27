@@ -6,7 +6,7 @@
     "url": "git+https://github.com/leanstacks/ionic8-starter.git"
   },
   "license": "MIT",
-  "version": "1.1.0-alpha.1",
+  "version": "1.1.0",
   "type": "module",
   "scripts": {
     "android": "npx cap sync android && npx cap open android",
