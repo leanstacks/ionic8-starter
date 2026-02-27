@@ -23,7 +23,6 @@ interface ContainerProps extends BaseComponentProps, PropsWithChildren {
  * has a fixed width and is centered at medium, large, and extra-large viewports.
  *
  * @param {ContainerProps} props - Component properties.
- * @returns {JSX.Element} Returns JSX.
  */
 const Container = ({ children, className, fixed = false, testid = 'container' }: ContainerProps) => {
   return (

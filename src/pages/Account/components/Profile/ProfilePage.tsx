@@ -17,7 +17,6 @@ import CardRow from 'common/components/Card/CardRow';
  * management page.
  *
  * @param {PropsWithTestId} props - Component properties.
- * @returns {JSX.Element} JSX
  */
 const ProfilePage = ({ testid = 'page-profile' }: PropsWithTestId) => {
   const { data: profile, isError, isLoading } = useGetProfile();

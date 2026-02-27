@@ -19,7 +19,6 @@ import WelcomeBlock from './components/WelcomeBlock/WelcomeBlock';
 /**
  * The `HomePage` component renders the layout for the home page. It displays
  * blocks and cards containing information in a responsive grid.
- * @returns JSX
  */
 const HomePage = () => {
   const queryClient = useQueryClient();

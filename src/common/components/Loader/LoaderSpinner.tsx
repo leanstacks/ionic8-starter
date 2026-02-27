@@ -20,7 +20,6 @@ interface LoaderSpinnerProps extends BaseComponentProps {
  * pass additional classes to modify the height and other styling of this
  * component.
  * @param {LoaderSpinnerProps} props - Component properties.
- * @returns JSX
  */
 const LoaderSpinner = ({ className, testid = 'loader-spinner', text }: LoaderSpinnerProps) => {
   return (

@@ -19,7 +19,6 @@ setupIonicReact();
 /**
  * The application root module. The outermost component of the Ionic React
  * application hierarchy. Declares application-wide providers.
- * @returns JSX
  */
 const App = () => (
   <IonApp data-testid="app">

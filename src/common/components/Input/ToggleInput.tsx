@@ -1,6 +1,6 @@
 import { IonToggle, ToggleChangeEventDetail, ToggleCustomEvent } from '@ionic/react';
 import { ComponentPropsWithoutRef } from 'react';
-import { useField } from 'formik';
+import { Control, FieldPath, FieldValues, useController } from 'react-hook-form';
 import classNames from 'classnames';
 
 import { PropsWithTestId } from '../types';
@@ -11,23 +11,33 @@ import { PropsWithTestId } from '../types';
  * @see {@link PropsWithTestId}
  * @see {@link IonToggle}
  */
-interface ToggleInputProps extends PropsWithTestId, ComponentPropsWithoutRef<typeof IonToggle> {
-  name: string;
+interface ToggleInputProps<T extends FieldValues>
+  extends PropsWithTestId, Omit<ComponentPropsWithoutRef<typeof IonToggle>, 'name'> {
+  control: Control<T>;
+  name: FieldPath<T>;
 }
 
 /**
  * The `ToggleInput` component renders a standardized `IonToggle` which is
- * integrated with Formik.
+ * integrated with React Hook Form.
  *
  * @param {ToggleInputProps} props - Component properties.
- * @returns {JSX.Element} JSX
  */
-const ToggleInput = ({ className, name, onIonChange, testid = 'input-toggle', ...toggleProps }: ToggleInputProps) => {
-  /* eslint-disable-next-line @typescript-eslint/no-unused-vars */
-  const [field, meta, helpers] = useField<boolean>(name);
+const ToggleInput = <T extends FieldValues>({
+  className,
+  control,
+  name,
+  onIonChange,
+  testid = 'input-toggle',
+  ...toggleProps
+}: ToggleInputProps<T>) => {
+  const { field } = useController({
+    name,
+    control,
+  });
 
   const onChange = async (e: ToggleCustomEvent<ToggleChangeEventDetail>) => {
-    await helpers.setValue(e.detail.checked);
+    field.onChange(e.detail.checked);
     onIonChange?.(e);
   };
 
@@ -36,8 +46,8 @@ const ToggleInput = ({ className, name, onIonChange, testid = 'input-toggle', ..
       className={classNames('ls-toggle-input', className)}
       checked={field.value}
       onIonChange={onChange}
-      data-testid={testid}
       {...toggleProps}
+      data-testid={testid}
     />
   );
 };

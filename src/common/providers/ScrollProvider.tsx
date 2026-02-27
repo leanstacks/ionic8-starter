@@ -20,7 +20,6 @@ import { ScrollContext, ScrollContextValue, ScrollDirection } from './ScrollCont
  * </IonContent>
  * ```
  * @param {PropsWithChildren} props - Component properties.
- * @returns {JSX.Element} JSX
  */
 const ScrollProvider = ({ children }: PropsWithChildren) => {
   const [scrollDirection, setScrollDirection] = useState<ScrollDirection | undefined>(undefined);

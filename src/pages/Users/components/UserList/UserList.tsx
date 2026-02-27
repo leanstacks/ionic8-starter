@@ -29,7 +29,6 @@ interface UserListProps extends BaseComponentProps {
  * The `UserList` component renders a list of `User` objects. Uses the `IonList`
  * component to provide base functionality.
  * @param {UserListProps} props - Component properties.
- * @returns JSX
  */
 const UserList = ({ className, filterBy, header, testid = 'list-user' }: UserListProps) => {
   const { t } = useTranslation();

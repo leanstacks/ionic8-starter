@@ -1,7 +1,8 @@
-import { useEffect, useRef } from 'react';
-import { IonButton } from '@ionic/react';
-import { Form, Formik, FormikHelpers } from 'formik';
-import { object, string } from 'yup';
+import { forwardRef, useImperativeHandle, useRef } from 'react';
+import { IonButton, useIonViewDidEnter } from '@ionic/react';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { z } from 'zod';
 import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
 
@@ -22,113 +23,135 @@ type UserFormValues = Pick<User, 'email' | 'name' | 'phone' | 'username' | 'webs
  * @see {@link BaseComponentProps}
  */
 interface UserFormProps extends BaseComponentProps {
-  onSubmit: (values: UserFormValues, helpers: FormikHelpers<UserFormValues>) => void;
+  onSubmit: (values: UserFormValues) => void;
   user?: User;
 }
 
 /**
- * The `UserForm` component renders a Formik form for creating or editing
+ * The `UserForm` component renders a form for creating or editing
  * a `User`.
+ *
+ * Uses `forwardRef` to expose a `setFocus` method to parent components, allowing them to programmatically focus
+ * the first input field. This is particularly useful when the form is used within a modal, ensuring that the
+ * keyboard opens automatically when the modal is presented.
+ *
  * @param {UserFormProps} props - Component properties.
- * @returns {JSX.Element} JSX
  */
-const UserForm = ({ className, onSubmit, user, testid = 'form-user' }: UserFormProps) => {
-  const focusInput = useRef<HTMLIonInputElement>(null);
-  const { t } = useTranslation();
+const UserForm = forwardRef<{ setFocus: () => void }, UserFormProps>(
+  ({ className, onSubmit, user, testid = 'form-user' }, ref) => {
+    const focusInput = useRef<HTMLIonInputElement>(null);
+    const { t } = useTranslation();
 
-  useEffect(() => {
-    focusInput.current?.setFocus();
-  }, []);
+    /**
+     * Expose focus method to parent components. Particularly useful for modals to focus the first input when opened.
+     */
+    useImperativeHandle(ref, () => ({
+      setFocus: () => {
+        focusInput.current?.setFocus();
+      },
+    }));
 
-  /**
-   * User form validation schema.
-   */
-  const validationSchema = object<UserFormValues>({
-    name: string().required(t('validation.required')),
-    username: string()
-      .required(t('validation.required'))
-      .min(8, ({ min }) => t('validation.min', { min }))
-      .max(30, ({ max }) => t('validation.max', { max })),
-    email: string().required(t('validation.required')).email(t('validation.email')),
-    phone: string().required(t('validation.required')),
-    website: string().url(t('validation.url')),
-  });
+    /**
+     * Focus the first input when the view is entered (for pages).
+     */
+    useIonViewDidEnter(() => {
+      focusInput.current?.setFocus();
+    });
 
-  return (
-    <div className={classNames('ls-user-form', className)} data-testid={testid}>
-      <Formik<UserFormValues>
-        enableReinitialize={true}
-        initialValues={{
-          email: user?.email ?? '',
-          name: user?.name ?? '',
-          phone: user?.phone ?? '',
-          username: user?.username ?? '',
-          website: user?.website ?? '',
-        }}
-        onSubmit={onSubmit}
-        validationSchema={validationSchema}
-      >
-        {({ dirty, isSubmitting }) => (
-          <Form data-testid={`${testid}-form`}>
-            <Input
-              name="name"
-              label={t('label.name', { ns: 'user' })}
-              labelPlacement="stacked"
-              disabled={isSubmitting}
-              className="ls-user-form__input"
-              ref={focusInput}
-              data-testid={`${testid}-field-name`}
-            ></Input>
-            <Input
-              name="username"
-              label={t('label.username', { ns: 'user' })}
-              labelPlacement="stacked"
-              disabled={isSubmitting}
-              maxlength={30}
-              className="ls-user-form__input"
-              data-testid={`${testid}-field-username`}
-            ></Input>
-            <Input
-              name="email"
-              type="email"
-              label={t('label.email', { ns: 'user' })}
-              labelPlacement="stacked"
-              disabled={isSubmitting}
-              className="ls-user-form__input"
-              data-testid={`${testid}-field-email`}
-            ></Input>
-            <Input
-              name="phone"
-              label={t('label.phone', { ns: 'user' })}
-              labelPlacement="stacked"
-              disabled={isSubmitting}
-              className="ls-user-form__input"
-              data-testid={`${testid}-field-phone`}
-            ></Input>
-            <Input
-              name="website"
-              label={t('label.website', { ns: 'user' })}
-              labelPlacement="stacked"
-              disabled={isSubmitting}
-              className="ls-user-form__input"
-              data-testid={`${testid}-field-website`}
-            ></Input>
+    /**
+     * User form validation schema.
+     */
+    const userFormSchema = z.object({
+      name: z.string().min(1, { message: t('validation.required') }),
+      username: z
+        .string()
+        .min(8, { message: t('validation.min', { min: 8 }) })
+        .max(30, { message: t('validation.max', { max: 30 }) }),
+      email: z.email({ message: t('validation.email') }).min(1, { message: t('validation.required') }),
+      phone: z.string().min(1, { message: t('validation.required') }),
+      website: z.url({ message: t('validation.url') }).min(1, { message: t('validation.required') }),
+    });
 
-            <IonButton
-              type="submit"
-              color="primary"
-              className="ls-user-form__button"
-              expand="block"
-              disabled={isSubmitting || !dirty}
-              data-testid={`${testid}-button-submit`}
-            >
-              {t('label.save')}
-            </IonButton>
-          </Form>
-        )}
-      </Formik>
-    </div>
-  );
-};
+    const { control, formState, handleSubmit } = useForm<UserFormValues>({
+      defaultValues: {
+        email: user?.email ?? '',
+        name: user?.name ?? '',
+        phone: user?.phone ?? '',
+        username: user?.username ?? '',
+        website: user?.website ?? '',
+      },
+      mode: 'all',
+      resolver: zodResolver(userFormSchema),
+    });
+
+    return (
+      <div className={classNames('ls-user-form', className)} data-testid={testid}>
+        <form onSubmit={handleSubmit(onSubmit)} noValidate data-testid={`${testid}-form`}>
+          <Input
+            control={control}
+            name="name"
+            label={t('label.name', { ns: 'user' })}
+            labelPlacement="stacked"
+            disabled={formState.isSubmitting}
+            className="ls-user-form__input"
+            ref={focusInput}
+            testid={`${testid}-field-name`}
+          ></Input>
+          <Input
+            control={control}
+            name="username"
+            label={t('label.username', { ns: 'user' })}
+            labelPlacement="stacked"
+            disabled={formState.isSubmitting}
+            maxlength={30}
+            className="ls-user-form__input"
+            testid={`${testid}-field-username`}
+          ></Input>
+          <Input
+            control={control}
+            name="email"
+            type="email"
+            label={t('label.email', { ns: 'user' })}
+            labelPlacement="stacked"
+            disabled={formState.isSubmitting}
+            className="ls-user-form__input"
+            testid={`${testid}-field-email`}
+          ></Input>
+          <Input
+            control={control}
+            name="phone"
+            label={t('label.phone', { ns: 'user' })}
+            labelPlacement="stacked"
+            disabled={formState.isSubmitting}
+            className="ls-user-form__input"
+            testid={`${testid}-field-phone`}
+          ></Input>
+          <Input
+            control={control}
+            name="website"
+            label={t('label.website', { ns: 'user' })}
+            labelPlacement="stacked"
+            disabled={formState.isSubmitting}
+            className="ls-user-form__input"
+            testid={`${testid}-field-website`}
+          ></Input>
+
+          <IonButton
+            type="submit"
+            color="primary"
+            className="ls-user-form__button"
+            expand="block"
+            disabled={formState.isSubmitting || !formState.isDirty}
+            data-testid={`${testid}-button-submit`}
+          >
+            {t('label.save')}
+          </IonButton>
+        </form>
+      </div>
+    );
+  },
+);
+
+UserForm.displayName = 'UserForm';
 
 export default UserForm;

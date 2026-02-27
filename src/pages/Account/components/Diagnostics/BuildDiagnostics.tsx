@@ -13,7 +13,6 @@ import { config } from 'common/utils/config';
  * configuration with values obtained from the DevOps automation pipeline.
  *
  * @param {BaseComponentProps} props - Component properties.
- * @returns {JSX.Element} JSX
  */
 const BuildDiagnostics = ({ className, testid = 'diagnostics-build' }: BaseComponentProps) => {
   const { t } = useTranslation();

@@ -6,7 +6,6 @@ import MessageCard, { MessageCardProps } from './MessageCard';
  * The `ErrorCard` component renders a `MessageCard` displaying information
  * describing an exceptional event which has occurred.
  * @param {MessageCardProps} props - Component properties.
- * @returns JSX
  */
 const ErrorCard = ({
   color = 'danger',

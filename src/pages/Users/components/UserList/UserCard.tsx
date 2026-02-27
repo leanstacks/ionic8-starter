@@ -20,7 +20,6 @@ interface UserCardProps extends BaseComponentProps {
  * The `UserCard` component renders an `IonCard` which displays an avatar,
  * name, and email address of a single `User`.
  * @param {UserCardProps} props - Component properties.
- * @returns {JSX.Element} JSX
  */
 const UserCard = ({ className, testid = 'card-user', user }: UserCardProps) => {
   return (

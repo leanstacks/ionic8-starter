@@ -25,7 +25,6 @@ import DiagnosticsPage from 'pages/Account/components/Diagnostics/DiagnosticsPag
  * may be toggled using the hamburger (three lines) icon in the top
  * toolbar.
  *
- * @returns JSX
  * @see {@link AppMenu}
  */
 const TabNavigation = () => {

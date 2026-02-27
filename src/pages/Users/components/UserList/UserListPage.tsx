@@ -31,7 +31,6 @@ import UserAddModal from '../UserAdd/UserAddModal';
 
 /**
  * The `UserListPage` component renders a list of all `User` objects.
- * @returns JSX
  */
 export const UserListPage = ({ testid = 'page-user-list' }: PropsWithTestId) => {
   const [isOpenModal, setIsOpenModal] = useState<boolean>(false);

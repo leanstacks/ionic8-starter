@@ -97,7 +97,6 @@ const actions = (dispatch: Dispatch<ToastContextAction>) => {
  * The `ToastProvider` component creates, maintains, and provides access to the
  * `ToastContext` value.
  * @param {PropsWithChildren} props - Component properties.
- * @returns {JSX.Element} JSX
  */
 const ToastProvider = ({ children }: PropsWithChildren) => {
   const [{ toasts }, dispatch] = useReducer(reducer, DEFAULT_STATE);

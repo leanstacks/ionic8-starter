@@ -27,7 +27,6 @@ interface UserDetailPageRouteParams {
 
 /**
  * The `UserDetailPage` component renders information about a single `User`.
- * @returns JSX
  */
 export const UserDetailPage = ({ testid = 'page-user-detail' }: PropsWithTestId) => {
   const { t } = useTranslation();

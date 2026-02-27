@@ -1,4 +1,3 @@
-import { JSX } from 'react';
 import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
 
@@ -32,12 +31,9 @@ interface ContactInfoProps extends BaseComponentProps {
  * user attributes are rendered.
  *
  * If `isLoading` is `false` and the `user` property is empty, the
- * component returns `false` so that the component remains in the React
- * hierarchy, but does not render anything.
+ * component returns `null`.
  *
  * @param {ContactInfoProps} props - Component properties.
- * @returns {JSX.Element | false} Returns JSX when loading or a user is
- * provided, otherwise returns `false`.
  */
 const ContactInfo = ({
   className,
@@ -45,7 +41,7 @@ const ContactInfo = ({
   showHeader = true,
   testid = 'contact-info',
   user,
-}: ContactInfoProps): JSX.Element | false => {
+}: ContactInfoProps) => {
   const { t } = useTranslation();
 
   if (isLoading) {
@@ -105,7 +101,7 @@ const ContactInfo = ({
   }
 
   // not loading and no user
-  return false;
+  return null;
 };
 
 export default ContactInfo;

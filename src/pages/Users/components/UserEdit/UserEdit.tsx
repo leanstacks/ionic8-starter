@@ -21,9 +21,8 @@ interface UserEditProps extends BaseComponentProps {
 }
 
 /**
- * The `UserEdit` component renders a Formik form for editing a `User`.
+ * The `UserEdit` component renders a form for editing a `User`.
  * @param {UserEditProps} props - Component properties.
- * @returns {JSX.Element} JSX
  */
 const UserEdit = ({ className, user, testid = 'user-edit' }: UserEditProps) => {
   const { t } = useTranslation();
@@ -48,7 +47,7 @@ const UserEdit = ({ className, user, testid = 'user-edit' }: UserEditProps) => {
 
             <UserForm
               user={user}
-              onSubmit={(values, { setSubmitting }) => {
+              onSubmit={(values) => {
                 setProgress(true);
                 setError('');
                 updateUser(
@@ -56,7 +55,6 @@ const UserEdit = ({ className, user, testid = 'user-edit' }: UserEditProps) => {
                   {
                     onSuccess: (user) => {
                       setProgress(false);
-                      setSubmitting(false);
                       createToast({
                         buttons: [DismissButton()],
                         duration: 5000,
@@ -71,7 +69,6 @@ const UserEdit = ({ className, user, testid = 'user-edit' }: UserEditProps) => {
                     onError(error) {
                       setProgress(false);
                       setError(error.message);
-                      setSubmitting(false);
                     },
                   },
                 );

@@ -23,7 +23,6 @@ import Icon from '../Icon/Icon';
  * The `AppMenu` component renders the main application menu. Facilitates
  * navigation throughout the major sections of the application.
  * @param {BaseComponentProps} props - Component properties.
- * @returns JSX
  */
 const AppMenu = ({ className, testid = 'menu-app' }: BaseComponentProps) => {
   const { isAuthenticated } = useAuth();

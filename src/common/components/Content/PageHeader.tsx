@@ -19,7 +19,6 @@ import HeaderRow, { HeaderRowProps } from '../Text/HeaderRow';
  * ```
  *
  * @param {HeaderRowProps} props - Component properties.
- * @returns {JSX.Element} Returns JSX.
  */
 const PageHeader = ({ className, testid = 'page-header', ...props }: HeaderRowProps) => {
   return <HeaderRow className={classNames('ls-page-header', className)} data-testid={testid} {...props} />;

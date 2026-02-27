@@ -6,7 +6,6 @@ import { AxiosContext, customAxios } from './AxiosContext';
  * The `AxiosProvider` React component creates, maintains, and provides
  * access to the `AxiosContext` value.
  * @param {PropsWithChildren} props - Component properties, `PropsWithChildren`.
- * @returns {JSX.Element} JSX
  */
 const AxiosProvider = ({ children }: PropsWithChildren) => {
   const [isReady, setIsReady] = useState(false);

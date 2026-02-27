@@ -30,7 +30,6 @@ interface UserDetailProps extends BaseComponentProps {
  * error message is displayed.
  *
  * @param {UserDetailProps} props - Component properties.
- * @returns {JSX.Element} JSX
  */
 const UserDetail = ({ className, testid = 'user-detail', userId }: UserDetailProps) => {
   const { t } = useTranslation();

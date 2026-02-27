@@ -1,6 +1,6 @@
 import { ComponentPropsWithoutRef } from 'react';
 import { IonRadioGroup, IonText, RadioGroupCustomEvent } from '@ionic/react';
-import { useField } from 'formik';
+import { Control, FieldPath, FieldValues, useController } from 'react-hook-form';
 import classNames from 'classnames';
 
 import './RadioGroupInput.scss';
@@ -11,38 +11,43 @@ import { PropsWithTestId } from '../types';
  * @see {@link PropsWithTestId}
  * @see {@link IonRadioGroup}
  */
-interface RadioGroupInputProps
-  extends
-    PropsWithTestId,
-    Omit<ComponentPropsWithoutRef<typeof IonRadioGroup>, 'name'>,
-    Required<Pick<ComponentPropsWithoutRef<typeof IonRadioGroup>, 'name'>> {}
+interface RadioGroupInputProps<T extends FieldValues>
+  extends PropsWithTestId, Omit<ComponentPropsWithoutRef<typeof IonRadioGroup>, 'name'> {
+  control: Control<T>;
+  name: FieldPath<T>;
+}
 
 /**
  * The `RadioGroupInput` component renders a standardized `IonRadioGroup` which
- * is integrated with Formik.
+ * is integrated with React Hook Form.
  *
  * Use one to many `IonRadio` components as the `children` to specify the
  * available options.
  *
  * @param {RadioGroupInputProps} props - Component properties.
- * @returns {JSX.Element} JSX
  */
-const RadioGroupInput = ({
+const RadioGroupInput = <T extends FieldValues>({
   className,
+  control,
   name,
   onIonChange,
   testid = 'input-radiogroup',
   ...radioGroupProps
-}: RadioGroupInputProps) => {
-  const [field, meta, helpers] = useField({ name });
+}: RadioGroupInputProps<T>) => {
+  const {
+    field,
+    fieldState: { error },
+  } = useController({
+    name,
+    control,
+  });
 
   /**
    * Handles changes to the field value as a result of user action.
    * @param {RadioGroupCustomEvent} event - The event
    */
   const onChange = async (event: RadioGroupCustomEvent): Promise<void> => {
-    await helpers.setValue(event.detail.value);
-    await helpers.setTouched(true);
+    field.onChange(event.detail.value);
     onIonChange?.(event);
   };
 
@@ -50,14 +55,14 @@ const RadioGroupInput = ({
     <div className="ls-radiogroup-input ls-radiogroup-input--expand-full" data-testid={`${testid}-wrapper`}>
       <IonRadioGroup
         className={classNames('ls-radiogroup-input__radiogroup', className)}
-        data-testid={testid}
         onIonChange={onChange}
-        {...field}
         {...radioGroupProps}
+        {...field}
+        data-testid={testid}
       />
-      {!!meta.error && (
+      {!!error && (
         <IonText className="ls-radiogroup-input__error" color="danger" data-testid={`${testid}-error`}>
-          {meta.error}
+          {error.message}
         </IonText>
       )}
     </div>

@@ -1,4 +1,3 @@
-import { JSX } from 'react';
 import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
 
@@ -29,19 +28,11 @@ interface AddressDetailProps extends BaseComponentProps {
  * address attributes are rendered.
  *
  * If `isLoading` is `false` and the `address` property is empty, the
- * component returns `false` so that the component remains in the React
- * hierarchy, but does not render anything.
+ * component returns `null`.
  *
  * @param {AddressDetailProps} props - Component properties.
- * @returns {JSX.Element | false} Returns JSX when loading or a user is
- * provided, otherwise returns `false`.
  */
-const AddressDetail = ({
-  address,
-  className,
-  isLoading = false,
-  testid = 'address-detail',
-}: AddressDetailProps): JSX.Element | false => {
+const AddressDetail = ({ address, className, isLoading = false, testid = 'address-detail' }: AddressDetailProps) => {
   const { t } = useTranslation();
 
   if (isLoading) {
@@ -83,8 +74,8 @@ const AddressDetail = ({
     );
   }
 
-  // not loading and no user
-  return false;
+  // not loading and no address
+  return null;
 };
 
 export default AddressDetail;

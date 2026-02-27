@@ -7,7 +7,6 @@ import { BaseComponentProps } from 'common/components/types';
  * The `WelcomeBlock` component renders a `Block` of information about the
  * application.
  * @param {BaseComponentProps} props - Component properties.
- * @returns JSX
  */
 const WelcomeBlock = ({ className, testid = 'block-welcome' }: BaseComponentProps) => {
   const { t } = useTranslation();

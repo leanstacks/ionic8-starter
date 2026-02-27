@@ -17,7 +17,6 @@ interface ListProps extends PropsWithTestId, ComponentPropsWithoutRef<typeof Ion
  * and standardized implementation of `IonList`.
  *
  * @param {ListProps} props - Component properties.
- * @returns {JSX.Element} JSX
  * @see {@link IonList}
  */
 const List = ({ className, testid = 'list', ...listProps }: ListProps) => {

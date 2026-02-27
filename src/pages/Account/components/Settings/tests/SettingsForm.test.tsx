@@ -37,7 +37,7 @@ describe('SettingsForm', () => {
   it('should render loading state', async () => {
     // ARRANGE
     const useGetSettingsSpy = vi.spyOn(UseGetSettings, 'useGetSettings');
-    useGetSettingsSpy.mockReturnValueOnce({
+    useGetSettingsSpy.mockReturnValue({
       data: undefined,
       isLoading: true,
       isSuccess: false,
@@ -54,7 +54,7 @@ describe('SettingsForm', () => {
     // ARRANGE
     const mockUpdateSettings = vi.fn();
     const useUpdateSettingsSpy = vi.spyOn(UseUpdateSettings, 'useUpdateSettings');
-    useUpdateSettingsSpy.mockReturnValueOnce({
+    useUpdateSettingsSpy.mockReturnValue({
       mutate: mockUpdateSettings,
     } as unknown as UseMutationResult<Settings, Error, UseUpdateSettings.UpdateSettingsVariables>);
     render(<SettingsForm testid="form" />);

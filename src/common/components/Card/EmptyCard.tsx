@@ -7,7 +7,6 @@ import MessageCard, { MessageCardProps } from './MessageCard';
  * when there is no data to display. For example, when a list of items has
  * no items to display.
  * @param {MessageCardProps} props - Component properties.
- * @returns JSX
  */
 const EmptyCard = ({ icon = 'circleInfo', testid = 'card-empty', title, ...cardProps }: MessageCardProps) => {
   const { t } = useTranslation();

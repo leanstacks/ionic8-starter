@@ -51,7 +51,6 @@ const COLORS = [
  * When `src` is empty, the `value` attribute is used to generate an Avatar using
  * first character of the `value`.
  * @param {AvatarProps} props - Component properties.
- * @returns JSX
  */
 const Avatar = ({ className, shape = 'rounded', size = 'default', src, testid = 'avatar', value }: AvatarProps) => {
   const trimmedValue = value.trim();

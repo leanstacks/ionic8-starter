@@ -18,7 +18,6 @@ interface CardRowProps extends BaseComponentProps, ComponentPropsWithoutRef<type
  * The content is horizontally and vertically centered within the row. The
  * card width is responsive, adjusting based upon the viewport size.
  * @param {CardRowProps} props - Component properties.
- * @returns JSX
  */
 const CardRow = ({
   className,

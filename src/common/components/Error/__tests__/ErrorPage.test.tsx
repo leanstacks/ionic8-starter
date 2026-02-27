@@ -1,6 +1,6 @@
 import { describe, expect, it, vi } from 'vitest';
 import userEvent from '@testing-library/user-event';
-import { ValidationError } from 'yup';
+import { ZodError, ZodIssue } from 'zod';
 import { AxiosError } from 'axios';
 
 import { render, screen } from 'test/test-utils';
@@ -21,19 +21,28 @@ describe('ErrorPage', () => {
 
   it('should display ValidationError', async () => {
     // ARRANGE
-    const ve1 = new ValidationError('Required.');
-    const ve2 = new ValidationError('Max length is 100.');
-    const error = new ValidationError([ve1, ve2]);
+    const issues: ZodIssue[] = [
+      {
+        code: 'custom',
+        message: 'Required.',
+        path: ['field1'],
+      },
+      {
+        code: 'custom',
+        message: 'Max length is 100.',
+        path: ['field2'],
+      },
+    ];
+    const error = new ZodError(issues);
     const mockReset = vi.fn();
     render(<ErrorPage error={error} resetErrorBoundary={mockReset} />);
     await screen.findByTestId('page-error');
 
     // ASSERT
     expect(screen.getByTestId('page-error')).toBeDefined();
-    expect(screen.getByTestId('page-error-title')).toHaveTextContent(/^Validation Error$/i);
-    expect(screen.getByTestId('page-error-message')).toHaveTextContent(
-      /^Required. Max length is 100.$/i,
-    );
+    expect(screen.getByTestId('page-error-title')).toHaveTextContent(/Validation Error/i);
+    expect(screen.getByTestId('page-error-message')).toHaveTextContent(/field1.*Required/i);
+    expect(screen.getByTestId('page-error-message')).toHaveTextContent(/field2.*Max length is 100/i);
   });
 
   it('should display AxiosError', async () => {
@@ -50,9 +59,7 @@ describe('ErrorPage', () => {
     // ASSERT
     expect(screen.getByTestId('page-error')).toBeDefined();
     expect(screen.getByTestId('page-error-title')).toHaveTextContent(/^ERR_BAD_REQUEST$/i);
-    expect(screen.getByTestId('page-error-message')).toHaveTextContent(
-      /^error message. http:\/\/www.example.org\/$/i,
-    );
+    expect(screen.getByTestId('page-error-message')).toHaveTextContent(/^error message. http:\/\/www.example.org\/$/i);
   });
 
   it('should display AxiosError with status code', async () => {
@@ -71,9 +78,7 @@ describe('ErrorPage', () => {
     // ASSERT
     expect(screen.getByTestId('page-error')).toBeDefined();
     expect(screen.getByTestId('page-error-title')).toHaveTextContent(/^404$/i);
-    expect(screen.getByTestId('page-error-message')).toHaveTextContent(
-      /^error message. http:\/\/www.example.org\/$/i,
-    );
+    expect(screen.getByTestId('page-error-message')).toHaveTextContent(/^error message. http:\/\/www.example.org\/$/i);
   });
 
   it('should display Error', async () => {

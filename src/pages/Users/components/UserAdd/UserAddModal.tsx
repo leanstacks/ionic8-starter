@@ -11,7 +11,7 @@ import {
   IonToolbar,
   useIonRouter,
 } from '@ionic/react';
-import { ComponentPropsWithoutRef, useState } from 'react';
+import { ComponentPropsWithoutRef, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { PropsWithTestId } from 'common/components/types';
@@ -35,11 +35,10 @@ interface UserAddModalProps extends PropsWithTestId, ComponentPropsWithoutRef<ty
 }
 
 /**
- * The `UserAddModal` component renders an `IonModal` containing a Formik
+ * The `UserAddModal` component renders an `IonModal` containing a
  * form to create a new `User`.
  *
  * @param {UserAddModalProps} props - Component properties.
- * @returns {JSX.Element} JSX
  */
 const UserAddModal = ({
   onIonModalDidDismiss,
@@ -48,6 +47,7 @@ const UserAddModal = ({
   ...modalProps
 }: UserAddModalProps) => {
   const [error, setError] = useState<string>('');
+  const userFormRef = useRef<{ setFocus: () => void }>(null);
   const router = useIonRouter();
   const { isActive: isActiveProgressBar, progressBar, setProgress } = useProgress();
   const { createToast } = useToasts();
@@ -59,8 +59,15 @@ const UserAddModal = ({
     setIsOpen(false);
   };
 
+  /**
+   * Focus the first input when the modal is presented.
+   */
+  const didPresent = () => {
+    userFormRef.current?.setFocus();
+  };
+
   return (
-    <IonModal onIonModalDidDismiss={didDismiss} {...modalProps} data-testid={testid}>
+    <IonModal onIonModalDidDismiss={didDismiss} onDidPresent={didPresent} {...modalProps} data-testid={testid}>
       <IonHeader>
         <IonToolbar>
           <IonTitle>{t('add-user', { ns: 'user' })}</IonTitle>
@@ -83,7 +90,8 @@ const UserAddModal = ({
           />
         )}
         <UserForm
-          onSubmit={(values, { setSubmitting }) => {
+          ref={userFormRef}
+          onSubmit={(values) => {
             setProgress(true);
             setError('');
             createUser(
@@ -91,7 +99,6 @@ const UserAddModal = ({
               {
                 onSuccess: (user) => {
                   setProgress(false);
-                  setSubmitting(false);
                   createToast({
                     buttons: [DismissButton()],
                     duration: 5000,
@@ -103,7 +110,6 @@ const UserAddModal = ({
                 onError(error) {
                   setProgress(false);
                   setError(error.message);
-                  setSubmitting(false);
                 },
               },
             );

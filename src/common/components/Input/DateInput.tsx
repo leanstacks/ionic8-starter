@@ -1,7 +1,7 @@
 import { ComponentPropsWithoutRef, useMemo, useState } from 'react';
 import { ModalCustomEvent } from '@ionic/core';
 import { DatetimeCustomEvent, IonButton, IonDatetime, IonInput, IonModal } from '@ionic/react';
-import { useField } from 'formik';
+import { Control, FieldPath, FieldValues, useController } from 'react-hook-form';
 import classNames from 'classnames';
 import dayjs from 'dayjs';
 
@@ -34,38 +34,47 @@ type DateValue = string | null;
  * @see {@link IonInput}
  * @see {@link IonModal}
  */
-interface DateInputProps
+interface DateInputProps<T extends FieldValues>
   extends
     PropsWithTestId,
     Pick<ComponentPropsWithoutRef<typeof IonInput>, 'label' | 'labelPlacement'>,
     Pick<ComponentPropsWithoutRef<typeof IonModal>, 'onIonModalDidDismiss'>,
-    Omit<ComponentPropsWithoutRef<typeof IonDatetime>, 'multiple' | 'name' | 'presentation'>,
-    Required<Pick<ComponentPropsWithoutRef<typeof IonDatetime>, 'name'>> {}
+    Omit<ComponentPropsWithoutRef<typeof IonDatetime>, 'multiple' | 'name' | 'presentation'> {
+  control: Control<T>;
+  name: FieldPath<T>;
+}
 
 /**
  * The `DateInput` component renders an `IonDatetime` which is integrated with
- * Formik. The form field value is displayed in an `IonInput`. When that input
+ * React Hook Form. The form field value is displayed in an `IonInput`. When that input
  * is clicked, an `IonDatetime` is presented within an `IonModal`.
  *
  * Use this component when you need to collect a date value within a form. The
  * date value will be set as an ISO8601 date, e.g. YYYY-MM-DD
  *
  * @param {DateInputProps} props - Component properties.
- * @returns {JSX.Element} JSX
  */
-const DateInput = ({
+const DateInput = <T extends FieldValues>({
   className,
+  control,
+  name,
   label,
   labelPlacement,
   onIonModalDidDismiss,
   testid = 'input-date',
   ...datetimeProps
-}: DateInputProps) => {
-  const [field, meta, helpers] = useField<DateValue>(datetimeProps.name);
+}: DateInputProps<T>) => {
+  const {
+    field,
+    fieldState: { error, isTouched },
+  } = useController({
+    name,
+    control,
+  });
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
   // populate error text only if the field has been touched and has an error
-  const errorText: string | undefined = meta.touched ? meta.error : undefined;
+  const errorText: string | undefined = isTouched ? error?.message : undefined;
 
   /**
    * Handle change events emitted by `IonDatetime`.
@@ -75,9 +84,9 @@ const DateInput = ({
     const value = e.detail.value as DateValue;
     if (value) {
       const isoDate = dayjs(value).format('YYYY-MM-DD');
-      await helpers.setValue(isoDate, true);
+      field.onChange(isoDate);
     } else {
-      await helpers.setValue(null, true);
+      field.onChange(null);
     }
     datetimeProps.onIonChange?.(e);
   };
@@ -86,7 +95,7 @@ const DateInput = ({
    * Handle 'did dismiss' events emitted by `IonModal`.
    */
   const onDidDismiss = async (e: ModalCustomEvent): Promise<void> => {
-    await helpers.setTouched(true, true);
+    field.onBlur();
     setIsOpen(false);
     onIonModalDidDismiss?.(e);
   };
@@ -117,9 +126,9 @@ const DateInput = ({
         className={classNames(
           'ls-date-input',
           className,
-          { 'ion-touched': meta.touched },
-          { 'ion-invalid': meta.error },
-          { 'ion-valid': meta.touched && !meta.error },
+          { 'ion-touched': isTouched },
+          { 'ion-invalid': error },
+          { 'ion-valid': isTouched && !error },
         )}
         data-testid={testid}
         disabled={datetimeProps.disabled}

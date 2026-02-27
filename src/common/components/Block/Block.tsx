@@ -19,7 +19,6 @@ interface BlockProps extends BaseComponentProps {
  * The `Block` component renders a section of content. Similar to an `IonCard`
  * but does not render the border and shadow.
  * @param {BlockProps} props - Component properties.
- * @returns JSX
  */
 const Block = ({ className, content, testid = 'block', title }: BlockProps) => {
   return (
