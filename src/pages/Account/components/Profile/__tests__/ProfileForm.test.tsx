@@ -38,7 +38,7 @@ describe('ProfileForm', async () => {
     // ARRANGE
     const mockUpdateProfile = vi.fn();
     const useUpdateProfileSpy = vi.spyOn(UseUpdateProfile, 'useUpdateProfile');
-    useUpdateProfileSpy.mockReturnValueOnce({
+    useUpdateProfileSpy.mockReturnValue({
       mutate: mockUpdateProfile,
     } as unknown as UseMutationResult<User, Error, UseUpdateProfile.UpdateProfileVariables>);
     render(<ProfileForm profile={profileFixture1} testid="form" />);

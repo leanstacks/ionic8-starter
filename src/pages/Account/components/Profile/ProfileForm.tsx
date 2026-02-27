@@ -123,7 +123,7 @@ const ProfileForm = ({ className, testid = 'form-profile', profile }: ProfileFor
           autocomplete="off"
           className="ls-profile-form__input"
           ref={focusInput}
-          data-testid={`${testid}-field-name`}
+          testid={`${testid}-field-name`}
         />
 
         <Input
@@ -135,7 +135,7 @@ const ProfileForm = ({ className, testid = 'form-profile', profile }: ProfileFor
           disabled={formState.isSubmitting}
           autocomplete="off"
           className="ls-profile-form__input"
-          data-testid={`${testid}-field-email`}
+          testid={`${testid}-field-email`}
         />
 
         <Textarea
@@ -148,7 +148,7 @@ const ProfileForm = ({ className, testid = 'form-profile', profile }: ProfileFor
           maxlength={500}
           disabled={formState.isSubmitting}
           className="ls-profile-form__input"
-          data-testid={`${testid}-field-bio`}
+          testid={`${testid}-field-bio`}
         />
 
         <DateInput

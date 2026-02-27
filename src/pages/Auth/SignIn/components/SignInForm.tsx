@@ -131,7 +131,7 @@ const SignInForm = ({ className, testid = 'form-signin' }: BaseComponentProps) =
           autocomplete="off"
           className="ls-signin-form__input"
           ref={focusInput}
-          data-testid={`${testid}-field-username`}
+          testid={`${testid}-field-username`}
         />
         <Input
           control={control}
@@ -142,7 +142,7 @@ const SignInForm = ({ className, testid = 'form-signin' }: BaseComponentProps) =
           maxlength={30}
           autocomplete="off"
           className="ls-signin-form__input"
-          data-testid={`${testid}-field-password`}
+          testid={`${testid}-field-password`}
         >
           <IonInputPasswordToggle slot="end"></IonInputPasswordToggle>
         </Input>

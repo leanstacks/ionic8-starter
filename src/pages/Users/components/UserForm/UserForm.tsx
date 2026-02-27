@@ -95,7 +95,7 @@ const UserForm = forwardRef<{ setFocus: () => void }, UserFormProps>(
             disabled={formState.isSubmitting}
             className="ls-user-form__input"
             ref={focusInput}
-            data-testid={`${testid}-field-name`}
+            testid={`${testid}-field-name`}
           ></Input>
           <Input
             control={control}
@@ -105,7 +105,7 @@ const UserForm = forwardRef<{ setFocus: () => void }, UserFormProps>(
             disabled={formState.isSubmitting}
             maxlength={30}
             className="ls-user-form__input"
-            data-testid={`${testid}-field-username`}
+            testid={`${testid}-field-username`}
           ></Input>
           <Input
             control={control}
@@ -115,7 +115,7 @@ const UserForm = forwardRef<{ setFocus: () => void }, UserFormProps>(
             labelPlacement="stacked"
             disabled={formState.isSubmitting}
             className="ls-user-form__input"
-            data-testid={`${testid}-field-email`}
+            testid={`${testid}-field-email`}
           ></Input>
           <Input
             control={control}
@@ -124,7 +124,7 @@ const UserForm = forwardRef<{ setFocus: () => void }, UserFormProps>(
             labelPlacement="stacked"
             disabled={formState.isSubmitting}
             className="ls-user-form__input"
-            data-testid={`${testid}-field-phone`}
+            testid={`${testid}-field-phone`}
           ></Input>
           <Input
             control={control}
@@ -133,7 +133,7 @@ const UserForm = forwardRef<{ setFocus: () => void }, UserFormProps>(
             labelPlacement="stacked"
             disabled={formState.isSubmitting}
             className="ls-user-form__input"
-            data-testid={`${testid}-field-website`}
+            testid={`${testid}-field-website`}
           ></Input>
 
           <IonButton

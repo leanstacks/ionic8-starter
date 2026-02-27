@@ -26,7 +26,7 @@ describe('SignInForm', () => {
     // ARRANGE
     const mockSignIn = vi.fn();
     const useSignInSpy = vi.spyOn(UseSignIn, 'useSignIn');
-    useSignInSpy.mockReturnValueOnce({
+    useSignInSpy.mockReturnValue({
       mutate: mockSignIn,
     } as unknown as UseMutationResult<User, Error, string, unknown>);
     render(<SignInForm testid="form" />);

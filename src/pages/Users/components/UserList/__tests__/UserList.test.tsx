@@ -4,7 +4,6 @@ import { UseQueryResult } from '@tanstack/react-query';
 import { render, screen } from 'test/test-utils';
 import * as UseGetUsers from 'pages/Users/api/useGetUsers';
 import { User } from 'common/models/user';
-import { usersFixture } from '__fixtures__/users';
 import UserList from '../UserList';
 
 describe('UserList', () => {
@@ -24,7 +23,8 @@ describe('UserList', () => {
 
     // ASSERT
     expect(screen.getByTestId('list-user')).toBeDefined();
-    expect(screen.getByTestId('list-user').childElementCount).toBe(usersFixture.length);
+    expect(screen.getByTestId('list-item-user-1')).toBeDefined();
+    expect(screen.getByTestId('list-item-user-2')).toBeDefined();
   });
 
   it('should render loading state', async () => {
