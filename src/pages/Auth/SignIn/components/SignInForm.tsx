@@ -80,7 +80,6 @@ const SignInForm = ({ className, testid = 'form-signin' }: BaseComponentProps) =
    * @param values - The form values.
    */
   const onFormSubmit = (values: SignInFormValues) => {
-    console.log('Form submitted with values:', values);
     setError('');
     setShowProgress(true);
     signIn(values.username, {

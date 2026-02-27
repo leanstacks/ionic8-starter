@@ -1,5 +1,5 @@
 import { forwardRef } from 'react';
-import { IonInput } from '@ionic/react';
+import { InputCustomEvent, IonInput } from '@ionic/react';
 import { Control, FieldValues, useController, FieldPath } from 'react-hook-form';
 import classNames from 'classnames';
 
@@ -27,7 +27,7 @@ interface InputProps<T extends FieldValues>
  * @param {ForwardedRef<HTMLIonInputElement>} [ref] - Optional. A forwarded `ref`.
  */
 const InputComponent = <T extends FieldValues>(
-  { className, control, name, testid = 'input', ...props }: InputProps<T>,
+  { className, control, name, onIonInput, testid = 'input', ...props }: InputProps<T>,
   ref: React.ForwardedRef<HTMLIonInputElement>,
 ) => {
   const {
@@ -37,6 +37,16 @@ const InputComponent = <T extends FieldValues>(
     name,
     control,
   });
+
+  /**
+   * Handle changes to the input's value. Updates the field state.
+   * Calls the supplied `onIonInput` props function if one was provided.
+   * @param {InputCustomEvent} e - The event.
+   */
+  const onInput = async (e: InputCustomEvent) => {
+    field.onChange(e.detail.value);
+    onIonInput?.(e);
+  };
 
   const errorText: string | undefined = isTouched ? error?.message : undefined;
 
@@ -52,6 +62,7 @@ const InputComponent = <T extends FieldValues>(
       )}
       {...props}
       {...field}
+      onIonInput={onInput}
       errorText={errorText}
       ref={ref}
       data-testid={testid}

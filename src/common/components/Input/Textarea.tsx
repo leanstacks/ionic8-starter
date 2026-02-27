@@ -38,7 +38,7 @@ const TextareaComponent = <T extends FieldValues>(
   });
 
   /**
-   * Handle changes to the textarea's value. Updates the Formik field state.
+   * Handle changes to the textarea's value. Updates the field state.
    * Calls the supplied `onIonInput` props function if one was provided.
    * @param {TextareaCustomEvent} e - The event.
    */
