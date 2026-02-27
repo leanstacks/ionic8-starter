@@ -39,7 +39,7 @@ interface SignInFormValues {
 }
 
 /**
- * The `SignInForm` component renders a Formik form for user authentication.
+ * The `SignInForm` component renders a form for user authentication.
  * @param {BaseComponentProps} props - Component properties.
  */
 const SignInForm = ({ className, testid = 'form-signin' }: BaseComponentProps) => {

@@ -35,7 +35,7 @@ interface ProfileFormProps extends BaseComponentProps {
 }
 
 /**
- * The `ProfileForm` component renders a Formik form to edit a user profile.
+ * The `ProfileForm` component renders a form to edit a user profile.
  * @param {ProfileFormProps} props - Component propeties.
  */
 const ProfileForm = ({ className, testid = 'form-profile', profile }: ProfileFormProps) => {

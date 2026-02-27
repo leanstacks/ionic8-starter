@@ -21,7 +21,7 @@ interface UserEditProps extends BaseComponentProps {
 }
 
 /**
- * The `UserEdit` component renders a Formik form for editing a `User`.
+ * The `UserEdit` component renders a form for editing a `User`.
  * @param {UserEditProps} props - Component properties.
  * @returns {JSX.Element} JSX
  */

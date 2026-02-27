@@ -35,7 +35,7 @@ interface UserAddModalProps extends PropsWithTestId, ComponentPropsWithoutRef<ty
 }
 
 /**
- * The `UserAddModal` component renders an `IonModal` containing a Formik
+ * The `UserAddModal` component renders an `IonModal` containing a
  * form to create a new `User`.
  *
  * @param {UserAddModalProps} props - Component properties.

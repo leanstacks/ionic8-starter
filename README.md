@@ -47,8 +47,7 @@ The application production technology stack includes:
 - React Router Dom - routing
 - TanStack Query - data fetching, caching, and asynchronous state management
 - Axios - HTTP client
-- Formik - form management
-- Yup - schema-based validation (deprecated)
+- React Hook Form - form management
 - Zod - schema-based validation
 - Lodash - utility functions
 - DayJS - date utility functions
@@ -212,8 +211,7 @@ See the [Infrastructure Guide](./docs/INFRASTRUCTURE_GUIDE.md) in the [project d
 - [React][react]
 - [TanStack][tanstack]
 - [Axios][axios]
-- [Formik][formik]
-- [Yup][yup]
+- [React Hook Form][rhf]
 - [Zod][zod]
 - [Testing Library][testing-library]
 - [Vitest][vitest]
@@ -227,8 +225,7 @@ See the [Infrastructure Guide](./docs/INFRASTRUCTURE_GUIDE.md) in the [project d
 [vite]: https://vitejs.dev/ 'Vite'
 [react]: https://react.dev/ 'React'
 [axios]: https://axios-http.com/ 'Axios'
-[formik]: https://formik.org/ 'Formik'
-[yup]: https://github.com/jquense/yup 'Yup'
+[rhf]: https://react-hook-form.com/ 'React Hook Form'
 [tanstack]: https://tanstack.com/ 'TanStack'
 [testing-library]: https://testing-library.com/ 'Testing Library'
 [vitest]: https://vitest.dev/ 'Vitest Testing Framework'
