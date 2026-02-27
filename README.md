@@ -50,7 +50,7 @@ The application production technology stack includes:
 - React Hook Form - form management
 - Zod - schema-based validation
 - Lodash - utility functions
-- DayJS - date utility functions
+- date-fns - date utility functions
 - i18next - internationalization framework
 
 The application development technology stack includes:
