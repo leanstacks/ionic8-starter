@@ -70,7 +70,7 @@ jobs:
           echo "${{ vars.CDK_ENV_DEV }}" > .env
 
       - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v6.0.0
+        uses: aws-actions/configure-aws-credentials@v6
         with:
           role-to-assume: ${{ vars.AWS_ROLE_ARN_DEV }}
           role-session-name: ci-ionic8-starter
