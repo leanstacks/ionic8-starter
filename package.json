@@ -1,5 +1,5 @@
 {
-  "name": "ionic8-starter",
+  "name": "@leanstacks/ionic8-starter",
   "description": "A template to kickstart Ionic + React applications utilizing an opinionated technology stack for optimal testability, maintainability, and operability.",
   "repository": {
     "type": "git",
