@@ -88,22 +88,17 @@ The project uses GitHub Actions for CI/CD. Below is a detailed description of ea
 - **Output Format:** All results are summarized in the GitHub Actions step summary for easy review in the UI
 - **Importance:** Maintains code quality, security posture, and up-to-date dependencies. Provides visibility into test coverage and build health. Acts as an early detection system for quality issues, security vulnerabilities, and outdated packages.
 
-### Deploy to DEV Workflow (`deploy-dev.yml`)
+### Deploy (Reusable) Workflow (`deploy-reusable.yml`)
 
-- **Purpose:** Automatically builds and deploys the application to the development environment on AWS with full infrastructure provisioning.
-- **Triggers:**
-  - On push to the `main` branch
-  - On push of the `dev` tag
-  - Manual: Via GitHub Actions UI (`workflow_dispatch`)
-- **Concurrency:**
-  - Prevents concurrent deployments; ensures orderly deployment
+- **Purpose:** Shared, reusable workflow that handles building and deploying the application to AWS environments with full infrastructure provisioning. This workflow is consumed by the environment-specific deployment workflows (DEV, QA, PROD).
+- **Type:** Reusable workflow called via `workflow_call`
 - **Timeout:** 30 minutes
-- **Prerequisites:**
-  - GitHub Actions variables must be configured:
-    - `AWS_ROLE_ARN_DEV` - AWS IAM Role ARN for development environment
-    - `AWS_REGION` - AWS region for deployment
-    - `ENV_DEV` - Application environment variables
-    - `CDK_ENV_DEV` - CDK infrastructure environment configuration
+- **Input Parameters:**
+  - `aws_region` (optional, default: `us-east-1`) - AWS region to deploy to
+  - `aws_role_arn` (required) - AWS IAM Role ARN to assume for deployment
+  - `env_code` (optional, default: `dev`) - Environment code (e.g., dev, qa, prod)
+  - `env_file` (required) - Application environment file content
+  - `cdk_env_file` (required) - CDK infrastructure environment file content
 - **Main Steps:**
   1. Checkout repository
   2. Setup Node.js (from `.nvmrc`, with npm cache)
@@ -117,8 +112,26 @@ The project uses GitHub Actions for CI/CD. Below is a detailed description of ea
   10. Bootstrap CDK (checks if already bootstrapped, skips if so)
   11. Synthesize CDK CloudFormation templates
   12. Deploy CDK stacks (`npm run deploy:all` with `--require-approval never`)
-  13. Clean up sensitive files (`.env`, `cdk.out`)
-- **Importance:** Enables rapid deployment of latest changes to development environment for testing and validation. Ensures infrastructure-as-code is always in sync with application deployments.
+  13. Clean up sensitive files (`.env` and `cdk.out`)
+- **Benefits:** Eliminates code duplication across deployment workflows while maintaining clarity and traceability. Each environment workflow calls this reusable workflow with environment-specific configuration.
+
+### Deploy to DEV Workflow (`deploy-dev.yml`)
+
+- **Purpose:** Automatically builds and deploys the application to the development environment on AWS with full infrastructure provisioning.
+- **Triggers:**
+  - On push to the `main` branch
+  - On push of the `dev` tag
+  - Manual: Via GitHub Actions UI (`workflow_dispatch`)
+- **Concurrency:**
+  - Prevents concurrent deployments; ensures orderly deployment
+- **Implementation:** Calls the [Deploy (Reusable) Workflow](#deploy-reusable-workflow-deploy-reusableyml) with DEV-specific configuration
+- **Prerequisites:**
+  - GitHub Actions variables must be configured:
+    - `AWS_ROLE_ARN_DEV` - AWS IAM Role ARN for development environment
+    - `AWS_REGION` - AWS region for deployment
+    - `ENV_DEV` - Application environment variables
+    - `CDK_ENV_DEV` - CDK infrastructure environment configuration
+- **Importance:** Enables rapid deployment of latest changes to the development environment for testing and validation. Ensures infrastructure-as-code is always in sync with application deployments.
 
 ### Deploy to QA Workflow (`deploy-qa.yml`)
 
@@ -128,27 +141,13 @@ The project uses GitHub Actions for CI/CD. Below is a detailed description of ea
   - On push of the `qa` tag
 - **Concurrency:**
   - Prevents concurrent deployments; ensures orderly deployment
-- **Timeout:** 30 minutes
+- **Implementation:** Calls the [Deploy (Reusable) Workflow](#deploy-reusable-workflow-deploy-reusableyml) with QA-specific configuration
 - **Prerequisites:**
   - GitHub Actions variables must be configured:
     - `AWS_ROLE_ARN_QA` - AWS IAM Role ARN for QA environment
     - `AWS_REGION` - AWS region for deployment
     - `ENV_QA` - Application environment variables
     - `CDK_ENV_QA` - CDK infrastructure environment configuration
-- **Main Steps:** (identical to DEV workflow with QA-specific variables)
-  1. Checkout repository
-  2. Setup Node.js (from `.nvmrc`, with npm cache)
-  3. Install application dependencies (`npm ci`)
-  4. Create application `.env` file with environment variables and build metadata
-  5. Build the application (`npm run build`)
-  6. Configure AWS credentials using OIDC (role: `AWS_ROLE_ARN_QA`)
-  7. Install infrastructure dependencies
-  8. Create infrastructure `.env` file from variables
-  9. Build infrastructure code
-  10. Bootstrap CDK (checks if already bootstrapped, skips if so)
-  11. Synthesize CDK CloudFormation templates
-  12. Deploy CDK stacks (`npm run deploy:all` with `--require-approval never`)
-  13. Clean up sensitive files (`.env`, `cdk.out`)
 - **Importance:** Allows testing of release branches in a QA environment before deploying to production.
 
 ### Deploy to PROD Workflow (`deploy-prod.yml`)
@@ -159,27 +158,13 @@ The project uses GitHub Actions for CI/CD. Below is a detailed description of ea
   - On push of the `prod` tag
 - **Concurrency:**
   - Prevents concurrent deployments; ensures orderly deployment
-- **Timeout:** 30 minutes
+- **Implementation:** Calls the [Deploy (Reusable) Workflow](#deploy-reusable-workflow-deploy-reusableyml) with PROD-specific configuration
 - **Prerequisites:**
   - GitHub Actions variables must be configured:
     - `AWS_ROLE_ARN_PROD` - AWS IAM Role ARN for production environment
     - `AWS_REGION` - AWS region for deployment
     - `ENV_PROD` - Application environment variables
     - `CDK_ENV_PROD` - CDK infrastructure environment configuration
-- **Main Steps:** (identical to DEV/QA workflows with PROD-specific variables)
-  1. Checkout repository
-  2. Setup Node.js (from `.nvmrc`, with npm cache)
-  3. Install application dependencies (`npm ci`)
-  4. Create application `.env` file with environment variables and build metadata
-  5. Build the application (`npm run build`)
-  6. Configure AWS credentials using OIDC (role: `AWS_ROLE_ARN_PROD`)
-  7. Install infrastructure dependencies
-  8. Create infrastructure `.env` file from variables
-  9. Build infrastructure code
-  10. Bootstrap CDK (checks if already bootstrapped, skips if so)
-  11. Synthesize CDK CloudFormation templates
-  12. Deploy CDK stacks (`npm run deploy:all` with `--require-approval never`)
-  13. Clean up sensitive files (`.env`, `cdk.out`)
 - **Importance:** Ensures controlled, traceable deployments to production. Using GitHub releases provides a clear release history and version tracking.
 
 ### Build Metadata
