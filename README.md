@@ -33,6 +33,102 @@ Many applications, particularly mobile applications, have a hidden page which di
 
 ## About
 
+### Features
+
+#### Core Architecture
+
+- Production-ready, modular architecture built on **Ionic 8** and **React 18**
+- Client-side routing with **React Router DOM** and route protection via private outlets
+- Clear separation between application-wide common components, hooks, utilities, and page-specific implementations
+- Full **TypeScript** support with strict mode enabled for type safety throughout
+
+#### Component Library + Common Components
+
+- Reusable component library accelerator with foundational components like: Badge, Block, Button, Card, Content, Error, Header, Icon, Input, List, Loader, Menu, Searchbar, Text
+- All components follow consistent interface with TypeScript prop definitions
+- Customizable styling through CSS modules
+- Common hooks like: `useAuth`, `useAxios`, `usePlatform`, `useProgress`, `useScrollContext`, `useToasts`
+- Shared logic encapsulation reduces code duplication
+
+#### Form Management + Validation
+
+- **React Hook Form** integration for performant, flexible form handling with minimal re-renders
+- **Zod** schema-based validation for type-safe, composable validation rules
+- Field-level and form submission validation
+- Automatic error handling and display
+- Support for complex, multi-step forms
+
+#### API Integration + State Management
+
+- **TanStack Query** (React Query) for server state management with caching and deduplication
+- Built-in automatic refetching and stale data handling
+- **Axios** HTTP client with interceptors for authentication and error handling
+- Sample API hooks like: `useGetCurrentUser`, `useGetSettings`, `useGetUserTokens`, `useUpdateSettings`, `useCreateUser`
+- JSON Placeholder mock API endpoint for development and testing
+
+#### Styling + Theme Management
+
+- **CSS Modules** for scoped styling and component encapsulation
+- Centralized theme using **CSS custom properties** (variables) for colors, typography, and spacing
+- Comprehensive theme directory: fonts, grid layout, normalization, typography
+- **BEM naming convention** for predictable, maintainable class names
+
+#### Internationalization (i18n)
+
+- **i18next** framework integration for multi-language support
+- Feature-organized message keys with lazy-loaded translations
+- Pluralization support
+- Context-aware translations
+- Language detection with fallback handling
+
+#### Configuration Management
+
+- Environment-based configuration with `.env` files and **Vite** integration (variables prefixed with `VITE_`)
+- **Zod** schemas validate configuration at application startup
+- Separate configuration for application code and infrastructure (AWS CDK)
+- Example `.env.example` files document required and optional settings
+
+#### Code Quality + Testing
+
+- **Vitest** for fast unit testing with TypeScript support
+- V8-based coverage reporting
+- **React Testing Library** enforces behavior-driven testing practices
+- Co-located tests in `__tests__` directories adjacent to source files
+- **MSW** (Mock Service Worker) for API call interception in tests
+- Minimum **80% code coverage** requirement
+- Automatic test discovery and watch mode
+
+#### DevOps + Infrastructure
+
+- **GitHub Actions** workflows for continuous integration, code quality checks, and deployment
+- **AWS CDK** infrastructure-as-code for provisioning cloud resources (CDN, storage, etc.) with TypeScript
+- Self-contained infrastructure directory with separate configuration and dependencies
+- Infrastructure code follows same testing and validation standards as application
+
+#### Documentation + Developer Experience
+
+- Comprehensive guides: [Configuration Guide](./docs/CONFIGURATION_GUIDE.md), [DevOps Guide](./docs/DEVOPS_GUIDE.md), [Infrastructure Guide](./docs/INFRASTRUCTURE_GUIDE.md)
+- Clear project structure with conventional naming for easy onboarding
+- Curated VS Code extension recommendations
+- Well-documented npm scripts for development, testing, linting, and building
+
+#### AI-Assisted Coding
+
+- Detailed **GitHub Copilot** instructions for consistent code generation
+- Defines best practices, project conventions, and coding standards
+- Guides AI to maintain consistency with TypeScript strict mode, testing requirements, and architectural decisions
+- `.github/copilot-instructions.md` serves as reference for developers and AI assistants
+
+#### Trunk-Based Development Workflow
+
+- `main` branch always ready for production
+- Feature branches follow `feature/NNNNN` naming convention
+- Releases use semantic versioning (`release/MM.mm.pp`)
+- Pull requests require code review approval and automated CI checks
+- Code quality gates enforced before merging
+
+### Technology Stack
+
 This project was bootstrapped with the [Ionic CLI](https://ionicframework.com/docs/cli/commands/start).
 
 ```
