@@ -1,0 +1,117 @@
+name: Deploy (Reusable)
+
+on:
+  workflow_call:
+    inputs:
+      aws_region:
+        description: 'AWS region to deploy to'
+        required: false
+        type: string
+        default: 'us-east-1'
+      aws_role_arn:
+        description: 'AWS IAM Role ARN to assume for deployment'
+        required: true
+        type: string
+      env_code:
+        description: 'Environment code (e.g. dev, qa, prod)'
+        required: false
+        type: string
+        default: 'dev'
+      env_file:
+        description: 'Environment file content'
+        required: true
+        type: string
+      cdk_env_file:
+        description: 'CDK environment file content'
+        required: true
+        type: string
+
+jobs:
+  deploy:
+    name: Deploy
+
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    permissions:
+      id-token: write
+      contents: read
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version-file: '.nvmrc'
+          cache: npm
+
+      - name: Install app dependencies
+        run: npm ci
+
+      - name: Create app .env file
+        run: |
+          echo "${{ inputs.env_file }}" > .env
+          echo "VITE_BUILD_DATE=$(date -u +'%Y-%m-%d')" >> .env
+          echo "VITE_BUILD_TIME=$(date -u +'%H:%M:%S')" >> .env
+          echo "VITE_BUILD_TS=$(date -u +'%Y-%m-%dT%H:%M:%SZ')" >> .env
+          echo "VITE_BUILD_COMMIT_SHA=${{ github.sha }}" >> .env
+          echo "VITE_BUILD_ENV_CODE=${{ inputs.env_code }}" >> .env
+          echo "VITE_BUILD_WORKFLOW_RUNNER=GitHub Actions" >> .env
+          echo "VITE_BUILD_WORKFLOW_NAME=${{ github.workflow }}" >> .env
+          echo "VITE_BUILD_WORKFLOW_RUN_NUMBER=${{ github.run_number }}" >> .env
+          echo "VITE_BUILD_WORKFLOW_RUN_ATTEMPT=${{ github.run_attempt }}" >> .env
+
+      - name: Build app
+        run: npm run build
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v6
+        with:
+          aws-region: ${{ inputs.aws_region }}
+          role-to-assume: ${{ inputs.aws_role_arn }}
+          role-session-name: deploy-ionic8-starter-${{ inputs.env_code }}
+
+      - name: Install infrastructure dependencies
+        working-directory: ./infrastructure
+        run: npm ci
+
+      - name: Create infrastructure .env file
+        working-directory: ./infrastructure
+        run: |
+          echo "${{ inputs.cdk_env_file }}" > .env
+          echo "✅ Infrastructure .env file created"
+
+      - name: Build infrastructure
+        working-directory: ./infrastructure
+        run: npm run build
+
+      - name: Bootstrap CDK
+        working-directory: ./infrastructure
+        run: |
+          echo "⚡ Checking if CDK bootstrap is needed..."
+          # Try to describe the bootstrap stack to see if it exists
+          if ! aws cloudformation describe-stacks --stack-name CDKToolkit --region ${{ inputs.aws_region }} >/dev/null 2>&1; then
+            echo "🚀 CDK not bootstrapped, bootstrapping now..."
+            npm run bootstrap
+          else
+            echo "✅ CDK already bootstrapped, skipping..."
+          fi
+
+      - name: Synthesize CDK stacks
+        working-directory: ./infrastructure
+        run: npm run synth
+
+      - name: Deploy CDK stacks
+        working-directory: ./infrastructure
+        run: npm run deploy:all -- --require-approval never
+
+      - name: Clean up sensitive files
+        if: always()
+        working-directory: ./infrastructure
+        run: |
+          echo "🧹 Cleaning up sensitive files..."
+          rm -f .env
+          rm -rf cdk.out
+          echo "✅ Sensitive files cleaned up"
