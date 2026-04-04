@@ -16,6 +16,9 @@ jobs:
   deploy:
     name: Deploy to PROD
     uses: ./.github/workflows/deploy-reusable.yml
+    permissions:
+      id-token: write
+      contents: read
     with:
       aws_region: ${{ vars.AWS_REGION }}
       aws_role_arn: ${{ vars.AWS_ROLE_ARN_PROD }}
