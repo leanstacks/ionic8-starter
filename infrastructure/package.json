@@ -1,5 +1,5 @@
 {
-  "name": "ionic8-starter-infrastructure",
+  "name": "@leanstacks/ionic8-starter-infrastructure",
   "version": "1.2.0-alpha.1",
   "private": true,
   "scripts": {
