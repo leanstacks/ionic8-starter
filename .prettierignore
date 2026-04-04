@@ -5,3 +5,6 @@ android
 infrastructure/cdk.out
 infrastructure/dist
 infrastructure/coverage
+
+# GitHub configuration files
+.github/CODEOWNERS
